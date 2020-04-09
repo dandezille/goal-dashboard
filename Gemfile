@@ -11,6 +11,7 @@ ruby "2.7.0"
 gem "autoprefixer-rails"
 
 gem "bootsnap", require: false
+gem "high_voltage"
 gem "honeybadger"
 gem "pg"
 gem "puma"
