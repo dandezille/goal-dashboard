@@ -14,12 +14,8 @@
     }
   },
   "name": "weight-dashboard",
-  "scripts": {
-  },
+  "scripts": {},
   "env": {
-    "APPLICATION_HOST": {
-      "required": true
-    },
     "EMAIL_RECIPIENTS": {
       "required": true
     },
@@ -36,7 +32,5 @@
       "generator": "secret"
     }
   },
-  "addons": [
-    "heroku-postgresql"
-  ]
+  "addons": ["heroku-postgresql"]
 }
