@@ -1,0 +1,57 @@
+<div id="container" class="flex-vertical">
+    <div id="status">
+        <div id="pace">
+            <div id="value">Pace: 79.1</div>
+            <div id="graph">
+                <div id="progress"></div>
+            </div>
+        </div>
+        <div id="progress">
+            <div id="daily_goal" class="flex-vertical">
+                <span>Daily Goal</span>
+                <span>0.17</span>
+                <span>per day</span>
+            </div>
+            <div id="current" class="flex-vertical">
+                <span>Current</span>
+                <span>79.8</span>
+                <span>3.8 to go</span>
+            </div>
+            <div id="projected" class="flex-vertical">
+                <span>Projected</span>
+                <span>77.5</span>
+                <span>on 30/04/20</span>
+            </div>
+        </div>
+        <div id="graph"></div>
+    </div>
+
+    <div id="entries">
+        <form id="new_entry">
+            <input type="date" name="date" pattern="\d{4}-\d{2}-\d{2}" required>
+            <input type="number" name="value" placeholder="weight" step="0.1" min="0" required>
+            <button type="submit">Add</button>
+        </form>
+        <div class="entry">
+            <div id="date">Thursday 9th April</div>
+            <div id="value">79.4</div>
+            <form id="delete_entry">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+        <div class="entry">
+            <div id="date">Wednesday 8th April</div>
+            <div id="value">79.8</div>
+            <form id="delete_entry">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+        <div class="entry">
+            <div id="date">Tuesday 9th April</div>
+            <div id="value">81.0</div>
+            <form id="delete_entry">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
