@@ -7,7 +7,7 @@ gem 'bootsnap', require: false
 gem 'high_voltage'
 gem 'pg'
 gem 'puma'
-gem 'rails', '~> 6.0.0'
+gem 'rails', '~> 6.0.0', github: 'rails/rails', branch: '6-0-stable'
 gem 'sassc-rails'
 gem 'simple_form'
 gem 'turbolinks'
