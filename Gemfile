@@ -31,5 +31,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'capybara'
+  gem 'formulaic'
   gem 'shoulda-matchers'
 end
