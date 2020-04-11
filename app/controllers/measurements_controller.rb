@@ -1,7 +1,7 @@
 class MeasurementsController < ApplicationController
   def create
     if create_measurement
-      flash[:notice] = 'New measurement created'
+      flash[:notice] = 'Measurement created'
     else
       flash[:alert] = @measurement.errors.messages
     end
@@ -11,7 +11,8 @@ class MeasurementsController < ApplicationController
 
   def destroy
     measurement = Measurement.find(params[:id])
-    measurement.delete
+    measurement.destroy
+    flash[:notice] = 'Measurement removed'
     redirect_to root_path
   end
 
