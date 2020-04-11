@@ -1,17 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe "Measurements" do
+RSpec.describe 'Measurements' do
 
-  describe "POST /create" do
-    it "returns http success" do
-      post "/measurements/create"
+  describe 'POST /measurements' do
+    it 'returns http success' do
+      post '/measurements'
       expect(response).to have_http_status(:success)
     end
   end
 
-  describe "GET /destroy" do
-    it "returns http success" do
-      get "/measurements/destroy"
+  describe 'DELETE /measurements/:id' do
+    it 'returns http success' do
+      measurement = create(:measurement);
+      delete "/measurements/#{measurement.id}"
       expect(response).to have_http_status(:success)
     end
   end
