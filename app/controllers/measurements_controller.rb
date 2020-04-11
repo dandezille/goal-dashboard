@@ -6,6 +6,9 @@ class MeasurementsController < ApplicationController
   end
 
   def destroy
+    measurement = Measurement.find(params[:id])
+    measurement.delete
+    redirect_to root_path
   end
 
   private

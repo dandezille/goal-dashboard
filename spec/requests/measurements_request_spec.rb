@@ -17,10 +17,12 @@ RSpec.describe 'Measurements' do
   end
 
   describe 'DELETE /measurements/:id' do
-    it 'returns http success' do
+    it 'deletes the given measurement' do
       measurement = create(:measurement);
-      delete "/measurements/#{measurement.id}"
-      expect(response).to have_http_status(:success)
+      delete measurement_path(measurement)
+
+      expect(response).to redirect_to(root_path)
+      expect(Measurement.count).to eq(0)
     end
   end
 
