@@ -1,0 +1,7 @@
+<div class="entry">
+    <div id="date"><%= measurement.date.strftime("%A #{measurement.date.day.ordinalize} %B") %></div>
+    <div id="value"><%= measurement.value %></div>
+    <form id="delete_entry">
+        <button type="submit">Delete</button>
+    </form>
+</div>
