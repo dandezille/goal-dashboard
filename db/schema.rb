@@ -16,8 +16,8 @@ ActiveRecord::Schema.define(version: 2020_04_10_194947) do
   enable_extension "plpgsql"
 
   create_table "measurements", force: :cascade do |t|
-    t.date "date"
-    t.decimal "value"
+    t.date "date", null: false
+    t.decimal "value", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
