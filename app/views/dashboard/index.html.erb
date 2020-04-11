@@ -29,8 +29,8 @@
     <div id="entries">
         <%= simple_form_for @measurement do |f| %>
             <%= f.input :date, as: :date_picker %>
-            <%= f.input :value, placeholder: 'weight (kg)', step: '0.1' %>
-            <%= f.button :submit, 'Add' %>
+            <%= f.input :value, step: '0.1' %>
+            <%= f.button :submit %>
         <% end %>
         <%= render @measurements %>
     </div>
