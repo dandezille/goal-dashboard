@@ -33,6 +33,7 @@ RSpec.describe 'Measurements' do
 
       expect(response).to redirect_to(root_path)
       expect(Measurement.count).to eq(0)
+      expect(flash[:notice]).to be_present
     end
   end
 
