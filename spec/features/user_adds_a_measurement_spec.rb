@@ -9,9 +9,4 @@ RSpec.feature 'User adds a measurement' do
     expect(page).to have_css('.flash.notice', text: 'Measurement created')
     expect(Measurement.count).to eq(1)
   end
-
-  def sign_in
-    @current_user = create(:user)
-    visit root_path(as: @current_user)
-  end
 end
