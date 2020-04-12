@@ -13,15 +13,20 @@ class MeasurementsController < ApplicationController
 
   def destroy
     measurement = Measurement.find(params[:id])
-    measurement.destroy
-    flash[:notice] = 'Measurement removed'
+    if measurement.user == current_user
+      measurement.destroy
+      flash[:notice] = 'Measurement removed'
+    else
+      flash[:alert] = 'Failed to remove measurement'
+    end
+
     redirect_to root_path
   end
 
   private
 
   def create_measurement
-    @measurement = Measurement.new(measurement_params)
+    @measurement = current_user.measurements.create(measurement_params)
     @measurement.save
   end
 
