@@ -37,6 +37,18 @@
   }
 }
 
+#new_measurement {
+  display: flex;
+
+  label {
+    display: none;
+  }
+
+  #measurement_value {
+    width: 120px;
+  }
+}
+
 #entries {
   .entry {
     display: flex;

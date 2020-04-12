@@ -1,0 +1,5 @@
+<div id="measurement_<%= measurement.id %>" class="entry">
+    <div id="date"><%= measurement.date.strftime("%A #{measurement.date.day.ordinalize} %B") %></div>
+    <div id="value"><%= measurement.value %></div>
+    <%= button_to "Delete", measurement, method: :delete, data: { confirm: "Are you sure?" } %>
+</div>

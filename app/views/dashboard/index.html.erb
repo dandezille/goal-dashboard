@@ -27,31 +27,11 @@
     </div>
 
     <div id="entries">
-        <form id="new_entry">
-            <input type="date" name="date" pattern="\d{4}-\d{2}-\d{2}" required>
-            <input type="number" name="value" placeholder="weight" step="0.1" min="0" required>
-            <button type="submit">Add</button>
-        </form>
-        <div class="entry">
-            <div id="date">Thursday 9th April</div>
-            <div id="value">79.4</div>
-            <form id="delete_entry">
-                <button type="submit">Delete</button>
-            </form>
-        </div>
-        <div class="entry">
-            <div id="date">Wednesday 8th April</div>
-            <div id="value">79.8</div>
-            <form id="delete_entry">
-                <button type="submit">Delete</button>
-            </form>
-        </div>
-        <div class="entry">
-            <div id="date">Tuesday 9th April</div>
-            <div id="value">81.0</div>
-            <form id="delete_entry">
-                <button type="submit">Delete</button>
-            </form>
-        </div>
+        <%= simple_form_for @measurement do |f| %>
+            <%= f.input :date, as: :date_picker %>
+            <%= f.input :value, step: '0.1' %>
+            <%= f.button :submit %>
+        <% end %>
+        <%= render @measurements %>
     </div>
 </div>
