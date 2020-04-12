@@ -14,7 +14,7 @@
             </div>
             <div id="current" class="flex-vertical">
                 <span>Current</span>
-                <span>79.8</span>
+                <span id="value"><%= @current_measurement&.value || '?' %></span>
                 <span>3.8 to go</span>
             </div>
             <div id="projected" class="flex-vertical">

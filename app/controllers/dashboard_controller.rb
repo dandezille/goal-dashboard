@@ -4,5 +4,6 @@ class DashboardController < ApplicationController
   def index
     @measurement = Measurement.new
     @measurements = current_user.measurements
+    @current_measurement = @measurements.first
   end
 end
