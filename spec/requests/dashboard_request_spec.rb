@@ -8,7 +8,7 @@ RSpec.describe 'Dashboards' do
       expect(response).to be_successful
     end
 
-    it "requires a signed in user" do
+    it 'redirects if not signed in' do
       get root_path
       expect(response).to redirect_to(sign_in_path)
     end
