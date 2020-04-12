@@ -1,4 +1,6 @@
 class MeasurementsController < ApplicationController
+  before_action :require_login
+
   def create
     if create_measurement
       flash[:notice] = 'Measurement created'

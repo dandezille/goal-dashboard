@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.feature 'User removes a measurement' do
   scenario 'it is deleted' do
+    user = create(:user)
     measurement = create(:measurement)
-    visit root_path
+    visit root_path(as: user)
     within("#measurement_#{measurement.id}") do
       click_on 'Delete'
     end
