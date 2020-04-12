@@ -1,5 +1,4 @@
 module SignInRequestHelpers
-
   def sign_in
     sign_in_as create(:user)
   end
