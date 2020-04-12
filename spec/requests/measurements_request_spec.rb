@@ -1,4 +1,4 @@
-require 'rails_helper' 
+require 'rails_helper'
 
 RSpec.describe 'Measurements' do
 
@@ -55,10 +55,5 @@ RSpec.describe 'Measurements' do
       expect(Measurement.count).to eq(1)
       expect(flash[:alert]).to be_present
     end
-  end
-
-  def sign_in
-    @current_user = create(:user)
-    sign_in_as(@current_user)
   end
 end
