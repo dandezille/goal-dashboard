@@ -12,6 +12,7 @@ class MeasurementsController < ApplicationController
   def destroy
     measurement = Measurement.find(params[:id])
     measurement.destroy
+    flash[:notice] = 'Measurement removed'
     redirect_to root_path
   end
 
