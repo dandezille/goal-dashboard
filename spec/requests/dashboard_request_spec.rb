@@ -4,8 +4,14 @@ RSpec.describe 'Dashboards' do
 
   describe 'GET /index' do
     it 'is successful' do
+      sign_in
       get root_path
       expect(response).to be_successful
+    end
+
+    it 'redirects if not signed in' do
+      get root_path
+      expect(response).to redirect_to(sign_in_path)
     end
   end
 

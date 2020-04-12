@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature 'User removes a measurement' do
+  before { sign_in }
+
   scenario 'it is deleted' do
     measurement = create(:measurement)
     visit root_path
