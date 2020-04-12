@@ -9,6 +9,7 @@ FactoryBot.define do
   end
 
   factory :measurement do
+    user
     date { '2020-04-10' }
     value { 78.2 }
   end

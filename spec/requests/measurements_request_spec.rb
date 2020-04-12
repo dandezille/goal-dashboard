@@ -15,6 +15,7 @@ RSpec.describe 'Measurements' do
         expect(flash[:notice]).to be_present
 
         measurement = Measurement.first
+        expect(measurement.user).to eq(@current_user)
         expect(measurement.date).to eq(measurement_attributes[:date].to_date)
         expect(measurement.value).to eq(measurement_attributes[:value])
       end
@@ -36,14 +37,26 @@ RSpec.describe 'Measurements' do
   end
 
   describe 'DELETE /measurements/:id' do
-    it 'deletes the given measurement' do
-      sign_in
-      measurement = create(:measurement);
-      delete measurement_path(measurement)
+    context 'when user signed in' do
+      before { sign_in }
 
-      expect(response).to redirect_to(root_path)
-      expect(Measurement.count).to eq(0)
-      expect(flash[:notice]).to be_present
+      it 'deletes the given measurement' do
+        measurement = create(:measurement, user: current_user);
+        delete measurement_path(measurement)
+
+        expect(response).to redirect_to(root_path)
+        expect(Measurement.count).to eq(0)
+        expect(flash[:notice]).to be_present
+      end
+
+      it 'fails for other users measurements' do
+        measurement = create(:measurement);
+        delete measurement_path(measurement)
+
+        expect(response).to redirect_to(root_path)
+        expect(Measurement.count).to eq(1)
+        expect(flash[:alert]).to be_present
+      end
     end
 
     it 'redirects if not signed in' do
