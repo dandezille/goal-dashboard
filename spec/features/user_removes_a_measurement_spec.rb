@@ -10,8 +10,7 @@ RSpec.feature 'User removes a measurement' do
     within("#measurement_#{measurement.id}") do
       click_on 'Delete'
     end
-
-    expect(page).to have_css('.flash.notice', text: 'Measurement removed')
+    expect(page).to have_flash_notice('Measurement removed')
     expect(Measurement.count).to eq(0)
   end
 end
