@@ -3,6 +3,6 @@ class DashboardController < ApplicationController
 
   def index
     @measurement = Measurement.new
-    @measurements = Measurement.all
+    @measurements = current_user.measurements
   end
 end
