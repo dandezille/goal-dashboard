@@ -4,9 +4,8 @@ RSpec.describe 'Measurements' do
 
   describe 'POST /measurements' do
     it 'creates a measurement' do
-      user = create(:user)
       measurement_attributes = attributes_for(:measurement)
-      post measurements_path(as: user), params: { measurement: measurement_attributes }
+      post measurements_path(as: create(:user)), params: { measurement: measurement_attributes }
 
       expect(response).to redirect_to(root_path)
       expect(Measurement.count).to eq(1)
@@ -18,8 +17,7 @@ RSpec.describe 'Measurements' do
     end
 
     it 'shows errors for invalid input' do
-      user = create(:user)
-      post measurements_path(as: user), params: { measurement: attributes_for(:measurement, date: '') }
+      post measurements_path(as: create(:user)), params: { measurement: attributes_for(:measurement, date: '') }
       expect(response).to redirect_to(root_path)
       expect(Measurement.count).to eq(0)
       expect(flash[:alert]).to be_present
@@ -35,9 +33,8 @@ RSpec.describe 'Measurements' do
 
   describe 'DELETE /measurements/:id' do
     it 'deletes the given measurement' do
-      user = create(:user)
       measurement = create(:measurement);
-      delete measurement_path(measurement, as: user)
+      delete measurement_path(measurement, as: create(:user))
 
       expect(response).to redirect_to(root_path)
       expect(Measurement.count).to eq(0)
