@@ -39,7 +39,7 @@ RSpec.describe 'Measurements' do
     it 'deletes the given measurement' do
       sign_in
       measurement = create(:measurement);
-      delete measurement_path(measurement, as: create(:user))
+      delete measurement_path(measurement)
 
       expect(response).to redirect_to(root_path)
       expect(Measurement.count).to eq(0)
