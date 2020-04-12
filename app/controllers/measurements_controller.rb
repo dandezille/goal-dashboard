@@ -1,7 +1,7 @@
 class MeasurementsController < ApplicationController
   def create
     if create_measurement
-      flash[:notice] = 'New measurement created'
+      flash[:notice] = 'Measurement created'
     else
       flash[:alert] = @measurement.errors.messages
     end
