@@ -3,13 +3,6 @@ require 'rails_helper'
 RSpec.describe 'Measurements' do
 
   describe 'POST /measurements' do
-    it 'redirects if not signed in' do
-      post measurements_path, params: { measurement: attributes_for(:measurement) }
-      expect(response).to redirect_to(sign_in_path)
-      expect(Measurement.count).to eq(0)
-      expect(flash[:alert]).to be_present
-    end
-
     context 'when user signed in' do
       before { sign_in }
 
@@ -32,7 +25,13 @@ RSpec.describe 'Measurements' do
         expect(Measurement.count).to eq(0)
         expect(flash[:alert]).to be_present
       end
+    end
 
+    it 'redirects if not signed in' do
+      post measurements_path, params: { measurement: attributes_for(:measurement) }
+      expect(response).to redirect_to(sign_in_path)
+      expect(Measurement.count).to eq(0)
+      expect(flash[:alert]).to be_present
     end
   end
 
