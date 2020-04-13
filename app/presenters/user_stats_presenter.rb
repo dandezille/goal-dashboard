@@ -1,5 +1,5 @@
 class UserStatsPresenter < BasePresenter
   def current
-    measurements.first&.value || '?'
+    measurements.order(:date).first&.value || '?'
   end
 end

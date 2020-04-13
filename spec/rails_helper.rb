@@ -62,6 +62,9 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
+  # Ensure presenter specs can access a view object
+  config.include ActionView::TestCase::Behavior, file_path: %r{spec/presenters}
+
   config.include SessionHelpers, type: :feature
   config.include ContentHelpers, type: :feature
   config.include SignInRequestHelpers, type: :request

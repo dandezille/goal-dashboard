@@ -2,6 +2,8 @@ FactoryBot.define do
   sequence :email do |n|
     "user#{n}@example.com"
   end
+  
+  sequence :value, 70
 
   factory :user do
     email
@@ -11,6 +13,6 @@ FactoryBot.define do
   factory :measurement do
     user
     date { '2020-04-10' }
-    value { 78.2 }
+    value 
   end
 end
