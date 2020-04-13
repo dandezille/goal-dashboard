@@ -17,7 +17,7 @@ class UserStatsDecorator < Draper::Decorator
     3.8
   end
 
-  def projected
+  def projected_value
     77.5
   end
 
