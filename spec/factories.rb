@@ -13,4 +13,10 @@ FactoryBot.define do
     date { '2020-04-10' }
     value { 78.2 }
   end
+
+  factory :goal do
+    user
+    date { '2020-05-10'}
+    value { 75.4 }
+  end
 end
