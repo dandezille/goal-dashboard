@@ -1,7 +1,7 @@
 <div id="container" class="flex-vertical">
     <div id="status">
         <div id="pace">
-            <div id="value">Pace: 79.1</div>
+            <div id="value">Pace: <%= @stats.pace %></div>
             <div id="graph">
                 <div id="progress"></div>
             </div>
@@ -9,18 +9,18 @@
         <div id="progress">
             <div id="daily_goal" class="flex-vertical">
                 <span>Daily Goal</span>
-                <span>0.17</span>
+                <span><%= @stats.daily_goal %></span>
                 <span>per day</span>
             </div>
             <div id="current" class="flex-vertical">
                 <span>Current</span>
-                <span>79.8</span>
-                <span>3.8 to go</span>
+                <span><%= @stats.current %></span>
+                <span><%= @stats.to_go %> to go</span>
             </div>
             <div id="projected" class="flex-vertical">
                 <span>Projected</span>
-                <span>77.5</span>
-                <span>on 30/04/20</span>
+                <span><%= @stats.projected_value %></span>
+                <span>on <%= @stats.projected_date %></span>
             </div>
         </div>
         <div id="graph"></div>
