@@ -5,6 +5,7 @@ ruby '2.7.1'
 
 gem 'bootsnap', require: false
 gem 'clearance'
+gem 'draper'
 gem 'high_voltage'
 gem 'pg'
 gem 'puma'
