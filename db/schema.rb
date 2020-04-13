@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_12_195548) do
+ActiveRecord::Schema.define(version: 2020_04_13_173612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "goals", force: :cascade do |t|
+    t.date "date", null: false
+    t.decimal "value", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_goals_on_user_id"
+  end
 
   create_table "measurements", force: :cascade do |t|
     t.date "date", null: false
@@ -35,5 +44,6 @@ ActiveRecord::Schema.define(version: 2020_04_12_195548) do
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
 
+  add_foreign_key "goals", "users"
   add_foreign_key "measurements", "users"
 end
