@@ -9,6 +9,12 @@ RSpec.feature 'User sets goal' do
     within('#new_goal') do
       fill_form_and_submit(:goal, goal_attributes)
     end
+
     expect(page).to have_flash_notice('Goal set')
+    expect(page).to have_goal(goal_attributes)
+  end
+
+  def have_goal(goal)
+    have_css '#goal', text: "#{goal[:value]} by #{goal[:date]}"
   end
 end
