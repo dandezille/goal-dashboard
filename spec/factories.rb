@@ -6,6 +6,10 @@ FactoryBot.define do
   factory :user do
     email
     password { 'super_secret' }
+
+    trait :with_goal do
+      association :goal
+    end
   end
 
   factory :measurement do

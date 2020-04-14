@@ -3,6 +3,19 @@ require 'rails_helper'
 RSpec.describe UserStatsDecorator do
   before { @user = build(:user) }
 
+  context '#goal' do
+    it 'returns the user goal' do
+      user = build(:user, :with_goal)
+      stats = decorate(user)
+      expect(stats.goal).to eq("#{user.goal.value} by #{user.goal.date}")
+    end
+
+    it 'handles missing goal' do
+      stats = decorate(build(:user))
+      expect(stats.goal).to eq('No goal set')
+    end
+  end
+
   context '#pace' do
     it 'returns 79.1' do
       stats = decorate(@user)
