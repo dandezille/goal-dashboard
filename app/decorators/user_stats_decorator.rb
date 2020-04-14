@@ -1,6 +1,14 @@
 class UserStatsDecorator < Draper::Decorator
   delegate_all
 
+  def goal
+    if model.goal
+      "#{model.goal.value} by #{model.goal.date}"
+    else
+      'No goal set'
+    end
+  end
+
   def pace
     79.1
   end
