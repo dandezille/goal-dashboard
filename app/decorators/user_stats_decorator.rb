@@ -32,10 +32,5 @@ class UserStatsDecorator < Draper::Decorator
   def projected_date
     '30/04/20'
   end
-
-  private
-
-  def latest_measurement
-    measurements.order(:date).first
-  end
 end
+
