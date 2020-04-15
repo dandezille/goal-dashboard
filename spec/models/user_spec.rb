@@ -11,7 +11,7 @@ RSpec.describe User do
     it { is_expected.to validate_presence_of(:password) }
   end
 
-  describe '.latest_measurement', focus: true do
+  describe '.latest_measurement' do
     it 'returns the latest measurement' do
       user = create(:user)
       create(:measurement, user: user, date: Date.today - 2.days)
