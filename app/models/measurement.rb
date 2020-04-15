@@ -4,6 +4,4 @@ class Measurement < ApplicationRecord
   validates :user_id, presence: true
   validates :date, presence: true
   validates :value, presence: true
-
-  default_scope { order(date: :desc) }
 end

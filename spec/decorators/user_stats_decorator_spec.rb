@@ -3,9 +3,8 @@ require 'rails_helper'
 RSpec.describe UserStatsDecorator do
   context '#goal' do
     it 'returns the user goal' do
-      user = build(:user, :with_goal)
-      stats = decorate(user)
-      expect(stats.goal).to eq("#{user.goal.value} by #{user.goal.date}")
+      stats = decorate(@user)
+      expect(stats.goal).to eq("#{@user.goal.value} by #{@user.goal.date}")
     end
 
     it 'handles missing goal' do
@@ -81,5 +80,9 @@ RSpec.describe UserStatsDecorator do
 
   def decorate(user)
     stats = UserStatsDecorator.decorate(user)
+  end
+
+  def latest_measurement
+    @user.measurements.order(:date).last.value
   end
 end
