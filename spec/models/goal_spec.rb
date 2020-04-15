@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Goal do
   describe 'associations' do
-    it { should belong_to(:user) }
+    it { is_expected.to belong_to(:user) }
   end
 
   describe 'validations' do
