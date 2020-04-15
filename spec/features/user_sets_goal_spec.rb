@@ -15,6 +15,6 @@ RSpec.feature 'User sets goal' do
   end
 
   def have_goal(goal)
-    have_css '#goal', text: "#{goal[:value]} by #{goal[:date]}"
+    have_css '#goal', text: "#{'%.1f' % goal[:value]} by #{goal[:date]}"
   end
 end

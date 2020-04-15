@@ -17,7 +17,7 @@ RSpec.describe 'Goals' do
         goal = Goal.first
         expect(goal.user).to eq(@current_user)
         expect(goal.date).to eq(goal_attributes[:date].to_date)
-        expect(goal.value.to_s).to eq(goal_attributes[:value].to_s)
+        expect(goal.value).to eq(goal_attributes[:value])
       end
     end
     

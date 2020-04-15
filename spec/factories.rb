@@ -3,6 +3,12 @@ FactoryBot.define do
     "user#{n}@example.com"
   end
 
+  sequence :weight, 70
+  
+  sequence :date do |n|
+    n.days.ago.strftime('%Y-%m-%d')
+  end
+
   factory :user do
     email
     password { 'super_secret' }
@@ -14,13 +20,13 @@ FactoryBot.define do
 
   factory :measurement do
     user
-    date { '2020-04-10' }
-    value { 78.2 }
+    date 
+    value { generate(:weight) }
   end
 
   factory :goal do
     user
-    date { '2020-05-10'}
-    value { 75.4 }
+    date 
+    value { generate(:weight) }
   end
 end
