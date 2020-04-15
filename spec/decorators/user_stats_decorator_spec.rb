@@ -16,16 +16,16 @@ RSpec.describe UserStatsDecorator do
 
   context '#pace' do
     it 'returns 79.1' do
-      @user = build(:user)
-      stats = decorate(@user)
+      user = build(:user)
+      stats = decorate(user)
       expect(stats.pace).to eq(79.1)
     end
   end
 
   context '#daily_goal' do
     it 'returns 0.17' do
-      @user = build(:user)
-      stats = decorate(@user)
+      user = build(:user)
+      stats = decorate(user)
       expect(stats.daily_goal).to eq(0.17)
     end
   end
@@ -47,24 +47,24 @@ RSpec.describe UserStatsDecorator do
 
   context '#to_go' do
     it 'returns 3.8' do
-      @user = build(:user)
-      stats = decorate(@user)
+      user = build(:user)
+      stats = decorate(user)
       expect(stats.to_go).to eq(3.8)
     end
   end
 
   context '#projected_value' do
     it 'returns 77.5' do
-      @user = build(:user)
-      stats = decorate(@user)
+      user = build(:user)
+      stats = decorate(user)
       expect(stats.projected_value).to eq(77.5)
     end
   end
 
   context '#projected_date' do
     it 'returns 30/04/20' do
-      @user = build(:user)
-      stats = decorate(@user)
+      user = build(:user)
+      stats = decorate(user)
       expect(stats.projected_date).to eq('30/04/20')
     end
   end
