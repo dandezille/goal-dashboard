@@ -14,7 +14,13 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def daily_goal
-    0.17
+    if latest_measurement and model.goal
+      days_between = (model.goal.date - latest_measurement.date).to_i
+      per_day = to_go / days_between
+      "#{'%.2f' % per_day}"
+    else
+      '?'
+    end
   end
 
   def current
