@@ -3,7 +3,7 @@ class UserStatsDecorator < Draper::Decorator
 
   def goal
     if model.goal
-      "#{model.goal.value} by #{model.goal.end_date}"
+      "#{model.goal.end_value} by #{model.goal.end_date}"
     else
       'No goal set'
     end
@@ -29,7 +29,7 @@ class UserStatsDecorator < Draper::Decorator
 
   def to_go
     if latest_measurement and model.goal
-      latest_measurement.value - model.goal.value
+      latest_measurement.value - model.goal.end_value
     else
       '?'
     end

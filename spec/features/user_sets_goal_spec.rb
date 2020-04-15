@@ -11,10 +11,11 @@ RSpec.feature 'User sets goal' do
     end
 
     expect(page).to have_flash_notice('Goal set')
-    expect(page).to have_goal(goal_attributes)
+    expect(page).to have_css '#goal', text: goal_attributes[:end_value]
+    expect(page).to have_css '#goal', text: goal_attributes[:end_date]
   end
 
   def have_goal(goal)
-    have_css '#goal', text: "#{'%.1f' % goal[:value]} by #{goal[:date]}"
+    have_css '#goal', text: "#{'%.1f' % goal[:end_value]} by #{goal[:end_date]}"
   end
 end
