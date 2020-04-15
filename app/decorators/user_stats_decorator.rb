@@ -18,7 +18,7 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def current
-    79.8
+    latest_measurement&.value || '?'
   end
 
   def to_go
@@ -31,5 +31,11 @@ class UserStatsDecorator < Draper::Decorator
 
   def projected_date
     '30/04/20'
+  end
+
+  private
+
+  def latest_measurement
+    measurements.order(:date).first
   end
 end

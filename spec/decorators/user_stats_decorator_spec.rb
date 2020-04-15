@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe UserStatsDecorator do
-  before { @user = build(:user) }
-
   context '#goal' do
     it 'returns the user goal' do
       user = build(:user, :with_goal)
@@ -18,6 +16,7 @@ RSpec.describe UserStatsDecorator do
 
   context '#pace' do
     it 'returns 79.1' do
+      @user = build(:user)
       stats = decorate(@user)
       expect(stats.pace).to eq(79.1)
     end
@@ -25,20 +24,30 @@ RSpec.describe UserStatsDecorator do
 
   context '#daily_goal' do
     it 'returns 0.17' do
+      @user = build(:user)
       stats = decorate(@user)
       expect(stats.daily_goal).to eq(0.17)
     end
   end
 
   context '#current' do
-    it 'returns 79.8' do
-      stats = decorate(@user)
-      expect(stats.current).to eq(79.8)
+    it 'returns latest measurement value' do
+      user = create(:user)
+      first = create(:measurement, date: Date.yesterday, value: 80, user: user)
+      second = create(:measurement, date: Date.today, value: 70, user: user)
+      stats = decorate(user)
+      expect(stats.current).to eq(70)
+    end
+
+    it 'handles missing measurements' do
+      stats = decorate(build(:user))
+      expect(stats.current).to eq('?')
     end
   end
 
   context '#to_go' do
     it 'returns 3.8' do
+      @user = build(:user)
       stats = decorate(@user)
       expect(stats.to_go).to eq(3.8)
     end
@@ -46,6 +55,7 @@ RSpec.describe UserStatsDecorator do
 
   context '#projected_value' do
     it 'returns 77.5' do
+      @user = build(:user)
       stats = decorate(@user)
       expect(stats.projected_value).to eq(77.5)
     end
@@ -53,6 +63,7 @@ RSpec.describe UserStatsDecorator do
 
   context '#projected_date' do
     it 'returns 30/04/20' do
+      @user = build(:user)
       stats = decorate(@user)
       expect(stats.projected_date).to eq('30/04/20')
     end
