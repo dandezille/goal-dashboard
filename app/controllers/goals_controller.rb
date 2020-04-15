@@ -14,6 +14,10 @@ class GoalsController < ApplicationController
   private
 
   def create_goal
+    if current_user.goal
+      current_user.goal.destroy
+    end
+
     @goal = current_user.create_goal(goal_params)
   end
 
