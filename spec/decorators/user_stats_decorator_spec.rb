@@ -23,10 +23,22 @@ RSpec.describe UserStatsDecorator do
   end
 
   context '#daily_goal' do
-    it 'returns 0.17' do
-      user = build(:user)
+    it 'returns weight loss required per day to hit target' do
+      user = create(:user)
+      create(:goal, user: user, date: Date.tomorrow, value: 70)
+      create(:measurement, user: user, date: 2.days.ago, value: 80)
       stats = decorate(user)
-      expect(stats.daily_goal).to eq(0.17)
+      expect(stats.daily_goal).to eq('3.33')
+    end
+
+    it 'handles missing goal' do
+      stats = decorate(create(:user, :with_measurements))
+      expect(stats.daily_goal).to eq('?')
+    end
+
+    it 'handles missing measurements' do
+      stats = decorate(create(:user, :with_goal))
+      expect(stats.daily_goal).to eq('?')
     end
   end
 
