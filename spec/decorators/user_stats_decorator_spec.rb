@@ -15,10 +15,15 @@ RSpec.describe UserStatsDecorator do
   end
 
   context '#pace' do
-    it 'returns 79.1' do
-      user = build(:user)
-      stats = decorate(user)
-      expect(stats.pace).to eq(79.1)
+    it 'returns expected weight given linear progress between goal points' do
+      goal = create(:goal, start_date: 2.days.ago, start_value: 70, end_date: Date.tomorrow, end_value: 60)
+      stats = decorate(goal.user)
+      expect(stats.pace).to eq('63.3')
+    end
+
+    it 'handles missing goal' do
+      stats = decorate(create(:user))
+      expect(stats.pace).to eq('?')
     end
   end
 
