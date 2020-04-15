@@ -38,7 +38,8 @@
 
     <div id="goal">
         <%= simple_form_for @goal do |f| %>
-            <%= f.input :date, as: :date_picker %>
+            <%= f.input :start_date, as: :date_picker %>
+            <%= f.input :end_date, as: :date_picker %>
             <%= f.input :value, step: '0.1' %>
             <%= f.button :submit %>
         <% end %>

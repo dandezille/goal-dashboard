@@ -36,7 +36,8 @@ FactoryBot.define do
 
   factory :goal do
     user
-    date 
+    start_date { generate(:date) }
+    end_date { (Date.parse(start_date) + 1.month).strftime('%Y-%m-%d') }
     value { generate(:weight) }
   end
 end
