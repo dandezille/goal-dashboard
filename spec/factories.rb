@@ -16,6 +16,16 @@ FactoryBot.define do
     trait :with_goal do
       association :goal
     end
+    
+    trait :with_measurements do
+      transient do
+        measurements_count { 5 }
+      end
+
+      after :create do |user, evaluator|
+        create_list(:measurement, evaluator.measurements_count, user: user)
+      end
+    end
   end
 
   factory :measurement do

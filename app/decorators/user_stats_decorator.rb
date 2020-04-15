@@ -22,7 +22,11 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def to_go
-    3.8
+    if latest_measurement and model.goal
+      latest_measurement.value - model.goal.value
+    else
+      '?'
+    end
   end
 
   def projected_value
@@ -32,10 +36,5 @@ class UserStatsDecorator < Draper::Decorator
   def projected_date
     '30/04/20'
   end
-
-  private
-
-  def latest_measurement
-    measurements.order(:date).first
-  end
 end
+
