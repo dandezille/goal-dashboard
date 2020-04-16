@@ -81,18 +81,62 @@ RSpec.describe UserStatsDecorator do
   end
 
   context '#projected_value' do
-    it 'returns 77.5' do
-      user = build(:user)
+    it 'when target can be achieved it returns goal end value' do
+      user = create(:user)
+      create(:measurement, user: user, date: 5.days.ago, value: 80)
+      create(:measurement, user: user, date: 3.days.ago, value: 70)
+      create(:goal, user: user, end_value: 60, end_date: Date.today)
       stats = decorate(user)
-      expect(stats.projected_value).to eq(77.5)
+      expect(stats.projected_value).to eq(60)
+    end
+
+    it "when target can't be achieved it returns preducted value at goal end date" do
+      user = create(:user)
+      create(:measurement, user: user, date: 5.days.ago, value: 80)
+      create(:measurement, user: user, date: 3.days.ago, value: 70)
+      create(:goal, user: user, end_value: 50, end_date: Date.today)
+      stats = decorate(user)
+      expect(stats.projected_value).to eq(55)
+    end
+
+    it 'handles missing goal' do
+      stats = decorate(create(:user, :with_measurements))
+      expect(stats.projected_value).to eq('?')
+    end
+
+    it 'handles missing measurements' do
+      stats = decorate(create(:user, :with_goal))
+      expect(stats.projected_value).to eq('?')
     end
   end
 
   context '#projected_date' do
-    it 'returns 30/04/20' do
-      user = build(:user)
+    it 'when target can be achieved it returns predicted goal date' do
+      user = create(:user)
+      create(:measurement, user: user, date: 5.days.ago, value: 80)
+      create(:measurement, user: user, date: 3.days.ago, value: 70)
+      create(:goal, user: user, end_value: 60, end_date: Date.today)
       stats = decorate(user)
-      expect(stats.projected_date).to eq('30/04/20')
+      expect(stats.projected_date).to eq(Date.yesterday)
+    end
+
+    it "when target can't be achieved it returns goal end date" do
+      user = create(:user)
+      create(:measurement, user: user, date: 5.days.ago, value: 80)
+      create(:measurement, user: user, date: 3.days.ago, value: 70)
+      create(:goal, user: user, end_value: 50, end_date: Date.today)
+      stats = decorate(user)
+      expect(stats.projected_date).to eq(Date.today)
+    end
+
+    it 'handles missing goal' do
+      stats = decorate(create(:user, :with_measurements))
+      expect(stats.projected_date).to eq('?')
+    end
+
+    it 'handles missing measurements' do
+      stats = decorate(create(:user, :with_goal))
+      expect(stats.projected_date).to eq('?')
     end
   end
 
