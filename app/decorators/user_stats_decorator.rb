@@ -59,6 +59,24 @@ class UserStatsDecorator < Draper::Decorator
     end
   end
 
+  def chart_definition
+    measurements_data = measurements.map do |m|
+      { x: (m.date - Date.today).to_i, y: m.value }
+    end
+
+    {
+      type: 'scatter',
+      data: {
+        datasets: [
+          {
+            label: 'Weights',
+            data: measurements_data
+          }
+        ]
+      }
+    }.to_json
+  end
+
   private
 
   def predict_value

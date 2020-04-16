@@ -24,7 +24,7 @@
                 <span>on <%= @stats.projected_date %></span>
             </div>
         </div>
-        <div id="graph"></div>
+        <canvas id="measurements_graph" width="400" height="250"></canvas>
     </div>
 
     <div id="entries">
@@ -46,3 +46,9 @@
         <% end %>
     </div>
 </div>
+
+<script>
+var ctx = document.getElementById('measurements_graph').getContext('2d');
+var chart_definition = <%= raw(@stats.chart_definition) %>;
+var myChart = new Chart(ctx, chart_definition);
+</script>
