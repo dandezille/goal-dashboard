@@ -45,7 +45,7 @@ class UserStatsDecorator < Draper::Decorator
 
   def projected_value
     if measurements.count > 1 and model.goal
-      predict_value
+      "#{'%.1f' % predict_value}"
     else
       '?'
     end
