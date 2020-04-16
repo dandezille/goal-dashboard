@@ -31,5 +31,8 @@ module WeightDashboard
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Disable asset pipeline as using webpack
+    config.assets.enabled = false
   end
 end
