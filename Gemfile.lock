@@ -188,6 +188,7 @@ GEM
     rspec-expectations (3.9.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
+    rspec-json_expectations (2.2.0)
     rspec-mocks (3.9.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
@@ -271,6 +272,7 @@ DEPENDENCIES
   puma
   rack-mini-profiler
   rails (~> 6.0.0)!
+  rspec-json_expectations
   rspec-rails
   ruby_linear_regression
   sassc-rails
