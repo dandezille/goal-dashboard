@@ -62,16 +62,10 @@ class UserStatsDecorator < Draper::Decorator
   private
 
   def predict_value
-    days_since = measurements.map do |m|
-      [(m.date - Date.today).to_i]
-    end
-    values = measurements.map { |m| m.value }
+    days_since = measurements.map(&method(:days_since_today))
+    values = measurements.map(&:value)
 
-    linear_regression = RubyLinearRegression.new
-    linear_regression.load_training_data(days_since, values)
-    linear_regression.train_normal_equation
-
-    value_at_goal_date = linear_regression.predict([model.goal.end_date - Date.today])
+    value_at_goal_date = predict(days_since, values, model.goal.end_date - Date.today)
     if value_at_goal_date < model.goal.end_value
       model.goal.end_value
     else
@@ -80,21 +74,29 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def predict_date
-    days_since = measurements.map do |m|
-      (m.date - Date.today).to_i
-    end
-    values = measurements.map { |m| [m.value] }
+    days_since = measurements.map(&method(:days_since_today))
+    values = measurements.map(&:value)
 
-    linear_regression = RubyLinearRegression.new
-    linear_regression.load_training_data(values, days_since)
-    linear_regression.train_normal_equation
-
-    date_at_goal_value = Date.today + linear_regression.predict([model.goal.end_value]).to_i.days
+    date_at_goal_value = Date.today + predict(values, days_since, model.goal.end_value).to_i.days
     if date_at_goal_value < model.goal.end_date
       date_at_goal_value
     else
       model.goal.end_date
     end
+  end
+
+  def days_since_today(measurement)
+    (measurement.date - Date.today).to_i
+  end
+
+  def predict(x_data, y_data, prediction_value)
+    x_data = x_data.map { |x| [x] }
+
+    linear_regression = RubyLinearRegression.new
+    linear_regression.load_training_data(x_data, y_data)
+    linear_regression.train_normal_equation
+
+    value_at_goal_date = linear_regression.predict([prediction_value])
   end
 
 end
