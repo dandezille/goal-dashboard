@@ -44,7 +44,7 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def projected_value
-    if latest_measurement and model.goal
+    if measurements.count > 1 and model.goal
       predict_value
     else
       '?'
@@ -52,7 +52,7 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def projected_date
-    if latest_measurement and model.goal
+    if measurements.count > 1 and model.goal
       predict_date
     else
       '?'

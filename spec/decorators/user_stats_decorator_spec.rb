@@ -108,6 +108,13 @@ RSpec.describe UserStatsDecorator do
       stats = decorate(create(:user, :with_goal))
       expect(stats.projected_value).to eq('?')
     end
+
+    it 'handles too few measurements' do
+      user = create(:user, :with_goal)
+      create(:measurement, user: user)
+      stats = decorate(user)
+      expect(stats.projected_value).to eq('?')
+    end
   end
 
   context '#projected_date' do
@@ -136,6 +143,13 @@ RSpec.describe UserStatsDecorator do
 
     it 'handles missing measurements' do
       stats = decorate(create(:user, :with_goal))
+      expect(stats.projected_date).to eq('?')
+    end
+
+    it 'handles too few measurements' do
+      user = create(:user, :with_goal)
+      create(:measurement, user: user)
+      stats = decorate(user)
       expect(stats.projected_date).to eq('?')
     end
   end
