@@ -1,9 +1,11 @@
-<% if flash.any? %>
-  <div class="flashes">
-    <% flash.each do |key, value| -%>
-      <div class="flash <%= key %>">
-        <span><%= value %></span>
-      </div>
-    <% end -%>
+<% if flash[:notice] %>
+  <div class="bg-blue-100 border border-blue-400 text-blue-700 text-sm font-bold px-4 py-3 rounded m-8">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
+<% if flash[:alert] %>
+  <div class="bg-red-100 border border-red-400 text-red-700 text-sm font-bold px-4 py-3 rounded m-8">
+    <%= flash[:alert] %>
   </div>
 <% end %>
