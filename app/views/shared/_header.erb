@@ -1,0 +1,14 @@
+<ul class="flex flex-row-reverse p-2 bg-indigo-200 border border-indigo-300 text-indigo-600">
+    <% if signed_in? %>
+        <li class="mr-6">
+            <%= link_to 'Sign out', sign_out_path, method: :delete %>
+        </li>
+        <li class="mr-6">
+            Signed in as: <%= current_user.email %>
+        </li>
+    <% else %>
+        <li class="mr-6">
+            <%= link_to 'Sign in', sign_in_path %>
+        </li>
+    <% end %>
+</ul>

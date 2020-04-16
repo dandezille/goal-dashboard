@@ -1,11 +1,15 @@
-<% if flash[:notice] %>
-  <div class="bg-blue-100 border border-blue-400 text-blue-700 text-sm font-bold px-4 py-3 rounded m-8">
-    <%= flash[:notice] %>
-  </div>
-<% end %>
+<% if flash.any? %>
+  <div class="flex flex-col text-center items-center">
+    <% if flash[:notice] %>
+      <div class="border text-sm font-bold px-4 py-3 rounded m-4 bg-blue-100 border-blue-400 text-blue-700">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
 
-<% if flash[:alert] %>
-  <div class="bg-red-100 border border-red-400 text-red-700 text-sm font-bold px-4 py-3 rounded m-8">
-    <%= flash[:alert] %>
+    <% if flash[:alert] %>
+      <div class="border text-sm font-bold px-4 py-3 rounded m-4 bg-red-100 border-red-400 text-red-700">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
   </div>
 <% end %>
