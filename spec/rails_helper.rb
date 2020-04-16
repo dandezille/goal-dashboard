@@ -8,6 +8,7 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'capybara/rspec'
 require "clearance/rspec"
+require "rspec/json_expectations"
 Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |file| require file }
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
