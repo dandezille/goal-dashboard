@@ -44,11 +44,60 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def projected_value
-    77.5
+    if measurements.count > 1 and model.goal
+      predict_value
+    else
+      '?'
+    end
   end
 
   def projected_date
-    '30/04/20'
+    if measurements.count > 1 and model.goal
+      predict_date
+    else
+      '?'
+    end
   end
+
+  private
+
+  def predict_value
+    days_since = measurements.map(&method(:days_since_today))
+    values = measurements.map(&:value)
+
+    value_at_goal_date = predict(days_since, values, model.goal.end_date - Date.today)
+    if value_at_goal_date < model.goal.end_value
+      model.goal.end_value
+    else
+      value_at_goal_date
+    end
+  end
+
+  def predict_date
+    days_since = measurements.map(&method(:days_since_today))
+    values = measurements.map(&:value)
+
+    date_at_goal_value = Date.today + predict(values, days_since, model.goal.end_value).to_i.days
+    if date_at_goal_value < model.goal.end_date
+      date_at_goal_value
+    else
+      model.goal.end_date
+    end
+  end
+
+  def days_since_today(measurement)
+    (measurement.date - Date.today).to_i
+  end
+
+  def predict(x_data, y_data, prediction_value)
+    x_data = x_data.map { |x| [x] }
+
+    linear_regression = RubyLinearRegression.new
+    linear_regression.load_training_data(x_data, y_data)
+    linear_regression.train_normal_equation
+
+    value_at_goal_date = linear_regression.predict([prediction_value])
+  end
+
 end
 

@@ -200,6 +200,7 @@ GEM
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
     rspec-support (3.9.2)
+    ruby_linear_regression (0.1.5)
     sassc (2.2.1)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -271,6 +272,7 @@ DEPENDENCIES
   rack-mini-profiler
   rails (~> 6.0.0)!
   rspec-rails
+  ruby_linear_regression
   sassc-rails
   shoulda-matchers
   simple_form
