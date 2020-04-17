@@ -1,49 +1,46 @@
-<div id="container" class="flex-vertical">
-    <div id="status">
-        <div id="goal"><%= @stats.goal %></div>
-        <div id="progress">
-            <div id="current" class="flex-vertical">
-                <span>Current</span>
-                <span><%= @stats.current %></span>
-                <span><%= @stats.to_go %> to go</span>
-            </div>
-            <div id="target" class="flex-vertical">
-                <span>Target</span>
-                <span><%= @stats.target %></span>
-                <span><%= @stats.target_delta %></span>
-            </div>
-            <div id="daily_goal" class="flex-vertical">
-                <span>Daily Goal</span>
-                <span><%= @stats.daily_goal %></span>
-                <span>per day</span>
-            </div>
-            <div id="projected" class="flex-vertical">
-                <span>Projected</span>
-                <span><%= @stats.projected_value %></span>
-                <span>on <%= @stats.projected_date %></span>
-            </div>
-        </div>
-        <canvas id="measurements_graph" width="400" height="250"></canvas>
+<div id="goal" class="text-center m-2">Goal: <%= @stats.goal %></div>
+<div id="pace">
+    <div id="value">Pace: <%= @stats.pace %></div>
+    <div id="graph">
+        <div id="progress"></div>
     </div>
+</div>
+<div id="progress">
+    <div id="daily_goal">
+        <span>Daily Goal</span>
+        <span><%= @stats.daily_goal %></span>
+        <span>per day</span>
+    </div>
+    <div id="current">
+        <span>Current</span>
+        <span><%= @stats.current %></span>
+        <span><%= @stats.to_go %> to go</span>
+    </div>
+    <div id="projected">
+        <span>Projected</span>
+        <span><%= @stats.projected_value %></span>
+        <span>on <%= @stats.projected_date %></span>
+    </div>
+</div>
+<canvas id="measurements_graph" width="400" height="250"></canvas>
 
-    <div id="entries">
-        <%= simple_form_for @measurement do |f| %>
-            <%= f.input :date, as: :date_picker %>
-            <%= f.input :value, step: '0.1' %>
-            <%= f.button :submit %>
-        <% end %>
-        <%= render @measurements %>
-    </div>
+<div id="entries">
+    <%= simple_form_for @measurement do |f| %>
+        <%= f.input :date, as: :date_picker %>
+        <%= f.input :value, step: '0.1' %>
+        <%= f.button :submit %>
+    <% end %>
+    <%= render @measurements %>
+</div>
 
-    <div id="goal">
-        <%= simple_form_for @goal do |f| %>
-            <%= f.input :start_date, as: :date_picker %>
-            <%= f.input :end_date, as: :date_picker %>
-            <%= f.input :start_value, step: '0.1' %>
-            <%= f.input :end_value, step: '0.1' %>
-            <%= f.button :submit %>
-        <% end %>
-    </div>
+<div id="goal">
+    <%= simple_form_for @goal do |f| %>
+        <%= f.input :start_date, as: :date_picker %>
+        <%= f.input :end_date, as: :date_picker %>
+        <%= f.input :start_value, step: '0.1' %>
+        <%= f.input :end_value, step: '0.1' %>
+        <%= f.button :submit %>
+    <% end %>
 </div>
 
 <script>
