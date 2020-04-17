@@ -2,7 +2,7 @@
     <div id="goal" class="flex bg-white rounded-lg shadow-md">
         <div class="p-2 pl-3 rounded-l-lg bg-indigo-800 text-indigo-100">Goal</div>
         <div class="p-2 pr-3"><%= @stats.goal %></div>
-</div>
+    </div>
 </div>
 
 <div class="bg-white m-4 p-4 rounded-lg shadow-md">
@@ -32,12 +32,17 @@
     <canvas id="measurements_graph"></canvas>
 </div>
 
-<div id="entries">
-    <%= simple_form_for @measurement do |f| %>
+<div class="bg-white m-4 rounded-lg shadow-md">
+    <div class="bg-indigo-800 rounded-t-lg text-indigo-100 p-2 pl-4">New Measurement</div>
+    <%= simple_form_for @measurement, html: { class: 'p-2 pl-4 pr-4' } do |f| %>
         <%= f.input :date, as: :date_picker %>
         <%= f.input :value, step: '0.1' %>
         <%= f.button :submit %>
     <% end %>
+</div>
+
+<div class="bg-white m-4 rounded-lg shadow-md">
+    <div class="bg-indigo-800 rounded-t-lg text-indigo-100 p-2 pl-4">Measurements</div>
     <%= render @measurements %>
 </div>
 
