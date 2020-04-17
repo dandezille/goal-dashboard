@@ -1,27 +1,30 @@
 <div id="goal" class="text-center m-2">Goal: <%= @stats.goal %></div>
+
 <div id="pace">
     <div id="value">Pace: <%= @stats.pace %></div>
     <div id="graph">
         <div id="progress"></div>
     </div>
 </div>
-<div id="progress">
-    <div id="daily_goal">
+
+<div class="flex justify-around">
+    <div id="daily_goal" class="flex flex-col items-center">
         <span>Daily Goal</span>
-        <span><%= @stats.daily_goal %></span>
+        <span><%= @stats.daily_goal %>kg</span>
         <span>per day</span>
     </div>
-    <div id="current">
+    <div id="current" class="flex flex-col items-center">
         <span>Current</span>
-        <span><%= @stats.current %></span>
+        <span><%= @stats.current %>kg</span>
         <span><%= @stats.to_go %> to go</span>
     </div>
-    <div id="projected">
+    <div id="projected" class="flex flex-col items-center">
         <span>Projected</span>
-        <span><%= @stats.projected_value %></span>
+        <span><%= @stats.projected_value %>kg</span>
         <span>on <%= @stats.projected_date %></span>
     </div>
 </div>
+
 <canvas id="measurements_graph" width="400" height="250"></canvas>
 
 <div id="entries">
