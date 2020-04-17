@@ -1,10 +1,4 @@
-<div id="goal" class="text-center m-2">Goal: <%= @stats.goal %></div>
-
-<div id="pace">
-    <div id="graph">
-        <div id="progress"></div>
-    </div>
-</div>
+<div id="goal" class="text-center mt-8 mb-8">Goal: <%= @stats.goal %></div>
 
 <div class="flex justify-around">
     <div id="current" class="flex flex-col items-center">
@@ -29,7 +23,7 @@
     </div>
 </div>
 
-<canvas id="measurements_graph" width="400" height="250"></canvas>
+<canvas id="measurements_graph" class="p-8"></canvas>
 
 <div id="entries">
     <%= simple_form_for @measurement do |f| %>
