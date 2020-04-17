@@ -1,9 +1,12 @@
-<div class="text-center mt-6 mb-6">
-    <span id="goal" class="p-2 bg-white rounded-lg shadow-md">Goal: <%= @stats.goal %></span>
+<div class="flex justify-center m-6">
+    <div id="goal" class="flex bg-white rounded-lg shadow-md">
+        <div class="p-2 pl-3 rounded-l-lg bg-indigo-800 text-indigo-100">Goal</div>
+        <div class="p-2 pr-3"><%= @stats.goal %></div>
+</div>
 </div>
 
-<div class="bg-white m-4 rounded-lg shadow-md">
-    <div class="flex justify-around pt-4">
+<div class="bg-white m-4 p-4 rounded-lg shadow-md">
+    <div class="flex justify-around">
         <div id="current" class="flex flex-col items-center">
             <span>Current</span>
             <span><%= @stats.current %>kg</span>
@@ -26,7 +29,7 @@
         </div>
     </div>
 
-    <canvas id="measurements_graph" class="p-4"></canvas>
+    <canvas id="measurements_graph"></canvas>
 </div>
 
 <div id="entries">
