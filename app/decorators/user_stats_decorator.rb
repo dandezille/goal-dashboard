@@ -64,7 +64,7 @@ class UserStatsDecorator < Draper::Decorator
 
   def projected_value
     if measurements.count > 1 and model.goal
-      prediction = predict_end_value
+      prediction = predict_value_at(model.goal.end_date)
       prediction = model.goal.end_value if prediction < model.goal.end_value
        "#{'%.1f' % prediction}"
     else
@@ -74,7 +74,7 @@ class UserStatsDecorator < Draper::Decorator
 
   def projected_date
     if measurements.count > 1 and model.goal
-      prediction = predict_end_date
+      prediction = predict_date_for(model.goal.end_value)
       prediction = model.goal.end_date if prediction > model.goal.end_date
       prediction 
     else
@@ -140,16 +140,16 @@ class UserStatsDecorator < Draper::Decorator
     model.goal.start_value + per_day * (Date.today - model.goal.start_date)
   end
 
-  def predict_end_value
+  def predict_value_at(date)
     days_since = measurements.map(&method(:days_since_today))
     values = measurements.map(&:value)
-    predict(days_since, values, model.goal.end_date - Date.today)
+    predict(days_since, values, date - Date.today)
   end
 
-  def predict_end_date
+  def predict_date_for(value)
     days_since = measurements.map(&method(:days_since_today))
     values = measurements.map(&:value)
-    Date.today + predict(values, days_since, model.goal.end_value).to_i.days
+    Date.today + predict(values, days_since, value).to_i.days
   end
 
   def days_since_today(measurement)
