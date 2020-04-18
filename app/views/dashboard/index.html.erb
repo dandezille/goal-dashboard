@@ -34,7 +34,7 @@
 
 <div class="bg-white m-4 rounded-lg shadow-md">
     <div class="bg-indigo-800 rounded-t-lg text-indigo-100 p-2 pl-4">New Measurement</div>
-    <%= simple_form_for @measurement, html: { class: 'flex justify-between p-2 pl-4 pr-4' } do |f| %>
+    <%= simple_form_for @stats.new_measurement, html: { class: 'flex justify-between p-2 pl-4 pr-4' } do |f| %>
         <%= f.input :date, as: :date_picker, label_html: { class: 'text-gray-700 text-sm font-bold mb-2' }, input_html: { class: 'shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' } %>
         <%= f.input :value, step: '0.1', label_html: { class: 'text-gray-700 text-sm font-bold mb-2' }, input_html: { class: 'shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' } %>
         <%= f.button :submit, class: 'bg-indigo-600 hover:bg-indigo-900 text-indigo-100 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' %>
@@ -43,13 +43,13 @@
 
 <div class="bg-white m-4 rounded-lg shadow-md">
     <div class="bg-indigo-800 rounded-t-lg text-indigo-100 p-2 pl-4">Measurements</div>
-    <%= render @measurements %>
+    <%= render @stats.measurements %>
 </div>
 
 <div class="bg-white m-4 rounded-lg shadow-md">
     <div class="bg-indigo-800 rounded-t-lg text-indigo-100 p-2 pl-4">Goal</div>
     <div class="flex justify-center">
-        <%= simple_form_for @goal, html: { class: 'flex flex-col items-center p-6'} do |f| %>
+        <%= simple_form_for @stats.new_goal, html: { class: 'flex flex-col items-center p-6'} do |f| %>
             <%= f.input :start_date, as: :date_picker, wrapper_html: { class: 'flex items-center pb-4 pl-4 pr-4' }, label_html: { class: 'w-40 text-gray-700 text-sm font-bold text-right' }, input_html: { class: 'w-40 shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' }%>
             <%= f.input :end_date, as: :date_picker, wrapper_html: { class: 'flex items-center p-4' }, label_html: { class: 'w-40 text-gray-700 text-sm font-bold text-right' }, input_html: { class: 'w-40 shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' }%>
             <%= f.input :start_value, step: '0.1', wrapper_html: { class: 'flex items-center p-4' }, label_html: { class: 'w-40 text-gray-700 text-sm font-bold text-right' }, input_html: { class: 'w-40 shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' }%>

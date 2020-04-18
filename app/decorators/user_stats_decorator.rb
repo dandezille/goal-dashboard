@@ -1,6 +1,14 @@
 class UserStatsDecorator < Draper::Decorator
   delegate_all
 
+  def new_measurement
+    Measurement.new(date: Date.today)
+  end
+
+  def new_goal
+    Goal.new
+  end
+
   def goal
     if model.goal
       "#{model.goal.end_value}kg by #{h.format_date(model.goal.end_date)}"
