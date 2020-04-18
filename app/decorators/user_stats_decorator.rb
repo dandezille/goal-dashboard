@@ -83,6 +83,11 @@ class UserStatsDecorator < Draper::Decorator
       { x: (m.date - Date.today).to_i, y: m.value }
     end
 
+    target_data = [
+      { x: (model.goal.start_date - Date.today).to_i, y: model.goal.start_value},
+      { x: (model.goal.end_date - Date.today).to_i, y: model.goal.end_value}
+    ]
+
     {
       type: 'scatter',
       data: {
@@ -91,7 +96,12 @@ class UserStatsDecorator < Draper::Decorator
             label: 'Weights',
             showLine: true,
             data: measurements_data
-          }
+          },
+          {
+            label: 'Target',
+            showLine: true,
+            data: target_data
+          
         ]
       },
       options: {
