@@ -6,7 +6,7 @@ RSpec.describe UserStatsDecorator do
       user = build(:user, :with_goal)
       goal = decorate(user).goal
       expect(goal).to include(user.goal.end_value.to_s)
-      expect(goal).to include(user.goal.end_date.to_s)
+      expect(goal).to include(format_date(user.goal.end_date))
     end
 
     it 'handles missing goal' do
