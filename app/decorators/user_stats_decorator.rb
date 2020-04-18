@@ -89,6 +89,7 @@ class UserStatsDecorator < Draper::Decorator
         datasets: [
           {
             label: 'Weights',
+            showLine: true,
             data: measurements_data
           }
         ]
