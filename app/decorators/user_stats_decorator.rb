@@ -11,11 +11,7 @@ class UserStatsDecorator < Draper::Decorator
 
   def pace
     if model.goal
-      days_between = (model.goal.end_date - model.goal.start_date).to_i
-      weight_difference = model.goal.end_value - model.goal.start_value
-      per_day = weight_difference / days_between
-      pace = model.goal.start_value + per_day * (Date.today - model.goal.start_date)
-      "#{'%.1f' % pace}"
+      "#{'%.1f' % target_for_today}"
     else
       '?'
     end
@@ -78,6 +74,13 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   private
+
+  def target_for_today
+    days_between = (model.goal.end_date - model.goal.start_date).to_i
+    weight_difference = model.goal.end_value - model.goal.start_value
+    per_day = weight_difference / days_between
+    model.goal.start_value + per_day * (Date.today - model.goal.start_date)
+  end
 
   def predict_value
     days_since = measurements.map(&method(:days_since_today))
