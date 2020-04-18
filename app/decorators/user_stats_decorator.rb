@@ -3,7 +3,7 @@ class UserStatsDecorator < Draper::Decorator
 
   def goal
     if model.goal
-      "#{model.goal.end_value} by #{model.goal.end_date}"
+      "#{model.goal.end_value}kg by #{h.format_date(model.goal.end_date)}"
     else
       'No goal set'
     end
