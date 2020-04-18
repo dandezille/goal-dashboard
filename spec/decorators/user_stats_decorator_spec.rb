@@ -5,7 +5,7 @@ RSpec.describe UserStatsDecorator do
     it 'returns the user goal' do
       user = build(:user, :with_goal)
       goal = decorate(user).goal
-      expect(goal).to include(user.goal.end_value.to_s)
+      expect(goal).to include('%.1f' % user.goal.end_value)
       expect(goal).to include(format_date(user.goal.end_date))
     end
 

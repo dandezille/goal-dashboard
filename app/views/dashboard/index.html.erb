@@ -1,48 +1,61 @@
-<div id="container" class="flex-vertical">
-    <div id="status">
-        <div id="goal"><%= @stats.goal %></div>
-        <div id="progress">
-            <div id="current" class="flex-vertical">
-                <span>Current</span>
-                <span><%= @stats.current %></span>
-                <span><%= @stats.to_go %> to go</span>
-            </div>
-            <div id="target" class="flex-vertical">
-                <span>Target</span>
-                <span><%= @stats.target %></span>
-                <span><%= @stats.target_delta %></span>
-            </div>
-            <div id="daily_goal" class="flex-vertical">
-                <span>Daily Goal</span>
-                <span><%= @stats.daily_goal %></span>
-                <span>per day</span>
-            </div>
-            <div id="projected" class="flex-vertical">
-                <span>Projected</span>
-                <span><%= @stats.projected_value %></span>
-                <span>on <%= @stats.projected_date %></span>
-            </div>
+<div class="flex justify-center m-6">
+    <div id="goal" class="flex bg-white rounded-lg shadow-md">
+        <div class="p-2 pl-3 rounded-l-lg bg-indigo-800 text-indigo-100">Goal</div>
+        <div class="p-2 pr-3"><%= @stats.goal %></div>
+    </div>
+</div>
+
+<div class="bg-white m-4 p-4 rounded-lg shadow-md">
+    <div class="flex justify-around">
+        <div id="current" class="flex flex-col items-center">
+            <span>Current</span>
+            <span><%= @stats.current %>kg</span>
+            <span><%= @stats.to_go %>kg to go</span>
         </div>
-        <canvas id="measurements_graph" width="400" height="250"></canvas>
+        <div id="pace" class="flex flex-col items-center">
+            <span>Target</span>
+            <span><%= @stats.target %>kg</span>
+            <span><%= @stats.target_delta %></span>
+        </div>
+        <div id="daily_goal" class="flex flex-col items-center">
+            <span>Daily Goal</span>
+            <span><%= @stats.daily_goal %>kg</span>
+            <span>per day</span>
+        </div>
+        <div id="projected" class="flex flex-col items-center">
+            <span>Projected</span>
+            <span><%= @stats.projected_value %>kg</span>
+            <span>on <%= @stats.projected_date %></span>
+        </div>
     </div>
 
-    <div id="entries">
-        <%= simple_form_for @measurement do |f| %>
-            <%= f.input :date, as: :date_picker %>
-            <%= f.input :value, step: '0.1' %>
-            <%= f.button :submit %>
-        <% end %>
-        <%= render @measurements %>
-    </div>
+    <canvas id="measurements_graph"></canvas>
+</div>
 
-    <div id="goal">
-        <%= simple_form_for @goal do |f| %>
-            <%= f.input :start_date, as: :date_picker %>
-            <%= f.input :end_date, as: :date_picker %>
-            <%= f.input :start_value, step: '0.1' %>
-            <%= f.input :end_value, step: '0.1' %>
-            <%= f.button :submit %>
-        <% end %>
+<div class="bg-white m-4 rounded-lg shadow-md">
+    <div class="bg-indigo-800 rounded-t-lg text-indigo-100 p-2 pl-4">New Measurement</div>
+    <%= simple_form_for @measurement, html: { class: 'flex justify-between p-2 pl-4 pr-4' } do |f| %>
+        <%= f.input :date, as: :date_picker, label_html: { class: 'text-gray-700 text-sm font-bold mb-2' }, input_html: { class: 'shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' } %>
+        <%= f.input :value, step: '0.1', label_html: { class: 'text-gray-700 text-sm font-bold mb-2' }, input_html: { class: 'shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' } %>
+        <%= f.button :submit, class: 'bg-indigo-600 hover:bg-indigo-900 text-indigo-100 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' %>
+    <% end %>
+</div>
+
+<div class="bg-white m-4 rounded-lg shadow-md">
+    <div class="bg-indigo-800 rounded-t-lg text-indigo-100 p-2 pl-4">Measurements</div>
+    <%= render @measurements %>
+</div>
+
+<div class="bg-white m-4 rounded-lg shadow-md">
+    <div class="bg-indigo-800 rounded-t-lg text-indigo-100 p-2 pl-4">Goal</div>
+    <div class="flex justify-center">
+        <%= simple_form_for @goal, html: { class: 'flex flex-col items-center p-6'} do |f| %>
+            <%= f.input :start_date, as: :date_picker, wrapper_html: { class: 'flex items-center pb-4 pl-4 pr-4' }, label_html: { class: 'w-40 text-gray-700 text-sm font-bold text-right' }, input_html: { class: 'w-40 shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' }%>
+            <%= f.input :end_date, as: :date_picker, wrapper_html: { class: 'flex items-center p-4' }, label_html: { class: 'w-40 text-gray-700 text-sm font-bold text-right' }, input_html: { class: 'w-40 shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' }%>
+            <%= f.input :start_value, step: '0.1', wrapper_html: { class: 'flex items-center p-4' }, label_html: { class: 'w-40 text-gray-700 text-sm font-bold text-right' }, input_html: { class: 'w-40 shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' }%>
+            <%= f.input :end_value, step: '0.1', wrapper_html: { class: 'flex items-center p-4' }, label_html: { class: 'w-40 text-gray-700 text-sm font-bold text-right' }, input_html: { class: 'w-40 shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' }%>
+            <%= f.button :submit, class: 'bg-indigo-600 hover:bg-indigo-900 text-indigo-100 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' %>
+    <% end %>
     </div>
 </div>
 

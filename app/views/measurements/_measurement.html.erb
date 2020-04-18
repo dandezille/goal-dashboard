@@ -1,5 +1,7 @@
-<div id="measurement_<%= measurement.id %>" class="entry">
-    <div id="date"><%= format_date(measurement.date) %></div>
-    <div id="value"><%= measurement.value %></div>
-    <%= button_to "Delete", measurement, method: :delete, data: { confirm: "Are you sure?" } %>
+<div id="measurement_<%= measurement.id %>" class="flex p-3 bg-gray-100 even:bg-gray-300">
+    <div class="w-3/5"><%= format_date(measurement.date) %></div>
+    <div class="w-1/5 text-center"><%= measurement.value %></div>
+    <div class="w-1/5 text-right hover:underline">
+        <%= link_to "Delete", measurement, method: :delete, data: { confirm: "Are you sure?" } %>
+    </div>
 </div>
