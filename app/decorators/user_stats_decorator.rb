@@ -64,7 +64,8 @@ class UserStatsDecorator < Draper::Decorator
 
   def projected_value
     if measurements.count > 1 and model.goal
-      "#{'%.1f' % predict_value}"
+      prediction = [predict_value_at(model.goal.end_date), model.goal.end_value].max
+       "#{'%.1f' % prediction}"
     else
       '?'
     end
@@ -72,7 +73,7 @@ class UserStatsDecorator < Draper::Decorator
 
   def projected_date
     if measurements.count > 1 and model.goal
-      predict_date
+      [predict_date_for(model.goal.end_value), model.goal.end_date].min
     else
       '?'
     end
@@ -88,6 +89,14 @@ class UserStatsDecorator < Draper::Decorator
       target_data = [
         { x: model.goal.start_date, y: model.goal.start_value},
         { x: model.goal.end_date, y: model.goal.end_value}
+      ]
+    end
+
+    prediction_data = []
+    if model.goal and model.measurements.count > 1
+      prediction_data = [
+        { x: model.goal.start_date, y: predict_value_at(model.goal.start_date) },
+        { x: model.goal.end_date, y: predict_value_at(model.goal.end_date) },
       ]
     end
 
@@ -108,6 +117,14 @@ class UserStatsDecorator < Draper::Decorator
             showLine: true,
             fill: false,
             data: target_data
+          },
+          {
+            label: 'Prediction',
+            showLine: true,
+            fill: false,
+            backgroundColor: '#a3bffa',
+            borderColor: '#a3bffa',
+            data: prediction_data,
           } 
         ]
       },
@@ -136,28 +153,16 @@ class UserStatsDecorator < Draper::Decorator
     model.goal.start_value + per_day * (Date.today - model.goal.start_date)
   end
 
-  def predict_value
+  def predict_value_at(date)
     days_since = measurements.map(&method(:days_since_today))
     values = measurements.map(&:value)
-
-    value_at_goal_date = predict(days_since, values, model.goal.end_date - Date.today)
-    if value_at_goal_date < model.goal.end_value
-      model.goal.end_value
-    else
-      value_at_goal_date
-    end
+    predict(days_since, values, date - Date.today)
   end
 
-  def predict_date
+  def predict_date_for(value)
     days_since = measurements.map(&method(:days_since_today))
     values = measurements.map(&:value)
-
-    date_at_goal_value = Date.today + predict(values, days_since, model.goal.end_value).to_i.days
-    if date_at_goal_value < model.goal.end_date
-      date_at_goal_value
-    else
-      model.goal.end_date
-    end
+    Date.today + predict(values, days_since, value).to_i.days
   end
 
   def days_since_today(measurement)
