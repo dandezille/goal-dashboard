@@ -80,7 +80,15 @@ class UserStatsDecorator < Draper::Decorator
 
   def chart_definition
     measurements_data = measurements.map do |m|
-      { x: (m.date - Date.today).to_i, y: m.value }
+      { x: m.date, y: m.value }
+    end
+
+    target_data = []
+    if model.goal
+      target_data = [
+        { x: model.goal.start_date, y: model.goal.start_value},
+        { x: model.goal.end_date, y: model.goal.end_value}
+      ]
     end
 
     target_data = []
@@ -114,6 +122,14 @@ class UserStatsDecorator < Draper::Decorator
       options: {
         legend: {
           display: false
+        },
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              unit: 'day'
+            }
+          }]
         }
       }
     }.to_json
