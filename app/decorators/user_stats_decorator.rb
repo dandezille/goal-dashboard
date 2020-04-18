@@ -9,9 +9,24 @@ class UserStatsDecorator < Draper::Decorator
     end
   end
 
-  def pace
+  def target
     if model.goal
       "#{'%.1f' % target_for_today}"
+    else
+      '?'
+    end
+  end
+
+  def target_delta
+    if model.goal and model.latest_measurement
+      delta = target_for_today - model.latest_measurement.value
+
+      if delta.abs < 0.1
+        'on target'
+      else
+        postscript = delta > 0 ? 'ahead' : 'behind'
+        "#{'%.1f' % delta.abs} #{postscript}"
+      end
     else
       '?'
     end

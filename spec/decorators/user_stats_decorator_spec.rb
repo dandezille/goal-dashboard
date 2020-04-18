@@ -14,16 +14,49 @@ RSpec.describe UserStatsDecorator do
     end
   end
 
-  context '#pace' do
+  context '#target' do
     it 'returns expected weight given linear progress between goal points' do
       goal = create(:goal, start_date: 2.days.ago, start_value: 70, end_date: Date.tomorrow, end_value: 60)
       stats = decorate(goal.user)
-      expect(stats.pace).to eq('63.3')
+      expect(stats.target).to eq('63.3')
     end
 
     it 'handles missing goal' do
       stats = decorate(create(:user))
-      expect(stats.pace).to eq('?')
+      expect(stats.target).to eq('?')
+    end
+  end
+
+  context '#target_delta' do
+    it 'returns delta when on target' do
+      goal = create(:goal, start_date: 2.days.ago, start_value: 70, end_date: Date.tomorrow, end_value: 60)
+      create(:measurement, user: goal.user, date: Date.today, value: 63.3)
+      stats = decorate(goal.user)
+      expect(stats.target_delta).to eq('on target')
+    end
+
+    it 'returns delta to target when behind' do
+      goal = create(:goal, start_date: 2.days.ago, start_value: 70, end_date: Date.tomorrow, end_value: 60)
+      create(:measurement, user: goal.user, date: Date.today, value: 65)
+      stats = decorate(goal.user)
+      expect(stats.target_delta).to eq('1.7 behind')
+    end
+
+    it 'returns delta to target when ahead' do
+      goal = create(:goal, start_date: 2.days.ago, start_value: 70, end_date: Date.tomorrow, end_value: 60)
+      create(:measurement, user: goal.user, date: Date.today, value: 62)
+      stats = decorate(goal.user)
+      expect(stats.target_delta).to eq('1.3 ahead')
+    end
+
+    it 'handles missing goal' do
+      stats = decorate(create(:user, :with_measurements))
+      expect(stats.target_delta).to eq('?')
+    end
+
+    it 'handles missing measurements' do
+      stats = decorate(create(:user, :with_goal))
+      expect(stats.target_delta).to eq('?')
     end
   end
 

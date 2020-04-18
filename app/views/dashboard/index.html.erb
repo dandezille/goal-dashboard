@@ -1,22 +1,21 @@
 <div id="container" class="flex-vertical">
     <div id="status">
         <div id="goal"><%= @stats.goal %></div>
-        <div id="pace">
-            <div id="value">Pace: <%= @stats.pace %></div>
-            <div id="graph">
-                <div id="progress"></div>
-            </div>
-        </div>
         <div id="progress">
-            <div id="daily_goal" class="flex-vertical">
-                <span>Daily Goal</span>
-                <span><%= @stats.daily_goal %></span>
-                <span>per day</span>
-            </div>
             <div id="current" class="flex-vertical">
                 <span>Current</span>
                 <span><%= @stats.current %></span>
                 <span><%= @stats.to_go %> to go</span>
+            </div>
+            <div id="target" class="flex-vertical">
+                <span>Target</span>
+                <span><%= @stats.target %></span>
+                <span><%= @stats.target_delta %></span>
+            </div>
+            <div id="daily_goal" class="flex-vertical">
+                <span>Daily Goal</span>
+                <span><%= @stats.daily_goal %></span>
+                <span>per day</span>
             </div>
             <div id="projected" class="flex-vertical">
                 <span>Projected</span>
