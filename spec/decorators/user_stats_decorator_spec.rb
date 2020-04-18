@@ -4,8 +4,9 @@ RSpec.describe UserStatsDecorator do
   context '#goal' do
     it 'returns the user goal' do
       user = build(:user, :with_goal)
-      stats = decorate(user)
-      expect(stats.goal).to eq("#{user.goal.end_value} by #{user.goal.end_date}")
+      goal = decorate(user).goal
+      expect(goal).to include(user.goal.end_value.to_s)
+      expect(goal).to include(user.goal.end_date.to_s)
     end
 
     it 'handles missing goal' do
