@@ -95,6 +95,14 @@ class UserStatsDecorator < Draper::Decorator
       ]
     end
 
+    prediction_data = []
+    if model.goal and model.measurements.count > 1
+      prediction_data = [
+        { x: model.goal.start_date, y: predict_value_at(model.goal.start_date) },
+        { x: model.goal.end_date, y: predict_value_at(model.goal.end_date) },
+      ]
+    end
+
     {
       type: 'scatter',
       data: {
@@ -112,6 +120,14 @@ class UserStatsDecorator < Draper::Decorator
             showLine: true,
             fill: false,
             data: target_data
+          },
+          {
+            label: 'Prediction',
+            showLine: true,
+            fill: false,
+            backgroundColor: '#a3bffa',
+            borderColor: '#a3bffa',
+            data: prediction_data,
           } 
         ]
       },
