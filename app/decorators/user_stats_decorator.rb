@@ -64,8 +64,7 @@ class UserStatsDecorator < Draper::Decorator
 
   def projected_value
     if measurements.count > 1 and model.goal
-      prediction = predict_value_at(model.goal.end_date)
-      prediction = model.goal.end_value if prediction < model.goal.end_value
+      prediction = [predict_value_at(model.goal.end_date), model.goal.end_value].max
        "#{'%.1f' % prediction}"
     else
       '?'
@@ -74,9 +73,7 @@ class UserStatsDecorator < Draper::Decorator
 
   def projected_date
     if measurements.count > 1 and model.goal
-      prediction = predict_date_for(model.goal.end_value)
-      prediction = model.goal.end_date if prediction > model.goal.end_date
-      prediction 
+      [predict_date_for(model.goal.end_value), model.goal.end_date].min
     else
       '?'
     end
