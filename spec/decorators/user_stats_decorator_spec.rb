@@ -219,8 +219,8 @@ RSpec.describe UserStatsDecorator do
           datasets: [
             {
               data:[
-                { x: 0, y: "55.0" },
-                { x: -1, y: "60.0" }
+                { x: Date.today.strftime('%Y-%m-%d'), y: '55.0' },
+                { x: Date.yesterday.strftime('%Y-%m-%d'), y: '60.0' }
               ]
             }
           ]
