@@ -91,14 +91,6 @@ class UserStatsDecorator < Draper::Decorator
       ]
     end
 
-    target_data = []
-    if model.goal
-      target_data = [
-        { x: (model.goal.start_date - Date.today).to_i, y: model.goal.start_value},
-        { x: (model.goal.end_date - Date.today).to_i, y: model.goal.end_value}
-      ]
-    end
-
     {
       type: 'scatter',
       data: {
