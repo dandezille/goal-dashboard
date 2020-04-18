@@ -73,6 +73,11 @@ class UserStatsDecorator < Draper::Decorator
             data: measurements_data
           }
         ]
+      },
+      options: {
+        legend: {
+          display: false
+        }
       }
     }.to_json
   end
