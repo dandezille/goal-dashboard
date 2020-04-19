@@ -1,6 +1,6 @@
-<div class="bg-white m-4 rounded-lg shadow-md">
+<div class="bg-white mt-4 mb-4 lg:m-4 lg:rounded-lg shadow-md">
     <% if local_assigns.has_key? :title %>
-        <div class="bg-indigo-800 rounded-t-lg text-indigo-100 p-2 pl-4"><%= title %></div>
+        <div class="bg-indigo-800 lg:rounded-t-lg text-indigo-100 p-2 pl-4"><%= title %></div>
     <% end %>
     <%= yield %>
 </div>
