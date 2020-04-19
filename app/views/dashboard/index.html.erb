@@ -44,7 +44,7 @@
     <%= render @dash.measurements %>
 <% end %>
 
-<%= render layout: 'shared/card', locals: { title: 'Goal' } do %>
+<%= render layout: 'shared/card', locals: { title: 'Set Goal' } do %>
     <div class="flex justify-center">
         <%= simple_form_for @dash.new_goal, html: { class: 'flex flex-col items-center p-6'} do |f| %>
             <%= f.input :start_date, as: :date_picker, wrapper_html: { class: 'flex items-center pb-4 pl-4 pr-4' }, label_html: { class: 'w-40 text-gray-700 text-sm font-bold text-right' }, input_html: { class: 'w-40 shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' }%>
