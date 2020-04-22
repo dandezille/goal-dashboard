@@ -1,13 +1,16 @@
 class LinearPredictor
   def initialize(x_data, y_data)
-    x_data = x_data.map { |x| [x] }
+    x = Matrix.columns([Array.new(x_data.length, 1), x_data])
+    y = Matrix.column_vector(y_data)
+    @b = (x.transpose * x).inverse * x.transpose * y
+  end
 
-    @predictor = RubyLinearRegression.new
-    @predictor.load_training_data(x_data, y_data)
-    @predictor.train_normal_equation
+  def coefficients
+    @b.column(0).to_a
   end
 
   def predict_for(value)
-    @predictor.predict([value])
+    y = Matrix.row_vector([1, value]) * @b
+    y[0,0]
   end
 end
