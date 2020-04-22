@@ -5,10 +5,13 @@ RSpec.feature 'User adds a measurement' do
 
   scenario 'it is created' do
     visit root_path
-    within('#new_measurement') do
-      fill_form_and_submit(:measurement, attributes_for(:measurement))
-    end
+
+    expect do
+      within('#new_measurement') do
+        fill_form_and_submit(:measurement, attributes_for(:measurement))
+      end
+    end.to change(Measurement, :count).by(1)
+
     expect(page).to have_flash_notice('Measurement created')
-    expect(Measurement.count).to eq(1)
   end
 end

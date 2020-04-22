@@ -5,12 +5,14 @@ RSpec.feature 'User removes a measurement' do
 
   scenario 'it is deleted' do
     measurement = create(:measurement, user: current_user)
-
     visit root_path
-    within("#measurement_#{measurement.id}") do
-      click_on 'Delete'
-    end
+
+    expect do
+      within("#measurement_#{measurement.id}") do
+        click_on 'Delete'
+      end
+    end.to change(Measurement, :count).by(-1)
+
     expect(page).to have_flash_notice('Measurement removed')
-    expect(Measurement.count).to eq(0)
   end
 end

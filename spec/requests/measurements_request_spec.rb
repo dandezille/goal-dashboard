@@ -8,10 +8,12 @@ RSpec.describe 'Measurements' do
 
       it 'creates a measurement' do
         measurement_attributes = attributes_for(:measurement)
-        post measurements_path, params: { measurement: measurement_attributes }
+
+        expect do
+          post measurements_path, params: { measurement: measurement_attributes }
+        end.to change(Measurement, :count).by(1)
 
         expect(response).to redirect_to(root_path)
-        expect(Measurement.count).to eq(1)
         expect(flash[:notice]).to be_present
 
         measurement = Measurement.first
@@ -21,17 +23,21 @@ RSpec.describe 'Measurements' do
       end
 
       it 'shows errors for invalid input' do
-        post measurements_path, params: { measurement: attributes_for(:measurement, date: '') }
+        expect do
+          post measurements_path, params: { measurement: attributes_for(:measurement, date: '') }
+        end.not_to change(Measurement, :count)
+
         expect(response).to redirect_to(root_path)
-        expect(Measurement.count).to eq(0)
         expect(flash[:alert]).to be_present
       end
     end
 
     it 'redirects if not signed in' do
-      post measurements_path, params: { measurement: attributes_for(:measurement) }
+      expect do
+        post measurements_path, params: { measurement: attributes_for(:measurement) }
+      end.not_to change(Measurement, :count)
+
       expect(response).to redirect_to(sign_in_path)
-      expect(Measurement.count).to eq(0)
       expect(flash[:alert]).to be_present
     end
   end
@@ -42,29 +48,35 @@ RSpec.describe 'Measurements' do
 
       it 'deletes the given measurement' do
         measurement = create(:measurement, user: current_user);
-        delete measurement_path(measurement)
+
+        expect do
+          delete measurement_path(measurement)
+        end.to change(Measurement, :count).by(-1)
 
         expect(response).to redirect_to(root_path)
-        expect(Measurement.count).to eq(0)
         expect(flash[:notice]).to be_present
       end
 
       it 'fails for other users measurements' do
         measurement = create(:measurement);
-        delete measurement_path(measurement)
+
+        expect do
+          delete measurement_path(measurement)
+        end.not_to change(Measurement, :count)
 
         expect(response).to redirect_to(root_path)
-        expect(Measurement.count).to eq(1)
         expect(flash[:alert]).to be_present
       end
     end
 
     it 'redirects if not signed in' do
       measurement = create(:measurement);
-      delete measurement_path(measurement)
+
+      expect do
+        delete measurement_path(measurement)
+      end.not_to change(Measurement, :count)
 
       expect(response).to redirect_to(sign_in_path)
-      expect(Measurement.count).to eq(1)
       expect(flash[:alert]).to be_present
     end
   end

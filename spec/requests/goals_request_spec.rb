@@ -5,9 +5,11 @@ RSpec.describe 'Goals' do
   describe 'POST /goals' do
     context 'when user signed out' do
       it 'it redirects to sign in path' do
-        post goals_path, params: { goal: attributes_for(:goal) }
+        expect {
+          post goals_path, params: { goal: attributes_for(:goal) }
+        }.not_to change(Goal, :count)
+
         expect(response).to redirect_to(sign_in_path)
-        expect(Goal.count).to eq(0)
         expect(flash[:alert]).to be_present
       end
     end
@@ -17,10 +19,12 @@ RSpec.describe 'Goals' do
 
       it 'creates a goal' do
         goal_attributes = attributes_for(:goal)
-        post goals_path, params: { goal: goal_attributes }
+
+        expect do
+          post goals_path, params: { goal: goal_attributes }
+        end.to change(Goal, :count).by(1)
 
         expect(response).to redirect_to(root_path)
-        expect(Goal.count).to eq(1)
         expect(flash[:notice]).to be_present
 
         goal = Goal.first
@@ -48,13 +52,14 @@ RSpec.describe 'Goals' do
 
       it 'updates the goal' do
         goal = create(:goal, user: current_user, end_value: 70)
-        put goal_path(goal), params: { goal: { end_value: 60 }}
+
+        expect do
+          put goal_path(goal), params: { goal: { end_value: 60 }}
+          goal.reload
+        end.to change(goal, :end_value).from(70).to(60)
 
         expect(response).to redirect_to(root_path)
         expect(flash[:notice]).to be_present
-
-        goal.reload
-        expect(goal.end_value).to eq(60)
       end
     end
   end
