@@ -155,15 +155,16 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def predict_value_at(date)
-    @value_predictor ||= LinearPredictor.new(measurements.map(&method(:days_since_today)), 
-                                             measurements.map(&:value))
-    @value_predictor.predict_for(date - Date.today)
+    predictor.predict_for(date - Date.today)
   end
 
   def predict_date_for(value)
-    @date_predictor ||= LinearPredictor.new(measurements.map(&:value),
-                                            measurements.map(&method(:days_since_today)))
-    Date.today + @date_predictor.predict_for(value).round.days
+    Date.today + predictor.inverse_predict_for(value).round.days
+  end
+
+  def predictor
+    @predictor ||= LinearPredictor.new(measurements.map(&method(:days_since_today)), 
+                                       measurements.map(&:value))
   end
 
   def days_since_today(measurement)
