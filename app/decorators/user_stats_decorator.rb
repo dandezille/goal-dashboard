@@ -155,30 +155,19 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def predict_value_at(date)
-    days_since = measurements.map(&method(:days_since_today))
-    values = measurements.map(&:value)
-    predict(days_since, values, date - Date.today)
+    @value_predictor ||= LinearPredictor.new(measurements.map(&method(:days_since_today)), 
+                                             measurements.map(&:value))
+    @value_predictor.predict_for(date - Date.today)
   end
 
   def predict_date_for(value)
-    days_since = measurements.map(&method(:days_since_today))
-    values = measurements.map(&:value)
-    Date.today + predict(values, days_since, value).to_i.days
+    @date_predictor ||= LinearPredictor.new(measurements.map(&:value),
+                                            measurements.map(&method(:days_since_today)))
+    Date.today + @date_predictor.predict_for(value).to_i.days
   end
 
   def days_since_today(measurement)
     (measurement.date - Date.today).to_i
   end
-
-  def predict(x_data, y_data, prediction_value)
-    x_data = x_data.map { |x| [x] }
-
-    linear_regression = RubyLinearRegression.new
-    linear_regression.load_training_data(x_data, y_data)
-    linear_regression.train_normal_equation
-
-    value_at_goal_date = linear_regression.predict([prediction_value])
-  end
-
 end
 
