@@ -4,6 +4,6 @@ module ApplicationHelper
       date = Date.parse(date)
     end
 
-    date.strftime("%A #{date.day.ordinalize} %B")
+    "#{date.day.ordinalize} #{date.strftime('%B')}"
   end
 end
