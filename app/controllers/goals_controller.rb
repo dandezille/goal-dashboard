@@ -11,6 +11,13 @@ class GoalsController < ApplicationController
     redirect_to root_path
   end
 
+  def update
+    goal = Goal.find(params[:id])
+    goal.update!(goal_params)
+    flash[:notice] = 'Goal updated' 
+    redirect_to root_path
+  end
+
   private
 
   def create_goal

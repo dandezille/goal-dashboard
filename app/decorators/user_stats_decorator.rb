@@ -6,7 +6,7 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def new_goal
-    Goal.new
+    model.goal || Goal.new
   end
 
   def goal
