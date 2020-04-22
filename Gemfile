@@ -10,7 +10,6 @@ gem 'high_voltage'
 gem 'pg'
 gem 'puma'
 gem 'rails', '~> 6.0.0', github: 'rails/rails', branch: '6-0-stable'
-gem 'ruby_linear_regression'
 gem 'simple_form'
 gem 'turbolinks'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
