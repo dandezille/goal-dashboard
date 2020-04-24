@@ -29,6 +29,6 @@ class GoalsController < ApplicationController
   end
 
   def goal_params
-    params.require(:goal).permit(:start_date, :end_date, :start_value, :end_value)
+    params.require(:goal).permit(:end_date, :end_value)
   end
 end

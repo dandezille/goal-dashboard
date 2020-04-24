@@ -18,7 +18,7 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def target
-    if model.goal
+    if model.goal and model.latest_measurement
       "#{'%.1f' % target_for_today}"
     else
       '?'
@@ -86,9 +86,9 @@ class UserStatsDecorator < Draper::Decorator
     end
 
     target_data = []
-    if model.goal
+    if model.goal and model.first_measurement
       target_data = [
-        { x: model.goal.start_date, y: model.goal.start_value},
+        { x: model.first_measurement.date, y: model.first_measurement.value},
         { x: model.goal.end_date, y: model.goal.end_value}
       ]
     end
@@ -96,7 +96,7 @@ class UserStatsDecorator < Draper::Decorator
     prediction_data = []
     if model.goal and model.measurements.count > 1
       prediction_data = [
-        { x: model.goal.start_date, y: predict_value_at(model.goal.start_date) },
+        { x: model.first_measurement.date, y: predict_value_at(model.first_measurement.date) },
         { x: model.goal.end_date, y: predict_value_at(model.goal.end_date) },
       ]
     end
@@ -148,10 +148,10 @@ class UserStatsDecorator < Draper::Decorator
   private
 
   def target_for_today
-    days_between = (model.goal.end_date - model.goal.start_date).to_i
-    weight_difference = model.goal.end_value - model.goal.start_value
+    days_between = (model.goal.end_date - model.first_measurement.date).to_i
+    weight_difference = model.goal.end_value - model.first_measurement.value
     per_day = weight_difference / days_between
-    model.goal.start_value + per_day * (Date.today - model.goal.start_date)
+    model.first_measurement.value + per_day * (Date.today - model.first_measurement.date)
   end
 
   def predict_value_at(date)
