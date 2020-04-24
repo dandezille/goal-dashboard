@@ -21,4 +21,15 @@ RSpec.describe User do
       expect(user.latest_measurement).to eq(latest)
     end
   end
+
+  describe '.first_measurement' do
+    it 'returns the first measurement' do
+      user = create(:user)
+      first = create(:measurement, user: user, date: Date.today - 2.days)
+      create(:measurement, user: user, date: Date.today)
+      create(:measurement, user: user, date: Date.today - 1.day)
+
+      expect(user.first_measurement).to eq(first)
+    end
+  end
 end

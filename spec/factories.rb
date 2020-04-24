@@ -5,8 +5,12 @@ FactoryBot.define do
 
   sequence :weight, 70
   
-  sequence :date do |n|
+  sequence :past_date do |n|
     n.days.ago.strftime('%Y-%m-%d')
+  end
+
+  sequence :future_date do |n|
+    n.days.since.strftime('%Y-%m-%d')
   end
 
   factory :user do
@@ -30,15 +34,13 @@ FactoryBot.define do
 
   factory :measurement do
     user
-    date 
+    date { generate(:past_date) }
     value { generate(:weight) }
   end
 
   factory :goal do
     user
-    start_date { generate(:date) }
-    end_date { (Date.parse(start_date) + 1.month).strftime('%Y-%m-%d') }
-    start_value { generate(:weight) }
-    end_value { start_value - 10 }
+    end_date { generate(:future_date) }
+    end_value { generate(:weight) }
   end
 end
