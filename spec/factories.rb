@@ -40,7 +40,7 @@ FactoryBot.define do
 
   factory :goal do
     user
-    end_date { generate(:future_date) }
-    end_value { generate(:weight) }
+    date { generate(:future_date) }
+    value { generate(:weight) }
   end
 end

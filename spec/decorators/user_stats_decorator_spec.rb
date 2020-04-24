@@ -23,8 +23,8 @@ RSpec.describe UserStatsDecorator do
     it 'returns the user goal' do
       user = build(:user, :with_goal)
       goal = decorate(user).goal
-      expect(goal).to include('%.1f' % user.goal.end_value)
-      expect(goal).to include(format_date(user.goal.end_date))
+      expect(goal).to include('%.1f' % user.goal.value)
+      expect(goal).to include(format_date(user.goal.date))
     end
 
     it 'handles missing goal' do
@@ -37,7 +37,7 @@ RSpec.describe UserStatsDecorator do
     it 'returns expected weight given linear progress between goal points' do
       user = create(:user)
       create(:measurement, user: user, date: 2.days.ago, value: 70)
-      create(:goal, user: user, end_date: Date.tomorrow, end_value: 60)
+      create(:goal, user: user, date: Date.tomorrow, value: 60)
 
       stats = decorate(user)
       expect(stats.target).to eq('63.3')
@@ -59,7 +59,7 @@ RSpec.describe UserStatsDecorator do
       before do
         @user = create(:user)
         create(:measurement, user: @user, date: 2.days.ago, value: 70)
-        create(:goal, user: @user, end_date: Date.tomorrow, end_value: 60)
+        create(:goal, user: @user, date: Date.tomorrow, value: 60)
       end
 
       it 'returns delta when on target' do
@@ -96,7 +96,7 @@ RSpec.describe UserStatsDecorator do
     it 'returns weight loss required per day to hit target' do
       user = create(:user)
       create(:measurement, user: user, date: 2.days.ago, value: 80)
-      create(:goal, user: user, end_date: Date.tomorrow, end_value: 70)
+      create(:goal, user: user, date: Date.tomorrow, value: 70)
 
       stats = decorate(user)
       expect(stats.daily_goal).to eq('3.33')
@@ -133,7 +133,7 @@ RSpec.describe UserStatsDecorator do
     it 'returns latest measurement minus goal' do
       user = create(:user, :with_goal, :with_measurements)
       stats = decorate(user)
-      expect(stats.to_go).to eq(user.latest_measurement.value - user.goal.end_value)
+      expect(stats.to_go).to eq(user.latest_measurement.value - user.goal.value)
     end
 
     it 'handles missing goal' do
@@ -152,7 +152,7 @@ RSpec.describe UserStatsDecorator do
       user = create(:user)
       create(:measurement, user: user, date: 5.days.ago, value: 80)
       create(:measurement, user: user, date: 3.days.ago, value: 70)
-      create(:goal, user: user, end_value: 50, end_date: Date.today)
+      create(:goal, user: user, value: 50, date: Date.today)
 
       stats = decorate(user)
       expect(stats.projected_value).to include('55.0')
@@ -181,7 +181,7 @@ RSpec.describe UserStatsDecorator do
       user = create(:user)
       create(:measurement, user: user, date: 5.days.ago, value: 80)
       create(:measurement, user: user, date: 3.days.ago, value: 70)
-      create(:goal, user: user, end_value: 50, end_date: Date.today)
+      create(:goal, user: user, value: 50, date: Date.today)
 
       stats = decorate(user)
       expect(stats.projected_date).to include(format_date(Date.tomorrow))
