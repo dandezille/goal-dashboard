@@ -7,8 +7,8 @@ RSpec.feature 'User sets goal' do
     new_goal = fill_goal
 
     expect(page).to have_flash_notice('Goal set')
-    expect(current_user.goal.end_value).to eq(new_goal[:end_value])
-    expect(current_user.goal.end_date).to eq(Date.parse(new_goal[:end_date]))
+    expect(current_user.goal.value).to eq(new_goal[:value])
+    expect(current_user.goal.date).to eq(Date.parse(new_goal[:date]))
   end
 
   scenario 'when goal exists' do
@@ -16,8 +16,8 @@ RSpec.feature 'User sets goal' do
     new_goal = fill_goal
 
     expect(page).to have_flash_notice('Goal updated')
-    expect(current_user.goal.end_value).to eq(new_goal[:end_value])
-    expect(current_user.goal.end_date).to eq(Date.parse(new_goal[:end_date]))
+    expect(current_user.goal.value).to eq(new_goal[:value])
+    expect(current_user.goal.date).to eq(Date.parse(new_goal[:date]))
   end
 
   def fill_goal
@@ -32,6 +32,6 @@ RSpec.feature 'User sets goal' do
   end
 
   def have_goal(goal)
-    have_css '#goal', text: "#{'%.1f' % goal[:end_value]} by #{goal[:end_date]}"
+    have_css '#goal', text: "#{'%.1f' % goal[:value]} by #{goal[:date]}"
   end
 end
