@@ -13,6 +13,11 @@ jobs:
           POSTGRES_DB: weight_dashboard_test
           POSTGRES_PASSWORD: "BAET&Hs%3qdB2vEZ]>2fwwEiPz(tiH22hJRo@Xmakbr7RpURVox&QyUUWpj?K72A"
         ports: ["5432:5432"]
+    env:
+      RAILS_ENV: test
+      PGHOST: localhost
+      PGUSER: weight_dashboard
+      PGPASSWORD: "BAET&Hs%3qdB2vEZ]>2fwwEiPz(tiH22hJRo@Xmakbr7RpURVox&QyUUWpj?K72A"
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
@@ -38,14 +43,4 @@ jobs:
             ${{ runner.os }}-yarn-
       - run: yarn install --pure-lockfile
       - run: bundle exec rails db:setup
-        env:
-          RAILS_ENV: test
-          PGHOST: localhost
-          PGUSER: weight_dashboard
-          PGPASSWORD: "BAET&Hs%3qdB2vEZ]>2fwwEiPz(tiH22hJRo@Xmakbr7RpURVox&QyUUWpj?K72A"
       - run: bundle exec rspec
-        env:
-          RAILS_ENV: test
-          PGHOST: localhost
-          PGUSER: weight_dashboard
-          PGPASSWORD: "BAET&Hs%3qdB2vEZ]>2fwwEiPz(tiH22hJRo@Xmakbr7RpURVox&QyUUWpj?K72A"
