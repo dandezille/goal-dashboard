@@ -3,7 +3,7 @@ FactoryBot.define do
     "user#{n}@example.com"
   end
 
-  sequence :weight, 70
+  sequence :measurement, 70
   
   sequence :past_date do |n|
     n.days.ago.strftime('%Y-%m-%d')
@@ -35,12 +35,12 @@ FactoryBot.define do
   factory :measurement do
     user
     date { generate(:past_date) }
-    value { generate(:weight) }
+    value { generate(:measurement) }
   end
 
   factory :goal do
     user
     date { generate(:future_date) }
-    value { generate(:weight) }
+    value { generate(:measurement) }
   end
 end

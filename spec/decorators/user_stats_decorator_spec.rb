@@ -34,7 +34,7 @@ RSpec.describe UserStatsDecorator do
   end
 
   context '#target' do
-    it 'returns expected weight given linear progress between goal points' do
+    it 'returns expected value given linear progress between goal points' do
       user = create(:user)
       create(:measurement, user: user, date: 2.days.ago, value: 70)
       create(:goal, user: user, date: Date.tomorrow, value: 60)
@@ -93,7 +93,7 @@ RSpec.describe UserStatsDecorator do
   end
 
   context '#daily_goal' do
-    it 'returns weight loss required per day to hit target' do
+    it 'returns loss required per day to hit target' do
       user = create(:user)
       create(:measurement, user: user, date: 2.days.ago, value: 80)
       create(:goal, user: user, date: Date.tomorrow, value: 70)

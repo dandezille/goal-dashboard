@@ -106,7 +106,7 @@ class UserStatsDecorator < Draper::Decorator
       data: {
         datasets: [
           {
-            label: 'Weights',
+            label: 'Measurements',
             showLine: true,
             fill: false,
             backgroundColor: '#444190',
@@ -149,8 +149,8 @@ class UserStatsDecorator < Draper::Decorator
 
   def target_for_today
     days_between = (model.goal.date - model.first_measurement.date).to_i
-    weight_difference = model.goal.value - model.first_measurement.value
-    per_day = weight_difference / days_between
+    delta = model.goal.value - model.first_measurement.value
+    per_day = delta / days_between
     model.first_measurement.value + per_day * (Date.today - model.first_measurement.date)
   end
 
