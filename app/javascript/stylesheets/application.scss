@@ -2,7 +2,9 @@
 
 @import "tailwindcss/components";
 
-.sign-in {
+.sign-in,
+.sign-up,
+.password-reset {
   @apply flex justify-around my-10;
 
   form {
