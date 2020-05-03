@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe User do
   describe 'associations' do
-    it { is_expected.to have_many(:measurements) }
-    it { is_expected.to have_one(:goal) }
+    it { is_expected.to have_many(:measurements).dependent(:destroy) }
+    it { is_expected.to have_one(:goal).dependent(:destroy) }
   end
   
   describe 'validations' do
