@@ -4,7 +4,7 @@ RSpec.describe 'Measurements' do
 
   describe 'POST /measurements' do
     context 'when user signed in' do
-      before { sign_in }
+      before { sign_in_as create(:user, :with_goal) }
 
       it 'creates a measurement' do
         measurement_attributes = attributes_for(:measurement)

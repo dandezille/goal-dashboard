@@ -27,6 +27,7 @@ class MeasurementsController < ApplicationController
 
   def create_measurement
     @measurement = current_user.measurements.create(measurement_params)
+    @measurement.goal = current_user.goal
     @measurement.save
   end
 
