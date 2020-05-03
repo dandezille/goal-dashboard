@@ -19,6 +19,11 @@ RSpec.describe User do
 
       expect(goal.user.latest_measurement).to eq(latest)
     end
+
+    it 'handles missing goal' do
+      user = create(:user)
+      expect(user.latest_measurement).to be_nil
+    end
   end
 
   describe '.first_measurement' do
@@ -29,6 +34,11 @@ RSpec.describe User do
       create(:measurement, goal: goal, date: Date.today - 1.day)
 
       expect(goal.user.first_measurement).to eq(first)
+    end
+
+    it 'handles missing goal' do
+      user = create(:user)
+      expect(user.first_measurement).to be_nil
     end
   end
 end

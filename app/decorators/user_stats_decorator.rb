@@ -41,7 +41,7 @@ class UserStatsDecorator < Draper::Decorator
     days_between = (model.goal.date - latest_measurement.date).to_i
     per_day = to_go / days_between
     "#{'%.2f' % per_day}"
-    end
+  end
 
   def current
     return '?' unless latest_measurement
@@ -56,20 +56,20 @@ class UserStatsDecorator < Draper::Decorator
 
   def projected_value
     return '?' unless model.goal
-    return '?' unless measurements.count > 1
+    return '?' unless model.goal.measurements.count > 1
     prediction = predict_value_at(model.goal.date)
     "#{'%.1f' % prediction}kg at #{h.format_date(model.goal.date)}"
-    end
+  end
 
   def projected_date
     return '?' unless model.goal
-    return '?' unless measurements.count > 1
+    return '?' unless model.goal.measurements.count > 1
     predicted  = predict_date_for(model.goal.value)
     "#{model.goal.value}kg at #{h.format_date(predicted)}"
-    end
+  end
 
   def chart_definition
-    measurements_data = measurements.map do |m|
+    measurements_data = model.goal.measurements.map do |m|
       { x: m.date, y: m.value }
     end
 
@@ -82,7 +82,7 @@ class UserStatsDecorator < Draper::Decorator
     end
 
     prediction_data = []
-    if model.goal and model.measurements.count > 1
+    if model.goal and model.goal.measurements.count > 1
       prediction_data = [
         { x: model.first_measurement.date, y: predict_value_at(model.first_measurement.date) },
         { x: model.goal.date, y: predict_value_at(model.goal.date) },
@@ -151,8 +151,8 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def predictor
-    @predictor ||= LinearPredictor.new(measurements.map(&method(:days_since_today)), 
-                                       measurements.map(&:value))
+    @predictor ||= LinearPredictor.new(model.goal.measurements.map(&method(:days_since_today)), 
+                                       model.goal.measurements.map(&:value))
   end
 
   def days_since_today(measurement)

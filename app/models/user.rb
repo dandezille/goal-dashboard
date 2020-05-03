@@ -4,10 +4,12 @@ class User < ApplicationRecord
   has_one :goal, dependent: :destroy
 
   def latest_measurement
+    return nil unless goal
     goal.measurements.order(:date).first
   end
 
   def first_measurement
+    return nil unless goal
     goal.measurements.order(:date).last
   end
 end
