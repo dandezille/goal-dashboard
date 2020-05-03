@@ -14,9 +14,10 @@ RSpec.describe User do
   describe '.latest_measurement' do
     it 'returns the latest measurement' do
       user = create(:user)
-      create(:measurement, user: user, date: Date.today - 2.days)
-      latest = create(:measurement, user: user, date: Date.today)
-      create(:measurement, user: user, date: Date.today - 1.day)
+      goal = create(:goal, user: user)
+      create(:measurement, user: user, goal: goal, date: Date.today - 2.days)
+      latest = create(:measurement, user: user, goal: goal, date: Date.today)
+      create(:measurement, user: user, goal: goal, date: Date.today - 1.day)
 
       expect(user.latest_measurement).to eq(latest)
     end
@@ -25,9 +26,10 @@ RSpec.describe User do
   describe '.first_measurement' do
     it 'returns the first measurement' do
       user = create(:user)
-      first = create(:measurement, user: user, date: Date.today - 2.days)
-      create(:measurement, user: user, date: Date.today)
-      create(:measurement, user: user, date: Date.today - 1.day)
+      goal = create(:goal, user: user)
+      first = create(:measurement, user: user, goal: goal, date: Date.today - 2.days)
+      create(:measurement, user: user, goal: goal, date: Date.today)
+      create(:measurement, user: user, goal: goal, date: Date.today - 1.day)
 
       expect(user.first_measurement).to eq(first)
     end

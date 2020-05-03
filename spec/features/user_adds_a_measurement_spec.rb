@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'User adds a measurement' do
-  before { sign_in }
+  before { sign_in_as create(:user, :with_goal) }
 
   scenario 'it is created' do
     visit root_path

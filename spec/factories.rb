@@ -34,6 +34,7 @@ FactoryBot.define do
 
   factory :measurement do
     user
+    goal 
     date { generate(:past_date) }
     value { generate(:measurement) }
   end
