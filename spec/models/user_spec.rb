@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe User do
   describe 'associations' do
-    it { is_expected.to have_many(:measurements).dependent(:destroy) }
     it { is_expected.to have_one(:goal).dependent(:destroy) }
   end
   
@@ -13,25 +12,23 @@ RSpec.describe User do
 
   describe '.latest_measurement' do
     it 'returns the latest measurement' do
-      user = create(:user)
-      goal = create(:goal, user: user)
-      create(:measurement, user: user, goal: goal, date: Date.today - 2.days)
-      latest = create(:measurement, user: user, goal: goal, date: Date.today)
-      create(:measurement, user: user, goal: goal, date: Date.today - 1.day)
+      goal = create(:goal)
+      create(:measurement, goal: goal, date: Date.today - 2.days)
+      latest = create(:measurement, goal: goal, date: Date.today)
+      create(:measurement, goal: goal, date: Date.today - 1.day)
 
-      expect(user.latest_measurement).to eq(latest)
+      expect(goal.user.latest_measurement).to eq(latest)
     end
   end
 
   describe '.first_measurement' do
     it 'returns the first measurement' do
-      user = create(:user)
-      goal = create(:goal, user: user)
-      first = create(:measurement, user: user, goal: goal, date: Date.today - 2.days)
-      create(:measurement, user: user, goal: goal, date: Date.today)
-      create(:measurement, user: user, goal: goal, date: Date.today - 1.day)
+      goal = create(:goal)
+      first = create(:measurement, goal: goal, date: Date.today - 2.days)
+      create(:measurement, goal: goal, date: Date.today)
+      create(:measurement, goal: goal, date: Date.today - 1.day)
 
-      expect(user.first_measurement).to eq(first)
+      expect(goal.user.first_measurement).to eq(first)
     end
   end
 end
