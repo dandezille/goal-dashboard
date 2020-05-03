@@ -15,6 +15,7 @@ namespace :measurements do
 
         user.measurements.each do |measurement|
           measurement.goal = user.goal
+          measurement.save
         end
 
         print '.'
