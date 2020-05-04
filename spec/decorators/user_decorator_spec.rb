@@ -121,27 +121,6 @@ RSpec.describe UserDecorator do
     end
   end
 
-  context '#current' do
-    it 'returns latest measurement value' do
-      goal = create(:goal)
-      create(:measurement, goal: goal, date: Date.yesterday, value: 80)
-      create(:measurement, goal: goal, date: Date.today, value: 70)
-
-      stats = decorate(goal.user)
-      expect(stats.current).to eq(70)
-    end
-
-    it 'handles missing goal' do
-      stats = decorate(build(:user))
-      expect(stats.current).to eq('?')
-    end
-
-    it 'handles missing measurements' do
-      stats = decorate(build(:user, :with_goal))
-      expect(stats.current).to eq('?')
-    end
-  end
-
   context '#to_go' do
     it 'returns latest measurement minus goal' do
       goal = create(:goal, :with_measurements)

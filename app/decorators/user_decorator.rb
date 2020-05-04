@@ -1,5 +1,5 @@
 class UserDecorator < ApplicationDecorator
-  delegate :current, :chart_definition, to: :goal
+  delegate :chart_definition, to: :goal
 
   def new_measurement
     Measurement.new(date: Date.today)
