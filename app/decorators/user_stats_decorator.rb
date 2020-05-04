@@ -41,44 +41,37 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def daily_goal
-    if latest_measurement and model.goal
+    return '?' unless model.goal
+    return '?' unless latest_measurement
       days_between = (model.goal.date - latest_measurement.date).to_i
       per_day = to_go / days_between
       "#{'%.2f' % per_day}"
-    else
-      '?'
     end
-  end
 
   def current
-    latest_measurement&.value || '?'
+    return '?' unless latest_measurement
+    latest_measurement.value
   end
 
   def to_go
-    if latest_measurement and model.goal
+    return '?' unless model.goal
+    return '?' unless latest_measurement
       latest_measurement.value - model.goal.value
-    else
-      '?'
     end
-  end
 
   def projected_value
-    if measurements.count > 1 and model.goal
+    return '?' unless model.goal
+    return '?' unless measurements.count > 1
       prediction = predict_value_at(model.goal.date)
        "#{'%.1f' % prediction}kg at #{h.format_date(model.goal.date)}"
-    else
-      '?'
     end
-  end
 
   def projected_date
-    if measurements.count > 1 and model.goal
+    return '?' unless model.goal
+    return '?' unless measurements.count > 1
       predicted  = predict_date_for(model.goal.value)
       "#{model.goal.value}kg at #{h.format_date(predicted)}"
-    else
-      '?'
     end
-  end
 
   def chart_definition
     measurements_data = measurements.map do |m|
