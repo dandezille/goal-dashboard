@@ -13,7 +13,7 @@ class MeasurementsController < ApplicationController
   end
 
   def destroy
-    if @measurement.user == current_user
+    if @measurement.goal.user == current_user
       @measurement.destroy
       flash[:notice] = 'Measurement removed'
     else
@@ -30,8 +30,13 @@ class MeasurementsController < ApplicationController
   end
 
   def create_measurement
-    @measurement = current_user.measurements.create(measurement_params)
-    @measurement.goal = current_user.goal
+    if !current_user.goal
+      @measurement = Measurement.new
+      @measurement.errors[:base] << 'Goal is required'
+      return false
+    end
+
+    @measurement = current_user.goal.measurements.create(measurement_params)
     @measurement.save
   end
 

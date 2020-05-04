@@ -2,12 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Measurement do
   describe 'associations' do
-    it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:goal) }
   end
   
   describe 'validations' do
-    it { is_expected.to validate_presence_of(:user_id) }
     it { is_expected.to validate_presence_of(:goal_id) }
     it { is_expected.to validate_presence_of(:date) }
     it { is_expected.to validate_presence_of(:value) }

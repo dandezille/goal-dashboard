@@ -9,6 +9,11 @@ class UserStatsDecorator < Draper::Decorator
     model.goal || Goal.new
   end
 
+  def measurements
+    return [] unless model.goal
+    model.goal.measurements
+  end
+
   def goal
     return 'No goal set' unless model.goal
     "#{model.goal.value}kg by #{h.format_date(model.goal.date)}"
@@ -16,15 +21,15 @@ class UserStatsDecorator < Draper::Decorator
 
   def target
     return '?' unless model.goal
-    return '?' unless model.latest_measurement
+    return '?' unless measurements.any?
     "#{'%.1f' % target_for_today}"
   end
 
   def target_delta
     return '?' unless model.goal
-    return '?' unless model.latest_measurement
+    return '?' unless measurements.any?
 
-    delta = target_for_today - model.latest_measurement.value
+    delta = target_for_today - model.goal.latest_measurement.value
 
     if delta.abs < 0.1
       'on target'
@@ -36,37 +41,37 @@ class UserStatsDecorator < Draper::Decorator
 
   def daily_goal
     return '?' unless model.goal
-    return '?' unless latest_measurement
+    return '?' unless measurements.any?
 
-    days_between = (model.goal.date - latest_measurement.date).to_i
+    days_between = (model.goal.date - model.goal.latest_measurement.date).to_i
     per_day = to_go / days_between
     "#{'%.2f' % per_day}"
-    end
+  end
 
   def current
-    return '?' unless latest_measurement
-    latest_measurement.value
+    return '?' unless measurements.any?
+    model.goal.latest_measurement.value
   end
 
   def to_go
     return '?' unless model.goal
-    return '?' unless latest_measurement
-    latest_measurement.value - model.goal.value
+    return '?' unless measurements.any?
+    model.goal.latest_measurement.value - model.goal.value
   end
 
   def projected_value
     return '?' unless model.goal
-    return '?' unless measurements.count > 1
+    return '?' unless model.goal.measurements.count > 1
     prediction = predict_value_at(model.goal.date)
     "#{'%.1f' % prediction}kg at #{h.format_date(model.goal.date)}"
-    end
+  end
 
   def projected_date
     return '?' unless model.goal
-    return '?' unless measurements.count > 1
+    return '?' unless model.goal.measurements.count > 1
     predicted  = predict_date_for(model.goal.value)
     "#{model.goal.value}kg at #{h.format_date(predicted)}"
-    end
+  end
 
   def chart_definition
     measurements_data = measurements.map do |m|
@@ -74,17 +79,17 @@ class UserStatsDecorator < Draper::Decorator
     end
 
     target_data = []
-    if model.goal and model.first_measurement
+    if model.goal and model.goal.first_measurement
       target_data = [
-        { x: model.first_measurement.date, y: model.first_measurement.value},
+        { x: model.goal.first_measurement.date, y: model.goal.first_measurement.value},
         { x: model.goal.date, y: model.goal.value}
       ]
     end
 
     prediction_data = []
-    if model.goal and model.measurements.count > 1
+    if model.goal and model.goal.measurements.count > 1
       prediction_data = [
-        { x: model.first_measurement.date, y: predict_value_at(model.first_measurement.date) },
+        { x: model.goal.first_measurement.date, y: predict_value_at(model.goal.first_measurement.date) },
         { x: model.goal.date, y: predict_value_at(model.goal.date) },
       ]
     end
@@ -136,10 +141,10 @@ class UserStatsDecorator < Draper::Decorator
   private
 
   def target_for_today
-    days_between = (model.goal.date - model.first_measurement.date).to_i
-    delta = model.goal.value - model.first_measurement.value
+    days_between = (model.goal.date - model.goal.first_measurement.date).to_i
+    delta = model.goal.value - model.goal.first_measurement.value
     per_day = delta / days_between
-    model.first_measurement.value + per_day * (Date.today - model.first_measurement.date)
+    model.goal.first_measurement.value + per_day * (Date.today - model.goal.first_measurement.date)
   end
 
   def predict_value_at(date)
@@ -151,8 +156,8 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def predictor
-    @predictor ||= LinearPredictor.new(measurements.map(&method(:days_since_today)), 
-                                       measurements.map(&:value))
+    @predictor ||= LinearPredictor.new(model.goal.measurements.map(&method(:days_since_today)), 
+                                       model.goal.measurements.map(&:value))
   end
 
   def days_since_today(measurement)

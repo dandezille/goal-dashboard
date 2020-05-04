@@ -12,19 +12,25 @@ RSpec.describe 'Dashboards' do
       end
 
       it 'shows users measurements' do
-        measurement = create(:measurement, user: current_user)
+        goal = create(:goal, :with_measurements, user: current_user)
 
         get root_path
         expect(response).to be_successful
-        expect(response.body).to include(measurement.value.to_s)
+
+        goal.measurements.each do |measurement|
+          expect(response.body).to include(measurement.value.to_s)
+        end
       end
 
       it 'does not show others measurements' do
-        measurement = create(:measurement)
+        goal = create(:goal, :with_measurements)
 
         get root_path
         expect(response).to be_successful
-        expect(response.body).not_to include(measurement.value.to_s)
+
+        goal.measurements.each do |measurement|
+          expect(response.body).not_to include(measurement.value.to_s)
+        end
       end
     end
     

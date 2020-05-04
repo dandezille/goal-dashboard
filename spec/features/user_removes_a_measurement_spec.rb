@@ -4,11 +4,11 @@ RSpec.feature 'User removes a measurement' do
   before { sign_in }
 
   scenario 'it is deleted' do
-    measurement = create(:measurement, user: current_user)
+    goal = create(:goal, :with_measurements, user: current_user)
     visit root_path
 
     expect do
-      within("#measurement_#{measurement.id}") do
+      within("#measurement_#{goal.measurements.first.id}") do
         click_on 'Delete'
       end
     end.to change(Measurement, :count).by(-1)
