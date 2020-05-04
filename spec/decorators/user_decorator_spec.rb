@@ -14,7 +14,8 @@ RSpec.describe UserDecorator do
     context 'when user has goal' do
       let(:user) { create(:user, :with_goal) }
 
-      it 'returns a decorated goal' do
+      it 'returns the decorated goal' do
+        expect(user.decorate.goal).to eq(user.goal)
         expect(user.decorate.goal).to be_decorated
       end
     end
@@ -24,6 +25,7 @@ RSpec.describe UserDecorator do
 
       it 'returns a new goal object' do
         expect(user.decorate.goal).to be_new_record
+        expect(user.decorate.goal).to be_decorated
       end
     end
   end
