@@ -12,7 +12,7 @@ class UserDecorator < Draper::Decorator
     model.goal.measurements
   end
 
-  def goal
+  def goal_description
     return 'No goal set' unless model.goal
     "#{model.goal.value}kg by #{h.format_date(model.goal.date)}"
   end

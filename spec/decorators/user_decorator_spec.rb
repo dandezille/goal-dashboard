@@ -39,17 +39,17 @@ RSpec.describe UserDecorator do
     end
   end
 
-  context '#goal' do
+  context '#goal_description' do
     it 'returns the user goal' do
       user = build(:user, :with_goal)
-      goal = decorate(user).goal
+      goal = decorate(user).goal_description
       expect(goal).to include('%.1f' % user.goal.value)
       expect(goal).to include(format_date(user.goal.date))
     end
 
     it 'handles missing goal' do
       stats = decorate(build(:user))
-      expect(stats.goal).to eq('No goal set')
+      expect(stats.goal_description).to eq('No goal set')
     end
   end
 
