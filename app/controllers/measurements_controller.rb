@@ -30,6 +30,12 @@ class MeasurementsController < ApplicationController
   end
 
   def create_measurement
+    if !current_user.goal
+      @measurement = Measurement.new
+      @measurement.errors[:base] << 'Goal is required'
+      return false
+    end
+
     @measurement = current_user.goal.measurements.create(measurement_params)
     @measurement.save
   end
