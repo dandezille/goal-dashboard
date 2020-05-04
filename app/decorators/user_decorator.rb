@@ -1,4 +1,4 @@
-class UserDecorator < Draper::Decorator
+class UserDecorator < ApplicationDecorator
   delegate :current, :chart_definition, to: :goal
 
   def new_measurement
