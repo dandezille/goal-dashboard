@@ -9,6 +9,11 @@ class UserStatsDecorator < Draper::Decorator
     model.goal || Goal.new
   end
 
+  def measurements
+    return [] unless model.goal
+    model.goal.measurements
+  end
+
   def goal
     return 'No goal set' unless model.goal
     "#{model.goal.value}kg by #{h.format_date(model.goal.date)}"

@@ -10,6 +10,26 @@ RSpec.describe UserStatsDecorator do
     end
   end
 
+  context '#measurements' do
+    it 'returns goal measurements' do
+      goal = create(:goal, :with_measurements)
+      measurements = decorate(goal.user).measurements
+      expect(measurements).to contain_exactly(*goal.measurements.to_a)
+    end
+
+    it 'handles missing goal' do
+      user = create(:user)
+      measurements = decorate(user).measurements
+      expect(measurements).to be_empty
+    end
+
+    it 'handles missing measurements' do
+      goal = create(:goal)
+      measurements = decorate(goal.user).measurements
+      expect(measurements).to be_empty
+    end
+  end
+
   context '#new_goal' do
     it 'returns a new goal' do
       user = build(:user)
