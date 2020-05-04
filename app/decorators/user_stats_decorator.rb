@@ -10,23 +10,20 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def goal
-    if model.goal
+    return 'No goal set' unless model.goal
       "#{model.goal.value}kg by #{h.format_date(model.goal.date)}"
-    else
-      'No goal set'
     end
-  end
 
   def target
-    if model.goal and model.latest_measurement
+    return '?' unless model.goal
+    return '?' unless model.latest_measurement
       "#{'%.1f' % target_for_today}"
-    else
-      '?'
-    end
   end
 
   def target_delta
-    if model.goal and model.latest_measurement
+    return '?' unless model.goal
+    return '?' unless model.latest_measurement
+
       delta = target_for_today - model.latest_measurement.value
 
       if delta.abs < 0.1
@@ -35,9 +32,6 @@ class UserStatsDecorator < Draper::Decorator
         postscript = delta > 0 ? 'ahead' : 'behind'
         "#{'%.1f' % delta.abs} #{postscript}"
       end
-    else
-      '?'
-    end
   end
 
   def daily_goal
