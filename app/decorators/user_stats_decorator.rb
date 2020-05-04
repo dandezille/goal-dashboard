@@ -21,13 +21,13 @@ class UserStatsDecorator < Draper::Decorator
 
   def target
     return '?' unless model.goal
-    return '?' unless model.latest_measurement
+    return '?' unless measurements.any?
     "#{'%.1f' % target_for_today}"
   end
 
   def target_delta
     return '?' unless model.goal
-    return '?' unless model.latest_measurement
+    return '?' unless measurements.any?
 
     delta = target_for_today - model.latest_measurement.value
 
@@ -41,7 +41,7 @@ class UserStatsDecorator < Draper::Decorator
 
   def daily_goal
     return '?' unless model.goal
-    return '?' unless latest_measurement
+    return '?' unless measurements.any?
 
     days_between = (model.goal.date - latest_measurement.date).to_i
     per_day = to_go / days_between
@@ -49,13 +49,13 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def current
-    return '?' unless latest_measurement
+    return '?' unless measurements.any?
     latest_measurement.value
   end
 
   def to_go
     return '?' unless model.goal
-    return '?' unless latest_measurement
+    return '?' unless measurements.any?
     latest_measurement.value - model.goal.value
   end
 
