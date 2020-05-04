@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UserStatsDecorator do
+RSpec.describe UserDecorator do
   context '#new_measurement' do
     it 'returns a new measurement' do
       user = build(:user)
@@ -10,46 +10,37 @@ RSpec.describe UserStatsDecorator do
     end
   end
 
-  context '#measurements' do
-    it 'returns goal measurements' do
-      goal = create(:goal, :with_measurements)
-      measurements = decorate(goal.user).measurements
-      expect(measurements).to contain_exactly(*goal.measurements.to_a)
+  describe '#goal' do
+    context 'when user has goal' do
+      let(:user) { create(:user, :with_goal) }
+
+      it 'returns the decorated goal' do
+        expect(user.decorate.goal).to eq(user.goal)
+        expect(user.decorate.goal).to be_decorated
+      end
     end
 
-    it 'handles missing goal' do
-      user = create(:user)
-      measurements = decorate(user).measurements
-      expect(measurements).to be_empty
-    end
+    context 'when user has no goal' do
+      let(:user) { create(:user) }
 
-    it 'handles missing measurements' do
-      goal = create(:goal)
-      measurements = decorate(goal.user).measurements
-      expect(measurements).to be_empty
-    end
-  end
-
-  context '#new_goal' do
-    it 'returns a new goal' do
-      user = build(:user)
-      goal = decorate(user).new_goal
-      expect(goal).to be_instance_of(Goal)
-      expect(goal).to be_new_record
+      it 'returns a new goal object' do
+        expect(user.decorate.goal).to be_new_record
+        expect(user.decorate.goal).to be_decorated
+      end
     end
   end
 
-  context '#goal' do
+  context '#goal_description' do
     it 'returns the user goal' do
       user = build(:user, :with_goal)
-      goal = decorate(user).goal
+      goal = decorate(user).goal_description
       expect(goal).to include('%.1f' % user.goal.value)
       expect(goal).to include(format_date(user.goal.date))
     end
 
     it 'handles missing goal' do
       stats = decorate(build(:user))
-      expect(stats.goal).to eq('No goal set')
+      expect(stats.goal_description).to eq('No goal set')
     end
   end
 
@@ -130,27 +121,6 @@ RSpec.describe UserStatsDecorator do
     end
   end
 
-  context '#current' do
-    it 'returns latest measurement value' do
-      goal = create(:goal)
-      create(:measurement, goal: goal, date: Date.yesterday, value: 80)
-      create(:measurement, goal: goal, date: Date.today, value: 70)
-
-      stats = decorate(goal.user)
-      expect(stats.current).to eq(70)
-    end
-
-    it 'handles missing goal' do
-      stats = decorate(build(:user))
-      expect(stats.current).to eq('?')
-    end
-
-    it 'handles missing measurements' do
-      stats = decorate(build(:user, :with_goal))
-      expect(stats.current).to eq('?')
-    end
-  end
-
   context '#to_go' do
     it 'returns latest measurement minus goal' do
       goal = create(:goal, :with_measurements)
@@ -225,30 +195,7 @@ RSpec.describe UserStatsDecorator do
     end
   end
 
-  context '#chart_definition' do
-    it 'returns json chart data' do
-      goal = create(:goal)
-      create(:measurement, goal: goal, date: Date.yesterday, value: 60)
-      create(:measurement, goal: goal, date: Date.today, value: 55)
-
-      definition = decorate(goal.user).chart_definition
-      expect(definition).to include_json(
-        type: 'scatter',
-        data: {
-          datasets: [
-            {
-              data:[
-                { x: Date.today.strftime('%Y-%m-%d'), y: '55.0' },
-                { x: Date.yesterday.strftime('%Y-%m-%d'), y: '60.0' }
-              ]
-            }
-          ]
-        }
-      )
-    end
-  end
-
   def decorate(user)
-    stats = UserStatsDecorator.decorate(user)
+    stats = described_class.decorate(user)
   end
 end
