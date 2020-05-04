@@ -10,75 +10,63 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def goal
-    if model.goal
-      "#{model.goal.value}kg by #{h.format_date(model.goal.date)}"
-    else
-      'No goal set'
-    end
+    return 'No goal set' unless model.goal
+    "#{model.goal.value}kg by #{h.format_date(model.goal.date)}"
   end
 
   def target
-    if model.goal and model.latest_measurement
-      "#{'%.1f' % target_for_today}"
-    else
-      '?'
-    end
+    return '?' unless model.goal
+    return '?' unless model.latest_measurement
+    "#{'%.1f' % target_for_today}"
   end
 
   def target_delta
-    if model.goal and model.latest_measurement
-      delta = target_for_today - model.latest_measurement.value
+    return '?' unless model.goal
+    return '?' unless model.latest_measurement
 
-      if delta.abs < 0.1
-        'on target'
-      else
-        postscript = delta > 0 ? 'ahead' : 'behind'
-        "#{'%.1f' % delta.abs} #{postscript}"
-      end
+    delta = target_for_today - model.latest_measurement.value
+
+    if delta.abs < 0.1
+      'on target'
     else
-      '?'
+      postscript = delta > 0 ? 'ahead' : 'behind'
+      "#{'%.1f' % delta.abs} #{postscript}"
     end
   end
 
   def daily_goal
-    if latest_measurement and model.goal
-      days_between = (model.goal.date - latest_measurement.date).to_i
-      per_day = to_go / days_between
-      "#{'%.2f' % per_day}"
-    else
-      '?'
+    return '?' unless model.goal
+    return '?' unless latest_measurement
+
+    days_between = (model.goal.date - latest_measurement.date).to_i
+    per_day = to_go / days_between
+    "#{'%.2f' % per_day}"
     end
-  end
 
   def current
-    latest_measurement&.value || '?'
+    return '?' unless latest_measurement
+    latest_measurement.value
   end
 
   def to_go
-    if latest_measurement and model.goal
-      latest_measurement.value - model.goal.value
-    else
-      '?'
-    end
+    return '?' unless model.goal
+    return '?' unless latest_measurement
+    latest_measurement.value - model.goal.value
   end
 
   def projected_value
-    if measurements.count > 1 and model.goal
-      prediction = predict_value_at(model.goal.date)
-       "#{'%.1f' % prediction}kg at #{h.format_date(model.goal.date)}"
-    else
-      '?'
+    return '?' unless model.goal
+    return '?' unless measurements.count > 1
+    prediction = predict_value_at(model.goal.date)
+    "#{'%.1f' % prediction}kg at #{h.format_date(model.goal.date)}"
     end
-  end
 
   def projected_date
-    if measurements.count > 1 and model.goal
-      predicted  = predict_date_for(model.goal.value)
-      "#{model.goal.value}kg at #{h.format_date(predicted)}"
-    else
-      '?'
+    return '?' unless model.goal
+    return '?' unless measurements.count > 1
+    predicted  = predict_date_for(model.goal.value)
+    "#{model.goal.value}kg at #{h.format_date(predicted)}"
     end
-  end
 
   def chart_definition
     measurements_data = measurements.map do |m|
