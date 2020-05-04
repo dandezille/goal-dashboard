@@ -155,7 +155,7 @@ RSpec.describe UserStatsDecorator do
     it 'returns latest measurement minus goal' do
       goal = create(:goal, :with_measurements)
       stats = decorate(goal.user)
-      expect(stats.to_go).to eq(goal.user.latest_measurement.value - goal.user.goal.value)
+      expect(stats.to_go).to eq(goal.latest_measurement.value - goal.value)
     end
 
     it 'handles missing goal' do

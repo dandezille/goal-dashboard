@@ -9,36 +9,4 @@ RSpec.describe User do
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to validate_presence_of(:password) }
   end
-
-  describe '.latest_measurement' do
-    it 'returns the latest measurement' do
-      goal = create(:goal)
-      create(:measurement, goal: goal, date: Date.today - 2.days)
-      latest = create(:measurement, goal: goal, date: Date.today)
-      create(:measurement, goal: goal, date: Date.today - 1.day)
-
-      expect(goal.user.latest_measurement).to eq(latest)
-    end
-
-    it 'handles missing goal' do
-      user = create(:user)
-      expect(user.latest_measurement).to be_nil
-    end
-  end
-
-  describe '.first_measurement' do
-    it 'returns the first measurement' do
-      goal = create(:goal)
-      first = create(:measurement, goal: goal, date: Date.today - 2.days)
-      create(:measurement, goal: goal, date: Date.today)
-      create(:measurement, goal: goal, date: Date.today - 1.day)
-
-      expect(goal.user.first_measurement).to eq(first)
-    end
-
-    it 'handles missing goal' do
-      user = create(:user)
-      expect(user.first_measurement).to be_nil
-    end
-  end
 end

@@ -29,7 +29,7 @@ class UserStatsDecorator < Draper::Decorator
     return '?' unless model.goal
     return '?' unless measurements.any?
 
-    delta = target_for_today - model.latest_measurement.value
+    delta = target_for_today - model.goal.latest_measurement.value
 
     if delta.abs < 0.1
       'on target'
@@ -43,20 +43,20 @@ class UserStatsDecorator < Draper::Decorator
     return '?' unless model.goal
     return '?' unless measurements.any?
 
-    days_between = (model.goal.date - latest_measurement.date).to_i
+    days_between = (model.goal.date - model.goal.latest_measurement.date).to_i
     per_day = to_go / days_between
     "#{'%.2f' % per_day}"
   end
 
   def current
     return '?' unless measurements.any?
-    latest_measurement.value
+    model.goal.latest_measurement.value
   end
 
   def to_go
     return '?' unless model.goal
     return '?' unless measurements.any?
-    latest_measurement.value - model.goal.value
+    model.goal.latest_measurement.value - model.goal.value
   end
 
   def projected_value
@@ -79,9 +79,9 @@ class UserStatsDecorator < Draper::Decorator
     end
 
     target_data = []
-    if model.goal and model.first_measurement
+    if model.goal and model.goal.first_measurement
       target_data = [
-        { x: model.first_measurement.date, y: model.first_measurement.value},
+        { x: model.goal.first_measurement.date, y: model.goal.first_measurement.value},
         { x: model.goal.date, y: model.goal.value}
       ]
     end
@@ -89,7 +89,7 @@ class UserStatsDecorator < Draper::Decorator
     prediction_data = []
     if model.goal and model.goal.measurements.count > 1
       prediction_data = [
-        { x: model.first_measurement.date, y: predict_value_at(model.first_measurement.date) },
+        { x: model.goal.first_measurement.date, y: predict_value_at(model.goal.first_measurement.date) },
         { x: model.goal.date, y: predict_value_at(model.goal.date) },
       ]
     end
@@ -141,10 +141,10 @@ class UserStatsDecorator < Draper::Decorator
   private
 
   def target_for_today
-    days_between = (model.goal.date - model.first_measurement.date).to_i
-    delta = model.goal.value - model.first_measurement.value
+    days_between = (model.goal.date - model.goal.first_measurement.date).to_i
+    delta = model.goal.value - model.goal.first_measurement.value
     per_day = delta / days_between
-    model.first_measurement.value + per_day * (Date.today - model.first_measurement.date)
+    model.goal.first_measurement.value + per_day * (Date.today - model.goal.first_measurement.date)
   end
 
   def predict_value_at(date)
