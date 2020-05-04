@@ -1,5 +1,6 @@
 class GoalsController < ApplicationController
   before_action :require_login
+  before_action :find_goal, only: :update
 
   def create
     if create_goal
@@ -12,13 +13,16 @@ class GoalsController < ApplicationController
   end
 
   def update
-    goal = Goal.find(params[:id])
-    goal.update!(goal_params)
+    @goal.update!(goal_params)
     flash[:notice] = 'Goal updated' 
     redirect_to root_path
   end
 
   private
+
+  def find_goal
+    @goal = Goal.find(params[:id])
+  end
 
   def create_goal
     if current_user.goal

@@ -1,5 +1,6 @@
 class MeasurementsController < ApplicationController
   before_action :require_login
+  before_action :find_measurement, only: :destroy
 
   def create
     if create_measurement
@@ -12,9 +13,8 @@ class MeasurementsController < ApplicationController
   end
 
   def destroy
-    measurement = Measurement.find(params[:id])
-    if measurement.user == current_user
-      measurement.destroy
+    if @measurement.user == current_user
+      @measurement.destroy
       flash[:notice] = 'Measurement removed'
     else
       flash[:alert] = 'Failed to remove measurement'
@@ -24,6 +24,10 @@ class MeasurementsController < ApplicationController
   end
 
   private
+
+  def find_measurement
+    @measurement = Measurement.find(params[:id])
+  end
 
   def create_measurement
     @measurement = current_user.measurements.create(measurement_params)
