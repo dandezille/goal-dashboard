@@ -17,7 +17,7 @@ RSpec.describe 'Measurements' do
         expect(flash[:notice]).to be_present
 
         measurement = Measurement.first
-        expect(measurement.user).to eq(@current_user)
+        expect(measurement.goal).to eq(@current_user.goal)
         expect(measurement.date).to eq(measurement_attributes[:date].to_date)
         expect(measurement.value).to eq(measurement_attributes[:value])
       end
@@ -44,10 +44,10 @@ RSpec.describe 'Measurements' do
 
   describe 'DELETE /measurements/:id' do
     context 'when user signed in' do
-      before { sign_in }
+      before { sign_in_as create(:user, :with_goal) }
 
       it 'deletes the given measurement' do
-        measurement = create(:measurement, user: current_user);
+        measurement = create(:measurement, goal: current_user.goal);
 
         expect do
           delete measurement_path(measurement)
