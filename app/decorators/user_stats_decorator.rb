@@ -74,7 +74,7 @@ class UserStatsDecorator < Draper::Decorator
   end
 
   def chart_definition
-    measurements_data = model.goal.measurements.map do |m|
+    measurements_data = measurements.map do |m|
       { x: m.date, y: m.value }
     end
 
