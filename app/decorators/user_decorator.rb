@@ -1,6 +1,4 @@
 class UserDecorator < Draper::Decorator
-  delegate :measurements, to: :goal
-
   def new_measurement
     Measurement.new(date: Date.today)
   end
@@ -16,13 +14,13 @@ class UserDecorator < Draper::Decorator
 
   def target
     return '?' unless model.goal
-    return '?' unless measurements.any?
+    return '?' unless goal.measurements.any?
     "#{'%.1f' % target_for_today}"
   end
 
   def target_delta
     return '?' unless model.goal
-    return '?' unless measurements.any?
+    return '?' unless goal.measurements.any?
 
     delta = target_for_today - model.goal.latest_measurement.value
 
@@ -36,7 +34,7 @@ class UserDecorator < Draper::Decorator
 
   def daily_goal
     return '?' unless model.goal
-    return '?' unless measurements.any?
+    return '?' unless goal.measurements.any?
 
     days_between = (model.goal.date - model.goal.latest_measurement.date).to_i
     per_day = to_go / days_between
@@ -44,13 +42,13 @@ class UserDecorator < Draper::Decorator
   end
 
   def current
-    return '?' unless measurements.any?
+    return '?' unless goal.measurements.any?
     model.goal.latest_measurement.value
   end
 
   def to_go
     return '?' unless model.goal
-    return '?' unless measurements.any?
+    return '?' unless goal.measurements.any?
     model.goal.latest_measurement.value - model.goal.value
   end
 
@@ -69,7 +67,7 @@ class UserDecorator < Draper::Decorator
   end
 
   def chart_definition
-    measurements_data = measurements.map do |m|
+    measurements_data = goal.measurements.map do |m|
       { x: m.date, y: m.value }
     end
 
