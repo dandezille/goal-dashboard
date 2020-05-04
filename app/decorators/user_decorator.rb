@@ -1,34 +1,9 @@
 module UserWithGoalDecorator
+  delegate :description, to: :goal, prefix: true
+  delegate :target, :target_delta, :daily_goal, :to_go, :projected_value, :projected_date, to: :goal
+
   def goal
     model.goal.decorate
-  end
-
-  def goal_description
-    goal.description
-  end
-
-  def target
-    goal.target
-  end
-
-  def target_delta
-    goal.target_delta
-    end
-
-  def daily_goal
-    goal.daily_goal
-  end
-
-  def to_go
-    goal.to_go
-  end
-
-  def projected_value
-    goal.projected_value
-  end
-
-  def projected_date
-    goal.projected_date
   end
 end
 
