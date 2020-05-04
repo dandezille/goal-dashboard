@@ -195,29 +195,6 @@ RSpec.describe UserDecorator do
     end
   end
 
-  context '#chart_definition' do
-    it 'returns json chart data' do
-      goal = create(:goal)
-      create(:measurement, goal: goal, date: Date.yesterday, value: 60)
-      create(:measurement, goal: goal, date: Date.today, value: 55)
-
-      definition = decorate(goal.user).chart_definition
-      expect(definition).to include_json(
-        type: 'scatter',
-        data: {
-          datasets: [
-            {
-              data:[
-                { x: Date.today.strftime('%Y-%m-%d'), y: '55.0' },
-                { x: Date.yesterday.strftime('%Y-%m-%d'), y: '60.0' }
-              ]
-            }
-          ]
-        }
-      )
-    end
-  end
-
   def decorate(user)
     stats = described_class.decorate(user)
   end

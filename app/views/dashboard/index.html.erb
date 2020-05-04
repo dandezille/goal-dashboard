@@ -56,6 +56,6 @@
 
 <script>
 var ctx = document.getElementById('measurements_graph').getContext('2d');
-var chart_definition = <%= raw(@dash.chart_definition) %>;
+var chart_definition = <%= raw(@dash.goal.chart_definition) %>;
 var myChart = new Chart(ctx, chart_definition);
 </script>
