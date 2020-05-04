@@ -3,8 +3,8 @@ class UserDecorator < Draper::Decorator
     Measurement.new(date: Date.today)
   end
 
-  def new_goal
-    model.goal || Goal.new
+  def goal
+    (model.goal || Goal.new).decorate
   end
 
   def measurements

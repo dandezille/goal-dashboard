@@ -30,12 +30,21 @@ RSpec.describe UserDecorator do
     end
   end
 
-  context '#new_goal' do
-    it 'returns a new goal' do
-      user = build(:user)
-      goal = decorate(user).new_goal
-      expect(goal).to be_instance_of(Goal)
-      expect(goal).to be_new_record
+  describe '#goal' do
+    context 'when user has goal' do
+      let(:user) { create(:user, :with_goal) }
+
+      it 'returns a decorated goal' do
+        expect(user.decorate.goal).to be_decorated
+      end
+    end
+
+    context 'when user has no goal' do
+      let(:user) { create(:user) }
+
+      it 'returns a new goal object' do
+        expect(user.decorate.goal).to be_new_record
+      end
     end
   end
 
