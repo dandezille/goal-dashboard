@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UserStatsDecorator do
+RSpec.describe UserDecorator do
   context '#new_measurement' do
     it 'returns a new measurement' do
       user = build(:user)
@@ -249,6 +249,6 @@ RSpec.describe UserStatsDecorator do
   end
 
   def decorate(user)
-    stats = UserStatsDecorator.decorate(user)
+    stats = described_class.decorate(user)
   end
 end

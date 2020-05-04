@@ -1,6 +1,4 @@
-class UserStatsDecorator < Draper::Decorator
-  delegate_all
-
+class UserDecorator < Draper::Decorator
   def new_measurement
     Measurement.new(date: Date.today)
   end
