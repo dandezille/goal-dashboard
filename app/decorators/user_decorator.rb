@@ -1,15 +1,12 @@
 class UserDecorator < Draper::Decorator
+  delegate :measurements, to: :goal
+
   def new_measurement
     Measurement.new(date: Date.today)
   end
 
   def goal
     (model.goal || Goal.new).decorate
-  end
-
-  def measurements
-    return [] unless model.goal
-    model.goal.measurements
   end
 
   def goal_description
