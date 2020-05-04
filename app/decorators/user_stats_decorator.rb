@@ -11,35 +11,36 @@ class UserStatsDecorator < Draper::Decorator
 
   def goal
     return 'No goal set' unless model.goal
-      "#{model.goal.value}kg by #{h.format_date(model.goal.date)}"
-    end
+    "#{model.goal.value}kg by #{h.format_date(model.goal.date)}"
+  end
 
   def target
     return '?' unless model.goal
     return '?' unless model.latest_measurement
-      "#{'%.1f' % target_for_today}"
+    "#{'%.1f' % target_for_today}"
   end
 
   def target_delta
     return '?' unless model.goal
     return '?' unless model.latest_measurement
 
-      delta = target_for_today - model.latest_measurement.value
+    delta = target_for_today - model.latest_measurement.value
 
-      if delta.abs < 0.1
-        'on target'
-      else
-        postscript = delta > 0 ? 'ahead' : 'behind'
-        "#{'%.1f' % delta.abs} #{postscript}"
-      end
+    if delta.abs < 0.1
+      'on target'
+    else
+      postscript = delta > 0 ? 'ahead' : 'behind'
+      "#{'%.1f' % delta.abs} #{postscript}"
+    end
   end
 
   def daily_goal
     return '?' unless model.goal
     return '?' unless latest_measurement
-      days_between = (model.goal.date - latest_measurement.date).to_i
-      per_day = to_go / days_between
-      "#{'%.2f' % per_day}"
+
+    days_between = (model.goal.date - latest_measurement.date).to_i
+    per_day = to_go / days_between
+    "#{'%.2f' % per_day}"
     end
 
   def current
@@ -50,21 +51,21 @@ class UserStatsDecorator < Draper::Decorator
   def to_go
     return '?' unless model.goal
     return '?' unless latest_measurement
-      latest_measurement.value - model.goal.value
-    end
+    latest_measurement.value - model.goal.value
+  end
 
   def projected_value
     return '?' unless model.goal
     return '?' unless measurements.count > 1
-      prediction = predict_value_at(model.goal.date)
-       "#{'%.1f' % prediction}kg at #{h.format_date(model.goal.date)}"
+    prediction = predict_value_at(model.goal.date)
+    "#{'%.1f' % prediction}kg at #{h.format_date(model.goal.date)}"
     end
 
   def projected_date
     return '?' unless model.goal
     return '?' unless measurements.count > 1
-      predicted  = predict_date_for(model.goal.value)
-      "#{model.goal.value}kg at #{h.format_date(predicted)}"
+    predicted  = predict_date_for(model.goal.value)
+    "#{model.goal.value}kg at #{h.format_date(predicted)}"
     end
 
   def chart_definition
