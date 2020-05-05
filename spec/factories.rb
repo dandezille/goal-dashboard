@@ -38,9 +38,9 @@ FactoryBot.define do
         measurements_count { 5 }
       end
 
-      after :create do |goal, evaluator|
-        create_list(:measurement, evaluator.measurements_count, goal: goal)
-      end
+      after(:stub)   { |goal, eval| stub_list :measurement, eval.measurements_count, goal: goal }
+      after(:build)  { |goal, eval| build_list :measurement, eval.measurements_count, goal: goal }
+      after(:create) { |goal, eval| create_list :measurement, eval.measurements_count, goal: goal }
     end
   end
 end

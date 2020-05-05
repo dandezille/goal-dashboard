@@ -1,6 +1,72 @@
 require 'rails_helper'
 
 RSpec.describe 'Goals' do
+  describe 'GET /goals' do
+    context 'when signed out' do
+      it 'redirects to sign in' do
+        get goals_path
+        expect(response).to redirect_to(sign_in_path)
+      end
+    end
+
+    context 'when signed in' do
+      context 'without goal' do
+        before { sign_in }
+
+        it 'redirects to new goal page' do
+          get goals_path
+          expect(response).to redirect_to(new_goal_path)
+        end
+      end
+
+      context 'with goal' do
+        before { sign_in_as create(:user, :with_goal) }
+
+        it 'redirects to goal page' do
+          get goals_path
+          expect(response).to redirect_to(goal_path(current_user.goal))
+        end
+      end
+    end
+  end
+
+  describe 'GET /goal/:id' do
+    context 'when signed out' do
+      it 'redirects to sign in' do
+        goal = create(:goal)
+        get goal_path(goal)
+        expect(response).to redirect_to(sign_in_path)
+      end
+    end
+
+    context 'when signed in' do
+      before { sign_in }
+
+      it 'is successful' do
+        goal = create(:goal, user: current_user)
+        get goal_path(goal)
+        expect(response).to be_successful
+      end
+
+      it 'shows measurements' do
+        goal = create(:goal, :with_measurements, user: current_user)
+
+        get goal_path(goal)
+        expect(response).to be_successful
+
+        goal.measurements.each do |measurement|
+          expect(response.body).to include(measurement.value.to_s)
+        end
+      end
+
+      it 'only shows the users goals' do
+        goal = create(:goal, :with_measurements)
+
+        get goal_path(goal)
+        expect(response).to redirect_to(goals_path)
+      end
+    end
+  end
 
   describe 'POST /goals' do
     context 'when user signed out' do
