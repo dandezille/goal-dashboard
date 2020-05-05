@@ -14,15 +14,13 @@ RSpec.describe GoalDecorator do
       it 'returns expected value given linear progress between goal points' do
         goal = create(:goal, date: Date.tomorrow, value: 60).decorate
         create(:measurement, goal: goal, date: 2.days.ago, value: 70)
-
         expect(goal.target).to eq('63.3')
       end
     end
 
     context 'without measurements' do
       it 'returns ?' do
-        goal = build(:goal).decorate
-        expect(goal.target).to eq('?')
+        expect(build(:goal).decorate.target).to eq('?')
       end
     end
   end
@@ -52,8 +50,7 @@ RSpec.describe GoalDecorator do
 
     context 'without measurements' do
       it 'returns ?' do
-        goal = create(:goal).decorate
-        expect(goal.target_delta).to eq('?')
+        expect(build(:goal).decorate.target_delta).to eq('?')
       end
     end
   end
@@ -62,14 +59,12 @@ RSpec.describe GoalDecorator do
     it 'returns loss required per day to hit target' do
       goal = create(:goal, date: Date.tomorrow, value: 70).decorate
       create(:measurement, goal: goal, date: 2.days.ago, value: 80)
-
       expect(goal.daily_goal).to eq('3.33')
     end
 
     context 'without measurements' do
       it 'returns ?' do
-        goal = create(:goal).decorate
-        expect(goal.daily_goal).to eq('?')
+        expect(build(:goal).decorate.daily_goal).to eq('?')
       end
     end
   end
@@ -87,7 +82,7 @@ RSpec.describe GoalDecorator do
 
     context 'without measurements' do
       it 'handles missing measurements' do
-        expect(create(:goal).decorate.current).to eq('?')
+        expect(build(:goal).decorate.current).to eq('?')
       end
     end
   end
@@ -102,8 +97,7 @@ RSpec.describe GoalDecorator do
 
     context 'without measurements' do
       it 'returns ?' do
-        goal = create(:goal).decorate
-        expect(goal.to_go).to eq('?')
+        expect(build(:goal).decorate.to_go).to eq('?')
       end
     end
   end
@@ -121,13 +115,11 @@ RSpec.describe GoalDecorator do
 
     context 'with insufficient measurements' do
       it 'returns ? for none' do
-        goal = create(:goal).decorate
-        expect(goal.projected_value).to eq('?')
+        expect(build(:goal).decorate.projected_value).to eq('?')
       end
 
       it 'returns ? for one' do
-        goal = create(:goal).decorate
-        create(:measurement, goal: goal)
+        goal = create(:goal, :with_measurements, measurements_count: 1).decorate
         expect(goal.projected_value).to eq('?')
       end
     end
@@ -146,13 +138,11 @@ RSpec.describe GoalDecorator do
 
     context 'with insufficient measurements' do
       it 'returns ? for none' do
-        goal = build(:goal).decorate
-        expect(goal.projected_date).to eq('?')
+        expect(build(:goal).decorate.projected_date).to eq('?')
       end
 
-      it 'handles too few measurements' do
-        goal = create(:goal).decorate
-        create(:measurement, goal: goal)
+      it 'returns ? for one' do
+        goal = create(:goal, :with_measurements, measurements_count: 1).decorate
         expect(goal.projected_date).to eq('?')
       end
     end
@@ -179,5 +169,4 @@ RSpec.describe GoalDecorator do
       )
     end
   end
-
 end
