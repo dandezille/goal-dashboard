@@ -1,15 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe UserDecorator do
-  context '#new_measurement' do
-    it 'returns a new measurement' do
-      user = build(:user)
-      measurement = decorate(user).new_measurement
-      expect(measurement).to be_instance_of(Measurement)
-      expect(measurement).to be_new_record
-    end
-  end
-
   describe '#goal' do
     context 'when user has goal' do
       let(:user) { create(:user, :with_goal) }

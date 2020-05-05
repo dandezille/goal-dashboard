@@ -50,9 +50,5 @@ class UserDecorator < ApplicationDecorator
       (class << self; include UserWithoutGoalDecorator; end)
     end
   end
-
-  def new_measurement
-    Measurement.new(date: Date.today)
-  end
 end
 
