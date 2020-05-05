@@ -49,28 +49,28 @@ class GoalDecorator < ApplicationDecorator
 
   def projected_date
     return '?' unless measurements.count > 1
-    predicted  = predict_date_for(value)
+    predicted = predict_date_for(value)
     "#{value}kg at #{h.format_date(predicted)}"
   end
 
   def chart_definition
-    measurements_data = measurements.map do |m|
-      { x: m.date, y: m.value }
-    end
+    measurements_data = measurements.map { |m| { x: m.date, y: m.value } }
 
     target_data = []
     if first_measurement
       target_data = [
-        { x: first_measurement.date, y: first_measurement.value},
-        { x: date, y: value}
+        { x: first_measurement.date, y: first_measurement.value },
+        { x: date, y: value }
       ]
     end
 
     prediction_data = []
     if measurements.count > 1
       prediction_data = [
-        { x: first_measurement.date, y: predict_value_at(first_measurement.date) },
-        { x: date, y: predict_value_at(date) },
+        {
+          x: first_measurement.date, y: predict_value_at(first_measurement.date)
+        },
+        { x: date, y: predict_value_at(date) }
       ]
     end
 
@@ -86,34 +86,20 @@ class GoalDecorator < ApplicationDecorator
             borderColor: '#444190',
             data: measurements_data
           },
-          {
-            label: 'Target',
-            showLine: true,
-            fill: false,
-            data: target_data
-          },
+          { label: 'Target', showLine: true, fill: false, data: target_data },
           {
             label: 'Prediction',
             showLine: true,
             fill: false,
             backgroundColor: '#a3bffa',
             borderColor: '#a3bffa',
-            data: prediction_data,
-          } 
+            data: prediction_data
+          }
         ]
       },
       options: {
-        legend: {
-          display: false
-        },
-        scales: {
-          xAxes: [{
-            type: 'time',
-            time: {
-              unit: 'day'
-            }
-          }]
-        }
+        legend: { display: false },
+        scales: { xAxes: [{ type: 'time', time: { unit: 'day' } }] }
       }
     }.to_json
   end
@@ -136,8 +122,11 @@ class GoalDecorator < ApplicationDecorator
   end
 
   def predictor
-    @predictor ||= LinearPredictor.new(measurements.map(&method(:days_since_today)), 
-                                       measurements.map(&:value))
+    @predictor ||=
+      LinearPredictor.new(
+        measurements.map(&method(:days_since_today)),
+        measurements.map(&:value)
+      )
   end
 
   def days_since_today(measurement)

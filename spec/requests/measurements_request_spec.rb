@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Measurements' do
-
   describe 'POST /measurements' do
     context 'when user signed in' do
       before { sign_in_as create(:user, :with_goal) }
@@ -10,7 +9,8 @@ RSpec.describe 'Measurements' do
         measurement_attributes = attributes_for(:measurement)
 
         expect do
-          post measurements_path, params: { measurement: measurement_attributes }
+          post measurements_path,
+               params: { measurement: measurement_attributes }
         end.to change(Measurement, :count).by(1)
 
         expect(response).to redirect_to(root_path)
@@ -24,7 +24,8 @@ RSpec.describe 'Measurements' do
 
       it 'shows errors for invalid input' do
         expect do
-          post measurements_path, params: { measurement: attributes_for(:measurement, date: '') }
+          post measurements_path,
+               params: { measurement: attributes_for(:measurement, date: '') }
         end.not_to change(Measurement, :count)
 
         expect(response).to redirect_to(root_path)
@@ -46,7 +47,8 @@ RSpec.describe 'Measurements' do
 
     it 'redirects if not signed in' do
       expect do
-        post measurements_path, params: { measurement: attributes_for(:measurement) }
+        post measurements_path,
+             params: { measurement: attributes_for(:measurement) }
       end.not_to change(Measurement, :count)
 
       expect(response).to redirect_to(sign_in_path)
@@ -59,22 +61,24 @@ RSpec.describe 'Measurements' do
       before { sign_in_as create(:user, :with_goal) }
 
       it 'deletes the given measurement' do
-        measurement = create(:measurement, goal: current_user.goal);
+        measurement = create(:measurement, goal: current_user.goal)
 
-        expect do
-          delete measurement_path(measurement)
-        end.to change(Measurement, :count).by(-1)
+        expect { delete measurement_path(measurement) }.to change(
+          Measurement,
+          :count
+        ).by(-1)
 
         expect(response).to redirect_to(root_path)
         expect(flash[:notice]).to be_present
       end
 
       it 'fails for other users measurements' do
-        measurement = create(:measurement);
+        measurement = create(:measurement)
 
-        expect do
-          delete measurement_path(measurement)
-        end.not_to change(Measurement, :count)
+        expect { delete measurement_path(measurement) }.not_to change(
+          Measurement,
+          :count
+        )
 
         expect(response).to redirect_to(root_path)
         expect(flash[:alert]).to be_present
@@ -82,11 +86,12 @@ RSpec.describe 'Measurements' do
     end
 
     it 'redirects if not signed in' do
-      measurement = create(:measurement);
+      measurement = create(:measurement)
 
-      expect do
-        delete measurement_path(measurement)
-      end.not_to change(Measurement, :count)
+      expect { delete measurement_path(measurement) }.not_to change(
+        Measurement,
+        :count
+      )
 
       expect(response).to redirect_to(sign_in_path)
       expect(flash[:alert]).to be_present

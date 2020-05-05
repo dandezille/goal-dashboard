@@ -8,9 +8,7 @@ RSpec.feature 'User removes a measurement' do
     visit root_path
 
     expect do
-      within("#measurement_#{goal.measurements.first.id}") do
-        click_on 'Delete'
-      end
+      within("#measurement_#{goal.measurements.first.id}") { click_on 'Delete' }
     end.to change(Measurement, :count).by(-1)
 
     expect(page).to have_flash_notice('Measurement removed')
