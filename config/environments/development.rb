@@ -59,5 +59,5 @@ Rails.application.configure do
     Bullet.rails_logger = true
   end
 
-  config.action_mailer.default_url_options = { host: "localhost:3000" }
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
 end

@@ -86,9 +86,10 @@ RSpec.describe 'Goals' do
       it 'creates a goal' do
         goal_attributes = attributes_for(:goal)
 
-        expect do
-          post goals_path, params: { goal: goal_attributes }
-        end.to change(Goal, :count).by(1)
+        expect { post goals_path, params: { goal: goal_attributes } }.to change(
+          Goal,
+          :count
+        ).by(1)
 
         expect(response).to redirect_to(root_path)
         expect(flash[:notice]).to be_present
@@ -118,7 +119,7 @@ RSpec.describe 'Goals' do
         goal = create(:goal, user: current_user, value: 70)
 
         expect do
-          put goal_path(goal), params: { goal: { value: 60 }}
+          put goal_path(goal), params: { goal: { value: 60 } }
           goal.reload
         end.to change(goal, :value).from(70).to(60)
 

@@ -23,9 +23,7 @@ RSpec.feature 'User sets goal' do
   def fill_goal
     goal_attributes = attributes_for(:goal)
     visit root_path
-    within('#goal_form') do
-      fill_form_and_submit(:goal, goal_attributes)
-    end
+    within('#goal_form') { fill_form_and_submit(:goal, goal_attributes) }
     current_user.reload
 
     goal_attributes

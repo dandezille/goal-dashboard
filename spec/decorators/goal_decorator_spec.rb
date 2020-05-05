@@ -159,7 +159,7 @@ RSpec.describe GoalDecorator do
         data: {
           datasets: [
             {
-              data:[
+              data: [
                 { x: Date.today.strftime('%Y-%m-%d'), y: '55.0' },
                 { x: Date.yesterday.strftime('%Y-%m-%d'), y: '60.0' }
               ]

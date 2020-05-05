@@ -4,7 +4,7 @@ RSpec.describe Measurement do
   describe 'associations' do
     it { is_expected.to belong_to(:goal) }
   end
-  
+
   describe 'validations' do
     it { is_expected.to validate_presence_of(:goal_id) }
     it { is_expected.to validate_presence_of(:date) }

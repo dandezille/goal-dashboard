@@ -1,13 +1,13 @@
 class GoalsController < ApplicationController
   before_action :require_login
-  before_action :find_goal, only: [ :show, :update ]
+  before_action :find_goal, only: %i[show update]
 
   def index
     if current_user.goal
       redirect_to goal_path(current_user.goal)
     else
-      redirect_to new_goal_path 
-    end 
+      redirect_to new_goal_path
+    end
   end
 
   def show
@@ -32,7 +32,7 @@ class GoalsController < ApplicationController
 
   def update
     @goal.update!(goal_params)
-    flash[:notice] = 'Goal updated' 
+    flash[:notice] = 'Goal updated'
     redirect_to root_path
   end
 
