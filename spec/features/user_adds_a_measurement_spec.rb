@@ -8,6 +8,9 @@ RSpec.feature 'User adds a measurement' do
 
     expect do
       within('#new_measurement') do
+        expect(page).to have_field 'measurement_date',
+                   with: Date.today.strftime('%Y-%m-%d')
+
         fill_form_and_submit(:measurement, attributes_for(:measurement))
       end
     end.to change(Measurement, :count).by(1)
