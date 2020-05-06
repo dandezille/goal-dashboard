@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'User sets goal' do
+RSpec.feature 'manage goal' do
   before { sign_in }
 
   scenario 'for the first time' do
