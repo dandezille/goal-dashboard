@@ -4,7 +4,7 @@ RSpec.feature 'manage measurements' do
   before { sign_in }
   let!(:goal) { create(:goal, :with_measurements, user: current_user) }
 
-  scenario 'add new measurement' do
+  scenario 'user creates a new measurement' do
     visit root_path
 
     expect do
@@ -16,7 +16,7 @@ RSpec.feature 'manage measurements' do
     expect(page).to have_flash_notice('Measurement created')
   end
 
-  scenario 'it is deleted' do
+  scenario 'user deletes a measurement' do
     visit root_path
 
     expect do
