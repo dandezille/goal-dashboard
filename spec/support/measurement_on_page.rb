@@ -9,19 +9,19 @@ class MeasurementOnPage < Struct.new(:params)
   end
 
   def delete
-    measurement_element.first.click_button 'Delete'
+    page.find('.measurement') { |element|
+      match_measurement(element)
+    }.click_button 'Delete'
   end
 
   def visible?
-    measurement_element.one?
+    page.has_css?('.measurement') { |element| match_measurement(element) }
   end
 
   private
 
-  def measurement_element
-    page.all('.measurement').select do |element|
-      element.has_css?('.value', text: params[:value]) &&
-        element.has_css?('.date', text: format_date(params[:date]))
-    end
+  def match_measurement(element)
+    element.has_css?('.value', text: params[:value]) &&
+      element.has_css?('.date', text: format_date(params[:date]))
   end
 end
