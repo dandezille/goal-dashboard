@@ -1,6 +1,6 @@
 class GoalsController < ApplicationController
   before_action :require_login
-  before_action :find_goal, only: %i[show update]
+  before_action :find_goal, only: %i[show edit update]
 
   def index
     if current_user.goal
@@ -29,6 +29,8 @@ class GoalsController < ApplicationController
 
     redirect_to root_path
   end
+
+  def edit; end
 
   def update
     @goal.update!(goal_params)

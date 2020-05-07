@@ -30,7 +30,7 @@ RSpec.feature 'manage measurements' do
     expect(measurement).not_to be_visible
   end
 
-  scenario 'user deletes a measurement' do
+  scenario 'delete a measurement' do
     visit root_path
     measurement = measurement_on_page
     measurement.create

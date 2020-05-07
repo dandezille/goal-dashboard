@@ -1,7 +1,10 @@
 <div class="lg:flex lg:justify-center my-6 lg:m-6">
     <div id="goal" class="flex items-center bg-white lg:rounded-lg shadow-md">
         <div class="p-6 lg:p-2 lg:pl-3 lg:rounded-l-lg bg-indigo-800 text-indigo-100">Goal</div>
-        <div class="w-full text-center lg:p-2 lg:pr-3"><%= @goal.description %></div>
+        <div class="w-full text-center lg:p-2"><%= @goal.description %></div>
+        <%= link_to edit_goal_path(@goal) do %>
+            <i class="fas fa-edit p-6 lg:p-2 lg:pr-3 text-indigo-800 hover:text-indigo-600"></i>
+        <% end %>
     </div>
 </div>
 
@@ -42,10 +45,6 @@
 
 <%= render layout: 'shared/card', locals: { title: 'Measurements' } do %>
     <%= render @goal.measurements %>
-<% end %>
-
-<%= render layout: 'shared/card', locals: { title: 'Set Goal' } do %>
-    <%= render 'goals/form'%>
 <% end %>
 
 <script>
