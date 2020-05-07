@@ -16,7 +16,7 @@ RSpec.feature 'manage goal' do
     create(:goal, user: current_user)
     visit root_path
     goal = goal_on_page
-    goal.create
+    goal.edit
 
     expect(goal).to be_visible
     expect(page).to have_flash_notice('Goal updated')

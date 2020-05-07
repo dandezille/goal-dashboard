@@ -8,6 +8,11 @@ class GoalOnPage < Struct.new(:params)
     click_button 'Update goal'
   end
 
+  def edit
+    page.find('#goal a').click
+    create
+  end
+
   def visible?
     page.has_css? '#goal' do |element|
       element.has_content?(params[:value]) &&
