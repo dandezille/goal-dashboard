@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe GoalDecorator do
+  include ActiveSupport::Testing::TimeHelpers
+
   describe '#description' do
-    it 'returns a formatted description of the goal fields' do
-      goal = build(:goal).decorate
-      expect(goal.description).to include('%.1f' % goal.value)
-      expect(goal.description).to include(format_date(goal.date))
+    it 'describes the goal' do
+      goal = build(:goal, value: 72.32, date: '2020-05-02').decorate
+      expect(goal.description).to eq('72.3kg by 2nd May')
     end
   end
 
@@ -128,11 +129,13 @@ RSpec.describe GoalDecorator do
   describe '#projected_date' do
     context 'with_measurements' do
       it 'predicts date at goal end value' do
+        travel_to '2020-4-10 12:00'
+
         goal = create(:goal, value: 50, date: Date.today).decorate
         create(:measurement, goal: goal, date: 5.days.ago, value: 80)
         create(:measurement, goal: goal, date: 3.days.ago, value: 70)
 
-        expect(goal.projected_date).to include(format_date(Date.tomorrow))
+        expect(goal.projected_date).to eq('50.0kg on 11th April')
       end
     end
 
