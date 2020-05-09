@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe GoalDecorator do
+  include DateHelper
+
   describe '#description' do
     it 'returns a formatted description of the goal fields' do
       goal = build(:goal).decorate
