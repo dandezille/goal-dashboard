@@ -2,7 +2,7 @@ class GoalDecorator < ApplicationDecorator
   delegate_all
 
   def description
-    "#{value}kg by #{h.format_date(date)}"
+    "#{'%.1f' % value}kg by #{h.format_date(date)}"
   end
 
   def target
@@ -44,13 +44,13 @@ class GoalDecorator < ApplicationDecorator
   def projected_value
     return '?' unless measurements.count > 1
     prediction = predict_value_at(date)
-    "#{'%.1f' % prediction}kg at #{h.format_date(date)}"
+    "#{'%.1f' % prediction}kg on #{h.format_date(date)}"
   end
 
   def projected_date
     return '?' unless measurements.count > 1
     predicted = predict_date_for(value)
-    "#{value}kg at #{h.format_date(predicted)}"
+    "#{value}kg on #{h.format_date(predicted)}"
   end
 
   def chart_definition
