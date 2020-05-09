@@ -13,4 +13,12 @@ RSpec.describe DateHelper do
       expect(helper.format_date(date_string)).to eq('2nd May')
     end
   end
+
+  describe 'days_since_today' do
+    it { expect(helper.days_since_today(2.days.since)).to eq(2) }
+    it { expect(helper.days_since_today(1.days.since)).to eq(1) }
+    it { expect(helper.days_since_today(Date.today)).to eq(0) }
+    it { expect(helper.days_since_today(1.days.ago)).to eq(-1) }
+    it { expect(helper.days_since_today(2.days.ago)).to eq(-2) }
+  end
 end

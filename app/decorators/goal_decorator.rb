@@ -1,4 +1,5 @@
 class GoalDecorator < ApplicationDecorator
+  include DateHelper
   delegate_all
 
   def description
@@ -124,12 +125,8 @@ class GoalDecorator < ApplicationDecorator
   def predictor
     @predictor ||=
       LinearPredictor.new(
-        measurements.map(&method(:days_since_today)),
+        measurements.map(&:date).map(&method(:days_since_today)),
         measurements.map(&:value)
       )
-  end
-
-  def days_since_today(measurement)
-    (measurement.date - Date.today).to_i
   end
 end
