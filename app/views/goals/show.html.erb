@@ -9,36 +9,36 @@
 </div>
 
 <%= render layout: 'shared/card' do %>
-    <div class="flex justify-around">
+    <div class="flex justify-around py-6">
         <div>
             <div class="flex flex-col items-center">
                 <div class="text-base"><%= @goal.latest_date %></div>
-                <div><%= @goal.latest_value %>kg</div>
-                <div><%= @goal.to_go %>kg</div>
+                <div class="lg:text-3xl"><%= @goal.latest_value %>kg</div>
+                <div class="lg:text-3xl"><%= @goal.to_go %>kg</div>
                 <div class="text-base">to go</div>
             </div>
         </div>
         <div>
             <div class="flex flex-col items-center">
                 <div class="text-base">target</div>
-                <div><%= @goal.target %>kg</div>
-                <div><%= @goal.target_delta %>kg</div>
+                <div class="lg:text-3xl"><%= @goal.target %>kg</div>
+                <div class="lg:text-3xl"><%= @goal.target_delta %>kg</div>
                 <div class="text-base">ahead</div>
             </div>
         </div>
         <div>
             <div class="flex flex-col items-center">
                 <div class="text-base">target per day</div>
-                <div><%= @goal.daily_goal %>kg</div>
-                <div><%= @goal.daily_historic %>kg</div>
+                <div class="lg:text-3xl"><%= @goal.daily_goal %>kg</div>
+                <div class="lg:text-3xl"><%= @goal.daily_historic %>kg</div>
                 <div class="text-base">actual per day</div>
             </div>
         </div>
         <div>
             <div class="flex flex-col items-center">
                 <div class="text-base">goal date</div>
-                <div><%= @goal.projected_value %>kg</div>
-                <div><%= @goal.projected_date %></div>
+                <div class="lg:text-3xl"><%= @goal.projected_value %>kg</div>
+                <div class="lg:text-3xl"><%= @goal.projected_date %></div>
                 <div class="text-base">goal value</div>
             </div>
         </div>
