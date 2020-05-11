@@ -19,7 +19,7 @@ class GoalDecorator < ApplicationDecorator
 
   def target_delta_word
     return '?' unless measurements.any?
-    delta = target_delta
+    delta = target_for_today - latest_measurement.value
 
     if delta.abs < 0.1
       'on target'

@@ -33,19 +33,14 @@ RSpec.describe GoalDecorator do
         create(:measurement, goal: @goal, date: 2.days.ago, value: 70)
       end
 
-      it 'returns delta when on target' do
-        create(:measurement, goal: @goal, date: Date.today, value: 63.3)
-        expect(@goal.target_delta).to eq('on target')
-      end
-
-      it 'returns delta to target when behind' do
+      it 'returns abs difference when behind' do
         create(:measurement, goal: @goal, date: Date.today, value: 65)
-        expect(@goal.target_delta).to eq('1.7 behind')
+        expect(@goal.target_delta).to eq('1.7')
       end
 
-      it 'returns delta to target when ahead' do
+      it 'returns abs difference when ahead' do
         create(:measurement, goal: @goal, date: Date.today, value: 62)
-        expect(@goal.target_delta).to eq('1.3 ahead')
+        expect(@goal.target_delta).to eq('1.3')
       end
     end
 
@@ -56,11 +51,43 @@ RSpec.describe GoalDecorator do
     end
   end
 
+  describe '#target_delta_word' do
+    context 'with measurements' do
+      before do
+        @goal = create(:goal, date: Date.tomorrow, value: 60).decorate
+        create(:measurement, goal: @goal, date: 2.days.ago, value: 70)
+      end
+
+      it 'returns on target' do
+        create(:measurement, goal: @goal, date: Date.today, value: 63.3)
+        expect(@goal.target_delta_word).to eq('on target')
+      end
+
+      it 'returns behind' do
+        create(:measurement, goal: @goal, date: Date.today, value: 65)
+        expect(@goal.target_delta_word).to eq('behind')
+      end
+
+      it 'returns ahead' do
+        create(:measurement, goal: @goal, date: Date.today, value: 62)
+        expect(@goal.target_delta_word).to eq('ahead')
+      end
+    end
+
+    context 'without measurements' do
+      it 'returns ?' do
+        expect(build(:goal).decorate.target_delta_word).to eq('?')
+      end
+    end
+  end
+
   describe '#daily_goal' do
-    it 'returns loss required per day to hit target' do
-      goal = create(:goal, date: Date.tomorrow, value: 70).decorate
-      create(:measurement, goal: goal, date: 2.days.ago, value: 80)
-      expect(goal.daily_goal).to eq('3.33')
+    context 'with measurements' do
+      it 'returns loss required per day to hit target' do
+        goal = create(:goal, date: Date.tomorrow, value: 70).decorate
+        create(:measurement, goal: goal, date: 2.days.ago, value: 80)
+        expect(goal.daily_goal).to eq('3.33')
+      end
     end
 
     context 'without measurements' do
@@ -70,20 +97,66 @@ RSpec.describe GoalDecorator do
     end
   end
 
-  describe '#current' do
+  describe '#daily_historic' do
+    context 'with measurements' do
+      it 'returns historic loss per day' do
+        goal = create(:goal).decorate
+        create(:measurement, goal: goal, date: 2.days.ago, value: 81)
+        create(:measurement, goal: goal, date: Date.today, value: 80)
+        expect(goal.daily_historic).to eq('0.50')
+      end
+    end
+
+    context 'with insufficient measurements' do
+      it 'returns ? for none' do
+        expect(build(:goal).decorate.daily_historic).to eq('?')
+      end
+
+      it 'returns ? for one' do
+        goal = create(:measurement).goal.decorate
+        expect(goal.daily_historic).to eq('?')
+      end
+    end
+  end
+
+  describe '#latest_value' do
     context 'with measurements' do
       it 'returns latest measurement value' do
         goal = create(:goal)
         create(:measurement, goal: goal, date: Date.yesterday, value: 80)
         create(:measurement, goal: goal, date: Date.today, value: 70)
-
-        expect(goal.decorate.current).to eq(70)
+        expect(goal.decorate.latest_value).to eq(70)
       end
     end
 
     context 'without measurements' do
       it 'handles missing measurements' do
-        expect(build(:goal).decorate.current).to eq('?')
+        expect(build(:goal).decorate.latest_value).to eq('?')
+      end
+    end
+  end
+
+  describe '#latest_date' do
+    context 'with measurements' do
+      it 'returns today' do
+        goal = create(:measurement, date: Date.today).goal.decorate
+        expect(goal.latest_date).to eq('today')
+      end
+
+      it 'returns yesterday' do
+        goal = create(:measurement, date: Date.yesterday).goal.decorate
+        expect(goal.latest_date).to eq('yesterday')
+      end
+
+      it 'returns days ago' do
+        goal = create(:measurement, date: 2.days.ago).goal.decorate
+        expect(goal.latest_date).to eq('2 days ago')
+      end
+    end
+
+    context 'without measurements' do
+      it 'handles missing measurements' do
+        expect(build(:goal).decorate.latest_date).to eq('?')
       end
     end
   end
@@ -110,7 +183,7 @@ RSpec.describe GoalDecorator do
         create(:measurement, goal: goal, date: 5.days.ago, value: 80)
         create(:measurement, goal: goal, date: 3.days.ago, value: 70)
 
-        expect(goal.projected_value).to include('55.0')
+        expect(goal.projected_value).to eq('55.0')
       end
     end
 
@@ -135,7 +208,7 @@ RSpec.describe GoalDecorator do
         create(:measurement, goal: goal, date: 5.days.ago, value: 80)
         create(:measurement, goal: goal, date: 3.days.ago, value: 70)
 
-        expect(goal.projected_date).to eq('50.0kg on 11th April')
+        expect(goal.projected_date).to eq('11th April')
       end
     end
 
