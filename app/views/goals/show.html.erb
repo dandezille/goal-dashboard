@@ -9,30 +9,44 @@
 </div>
 
 <%= render layout: 'shared/card' do %>
-    <div class="flex justify-around py-4">
-        <div id="current" class="flex flex-col items-center">
-            <span>Current</span>
-            <span><%= @goal.current %>kg</span>
-            <span><%= @goal.to_go %>kg to go</span>
+    <div class="flex justify-around">
+        <div>
+            <div class="flex flex-col items-center">
+                <div class="text-base"><%= @goal.latest_date %></div>
+                <div><%= @goal.latest_value %>kg</div>
+                <div><%= @goal.to_go %>kg</div>
+                <div class="text-base">to go</div>
+            </div>
         </div>
-        <div id="pace" class="flex flex-col items-center">
-            <span>Target</span>
-            <span><%= @goal.target %>kg</span>
-            <span><%= @goal.target_delta %></span>
+        <div>
+            <div class="flex flex-col items-center">
+                <div class="text-base">target</div>
+                <div><%= @goal.target %>kg</div>
+                <div><%= @goal.target_delta %>kg</div>
+                <div class="text-base">ahead</div>
+            </div>
         </div>
-        <div id="daily_goal" class="flex flex-col items-center">
-            <span>Daily Goal</span>
-            <span><%= @goal.daily_goal %>kg</span>
-            <span>per day</span>
+        <div>
+            <div class="flex flex-col items-center">
+                <div class="text-base">target per day</div>
+                <div><%= @goal.daily_goal %>kg</div>
+                <div><%= @goal.daily_historic %>kg</div>
+                <div class="text-base">actual per day</div>
+            </div>
         </div>
-        <div id="projected" class="flex flex-col items-center">
-            <span>Projected</span>
-            <span><%= @goal.projected_value %></span>
-            <span><%= @goal.projected_date %></span>
+        <div>
+            <div class="flex flex-col items-center">
+                <div class="text-base">goal date</div>
+                <div><%= @goal.projected_value %>kg</div>
+                <div><%= @goal.projected_date %></div>
+                <div class="text-base">goal value</div>
+            </div>
         </div>
     </div>
+<% end %>
 
-    <canvas id="measurements_graph" class="pb-6 px-6"></canvas>
+<%= render layout: 'shared/card' do %>
+    <canvas id="measurements_graph" class="p-6"></canvas>
 <% end %>
 
 <%= render layout: 'shared/card', locals: { title: 'New Measurement' } do %>

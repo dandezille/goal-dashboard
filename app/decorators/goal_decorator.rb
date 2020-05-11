@@ -13,14 +13,20 @@ class GoalDecorator < ApplicationDecorator
 
   def target_delta
     return '?' unless measurements.any?
-
     delta = target_for_today - latest_measurement.value
+    "#{'%.1f' % delta.abs}"
+  end
+
+  def target_delta_word
+    return '?' unless measurements.any?
+    delta = target_delta
 
     if delta.abs < 0.1
       'on target'
+    elsif delta < 0
+      'behind'
     else
-      postscript = delta > 0 ? 'ahead' : 'behind'
-      "#{'%.1f' % delta.abs} #{postscript}"
+      'ahead'
     end
   end
 
@@ -32,9 +38,23 @@ class GoalDecorator < ApplicationDecorator
     "#{'%.2f' % per_day}"
   end
 
-  def current
+  def daily_historic
+    return '?' unless measurements.count > 1
+    "#{'%.2f' % -predictor.coefficients[1]}"
+  end
+
+  def latest_value
     return '?' unless measurements.any?
     latest_measurement.value
+  end
+
+  def latest_date
+    return '?' unless measurements.any?
+    delta = (Date.today - latest_measurement.date).to_i
+
+    return 'today' if delta == 0
+    return 'yesterday' if delta == 1
+    "#{delta.abs} days ago"
   end
 
   def to_go
@@ -44,14 +64,12 @@ class GoalDecorator < ApplicationDecorator
 
   def projected_value
     return '?' unless measurements.count > 1
-    prediction = predict_value_at(date)
-    "#{'%.1f' % prediction}kg on #{h.format_date(date)}"
+    "#{'%.1f' % predict_value_at(date)}"
   end
 
   def projected_date
     return '?' unless measurements.count > 1
-    predicted = predict_date_for(value)
-    "#{value}kg on #{h.format_date(predicted)}"
+    "#{h.format_date(predict_date_for(value))}"
   end
 
   def chart_definition
