@@ -8,22 +8,21 @@ class GoalDecorator < ApplicationDecorator
 
   def target
     return '?' unless measurements.any?
-    "#{format_float 1, target_for_today}"
+    "#{format_float 1, calculations.target}"
   end
 
   def target_delta
     return '?' unless measurements.any?
-    delta = target_for_today - latest_measurement.value
-    "#{format_float 1, delta.abs}"
+    "#{format_float 1, calculations.target_delta.abs}"
   end
 
   def target_delta_word
     return '?' unless measurements.any?
-    delta = target_for_today - latest_measurement.value
+    delta = calculations.target_delta
 
     if delta.abs < 0.1
       'on target'
-    elsif delta < 0
+    elsif delta > 0
       'behind'
     else
       'ahead'
@@ -32,25 +31,22 @@ class GoalDecorator < ApplicationDecorator
 
   def daily_goal
     return '?' unless measurements.any?
-
-    days_between = (date - latest_measurement.date).to_i
-    per_day = to_go / days_between
-    "#{format_float 2, per_day}"
+    "#{format_float 2, calculations.daily_goal}"
   end
 
   def daily_historic
     return '?' unless measurements.count > 1
-    "#{format_float 2, -predictor.coefficients[1]}"
+    "#{format_float 2, calculations.daily_historic}"
   end
 
   def latest_value
     return '?' unless measurements.any?
-    latest_measurement.value
+    "#{format_float 1, latest_measurement.value}"
   end
 
   def latest_date
     return '?' unless measurements.any?
-    delta = (Date.today - latest_measurement.date).to_i
+    delta = calculations.latest_date_delta
 
     return 'today' if delta == 0
     return 'yesterday' if delta == 1
@@ -59,17 +55,17 @@ class GoalDecorator < ApplicationDecorator
 
   def to_go
     return '?' unless measurements.any?
-    latest_measurement.value - value
+    "#{format_float 1, calculations.to_go}"
   end
 
   def projected_value
     return '?' unless measurements.count > 1
-    "#{format_float 1, predict_value_at(date)}"
+    "#{format_float 1, calculations.predict_value_at(date)}"
   end
 
   def projected_date
     return '?' unless measurements.count > 1
-    "#{h.format_date(predict_date_for(value))}"
+    "#{h.format_date(calculations.predict_date_for(value))}"
   end
 
   def chart_definition
@@ -87,9 +83,10 @@ class GoalDecorator < ApplicationDecorator
     if measurements.count > 1
       prediction_data = [
         {
-          x: first_measurement.date, y: predict_value_at(first_measurement.date)
+          x: first_measurement.date,
+          y: calculations.predict_value_at(first_measurement.date)
         },
-        { x: date, y: predict_value_at(date) }
+        { x: date, y: calculations.predict_value_at(date) }
       ]
     end
 
@@ -121,34 +118,5 @@ class GoalDecorator < ApplicationDecorator
         scales: { xAxes: [{ type: 'time', time: { unit: 'day' } }] }
       }
     }.to_json
-  end
-
-  private
-
-  def target_for_today
-    days_between = (date - first_measurement.date).to_i
-    delta = value - first_measurement.value
-    per_day = delta / days_between
-    first_measurement.value + per_day * (Date.today - first_measurement.date)
-  end
-
-  def days_since_today(date)
-    (date.to_date - Date.today.to_date).to_i
-  end
-
-  def predict_value_at(date)
-    predictor.predict_for(date - Date.today)
-  end
-
-  def predict_date_for(value)
-    Date.today + predictor.inverse_predict_for(value).round.days
-  end
-
-  def predictor
-    @predictor ||=
-      LinearPredictor.new(
-        measurements.map(&:date).map(&method(:days_since_today)),
-        measurements.map(&:value)
-      )
   end
 end
