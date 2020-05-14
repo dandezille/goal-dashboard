@@ -132,6 +132,10 @@ class GoalDecorator < ApplicationDecorator
     first_measurement.value + per_day * (Date.today - first_measurement.date)
   end
 
+  def days_since_today(date)
+    (date.to_date - Date.today.to_date).to_i
+  end
+
   def predict_value_at(date)
     predictor.predict_for(date - Date.today)
   end
