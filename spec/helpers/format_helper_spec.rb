@@ -13,4 +13,16 @@ RSpec.describe FormatHelper do
       expect(helper.format_date(date_string)).to eq('2nd May')
     end
   end
+
+  describe 'format_float' do
+    let(:number) { 18.247 }
+
+    it 'does one decimal place' do
+      expect(helper.format_float(1, number)).to eq('18.2')
+    end
+
+    it 'does two decimal places' do
+      expect(helper.format_float(2, number)).to eq('18.25')
+    end
+  end
 end
