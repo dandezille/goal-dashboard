@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe DateHelper do
+RSpec.describe FormatHelper do
   describe 'format_date' do
     let(:date_string) { '2020-05-02' }
 

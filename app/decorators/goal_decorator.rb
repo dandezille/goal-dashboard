@@ -1,5 +1,5 @@
 class GoalDecorator < ApplicationDecorator
-  include DateHelper
+  include FormatHelper
   delegate_all
 
   def description
