@@ -1,8 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe GoalDecorator do
+  let(:calculator) { instance_double(GoalCalculator) }
+  let(:value) { instance_double(Float) }
+  let(:date) { instance_double(DateTime) }
+  let(:measurements) { [] }
+  let(:goal) do
+    GoalDecorator.decorate(
+      instance_double(
+        Goal,
+        date: date,
+        value: value,
+        measurements: measurements,
+        calculations: calculator,
+        latest_measurement: double(value: 65)
+      )
+    )
+  end
+
   describe '#description' do
-    let(:goal) { build(:goal, value: 72.32, date: '2020-05-02').decorate }
+    let(:value) { 72.32 }
+    let(:date) { '2020-05-02' }
 
     it 'describes the goal' do
       expect(goal.description).to eq('72.3kg by 2nd May')
@@ -10,10 +28,6 @@ RSpec.describe GoalDecorator do
   end
 
   context 'without measurements' do
-    let(:goal) do
-      GoalDecorator.decorate(instance_double(Goal, measurements: []))
-    end
-
     describe '#target' do
       it 'returns ?' do
         expect(goal.target).to eq('?')
@@ -76,9 +90,7 @@ RSpec.describe GoalDecorator do
   end
 
   context 'with one measurement' do
-    let(:goal) do
-      GoalDecorator.decorate(instance_double(Goal, measurements: [double]))
-    end
+    let(:measurements) { [double] }
 
     describe '#daily_historic' do
       it 'returns ?' do
@@ -100,19 +112,7 @@ RSpec.describe GoalDecorator do
   end
 
   context 'with multiple measurements' do
-    let(:calculator) { instance_double(GoalCalculator) }
-    let(:value) { instance_double(Float) }
-    let(:date) { instance_double(DateTime) }
-    let(:goal_double) do
-      instance_double(
-        Goal,
-        date: date,
-        value: value,
-        measurements: [double, double],
-        calculations: calculator
-      )
-    end
-    let(:goal) { GoalDecorator.decorate(goal_double) }
+    let(:measurements) { [double, double] }
 
     describe '#target' do
       it 'formats calculated value' do
@@ -161,7 +161,7 @@ RSpec.describe GoalDecorator do
 
     describe '#latest_value' do
       it 'returns latest measurement value' do
-        expect(goal_double).to receive(:latest_measurement).and_return(
+        expect(goal).to receive(:latest_measurement).and_return(
           double(value: 65)
         )
         expect(goal.latest_value).to eq('65.0')
