@@ -41,7 +41,7 @@ class GoalDecorator < ApplicationDecorator
 
   def latest_value
     return '?' unless measurements.any?
-    latest_measurement.value
+    "#{format_float 1, latest_measurement.value}"
   end
 
   def latest_date
@@ -55,7 +55,7 @@ class GoalDecorator < ApplicationDecorator
 
   def to_go
     return '?' unless measurements.any?
-    calculations.to_go
+    "#{format_float 1, calculations.to_go}"
   end
 
   def projected_value

@@ -125,7 +125,7 @@ RSpec.describe GoalDecorator do
         goal = create(:goal)
         create(:measurement, goal: goal, date: Date.yesterday, value: 80)
         create(:measurement, goal: goal, date: Date.today, value: 70)
-        expect(goal.decorate.latest_value).to eq(70)
+        expect(goal.decorate.latest_value).to eq('70.0')
       end
     end
 
@@ -164,8 +164,9 @@ RSpec.describe GoalDecorator do
   describe '#to_go' do
     context 'with measurements' do
       it 'returns latest measurement minus goal' do
-        goal = create(:goal, :with_measurements).decorate
-        expect(goal.to_go).to eq(goal.latest_measurement.value - goal.value)
+        goal = create(:goal, date: Date.tomorrow, value: 60).decorate
+        create(:measurement, goal: goal, date: Date.yesterday, value: 70)
+        expect(goal.to_go).to eq('10.0')
       end
     end
 
