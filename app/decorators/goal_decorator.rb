@@ -3,18 +3,18 @@ class GoalDecorator < ApplicationDecorator
   delegate_all
 
   def description
-    "#{'%.1f' % value}kg by #{h.format_date(date)}"
+    "#{format_float 1, value}kg by #{h.format_date date}"
   end
 
   def target
     return '?' unless measurements.any?
-    "#{'%.1f' % target_for_today}"
+    "#{format_float 1, target_for_today}"
   end
 
   def target_delta
     return '?' unless measurements.any?
     delta = target_for_today - latest_measurement.value
-    "#{'%.1f' % delta.abs}"
+    "#{format_float 1, delta.abs}"
   end
 
   def target_delta_word
@@ -35,12 +35,12 @@ class GoalDecorator < ApplicationDecorator
 
     days_between = (date - latest_measurement.date).to_i
     per_day = to_go / days_between
-    "#{'%.2f' % per_day}"
+    "#{format_float 2, per_day}"
   end
 
   def daily_historic
     return '?' unless measurements.count > 1
-    "#{'%.2f' % -predictor.coefficients[1]}"
+    "#{format_float 2, -predictor.coefficients[1]}"
   end
 
   def latest_value
@@ -64,7 +64,7 @@ class GoalDecorator < ApplicationDecorator
 
   def projected_value
     return '?' unless measurements.count > 1
-    "#{'%.1f' % predict_value_at(date)}"
+    "#{format_float 1, predict_value_at(date)}"
   end
 
   def projected_date
