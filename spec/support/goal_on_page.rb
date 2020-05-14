@@ -1,6 +1,6 @@
 class GoalOnPage < Struct.new(:params)
   include Capybara::DSL
-  include DateHelper
+  include FormatHelper
 
   def create
     fill_in 'goal_date', with: params[:date]

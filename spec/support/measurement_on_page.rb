@@ -1,6 +1,6 @@
 class MeasurementOnPage < Struct.new(:params)
   include Capybara::DSL
-  include DateHelper
+  include FormatHelper
 
   def create
     fill_in 'measurement_date', with: params[:date]
