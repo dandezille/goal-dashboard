@@ -33,4 +33,11 @@ RSpec.describe Goal do
       expect(goal.first_measurement).to eq(first)
     end
   end
+
+  describe '#calculations' do
+    it 'returns a calculator object' do
+      goal = create(:goal)
+      expect(goal.calculations).to be_a(GoalCalculator)
+    end
+  end
 end

@@ -13,4 +13,8 @@ class Goal < ApplicationRecord
   def first_measurement
     measurements.order(:date).last
   end
+
+  def calculations
+    @calculations ||= GoalCalculator.new(self)
+  end
 end
