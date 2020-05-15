@@ -19,14 +19,7 @@ class GoalDecorator < ApplicationDecorator
   def target_delta_word
     return '?' unless measurements.any?
     delta = calculations.target_delta
-
-    if delta.abs < 0.1
-      'on target'
-    elsif delta > 0
-      'behind'
-    else
-      'ahead'
-    end
+    target_delta_in_words(delta)
   end
 
   def daily_goal
@@ -118,5 +111,13 @@ class GoalDecorator < ApplicationDecorator
         scales: { xAxes: [{ type: 'time', time: { unit: 'day' } }] }
       }
     }.to_json
+  end
+
+  private
+
+  def target_delta_in_words(delta)
+    return 'on target' if delta.abs < 0.1
+    return 'behind' if delta > 0
+    'ahead'
   end
 end
