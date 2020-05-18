@@ -3,7 +3,7 @@ class GoalsController < ApplicationController
   before_action :find_goal, only: %i[show edit update]
 
   def index
-    if current_user.goals.first
+    if current_user.goals.any?
       redirect_to goal_path(current_user.goals.first)
     else
       redirect_to new_goal_path
