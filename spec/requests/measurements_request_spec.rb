@@ -33,18 +33,18 @@ RSpec.describe 'Measurements' do
         expect(response).to redirect_to(root_path)
         expect(flash[:alert]).to be_present
       end
-    end
 
-    it 'requires a goal' do
-      sign_in
-      measurement_attributes = attributes_for(:measurement)
+      it 'requires the user to own the goal' do
+        goal = create(:goal)
+        measurement_attributes = attributes_for(:measurement)
 
-      expect do
-        post measurements_path, params: { measurement: measurement_attributes }
-      end.not_to change(Measurement, :count)
+        expect do
+          post goal_measurements_path(goal), params: { measurement: measurement_attributes }
+        end.not_to change(Measurement, :count)
 
-      expect(response).to redirect_to(root_path)
-      expect(flash[:alert]).to be_present
+        expect(response).to redirect_to(root_path)
+        expect(flash[:alert]).to be_present
+      end
     end
 
     it 'redirects if not signed in' do

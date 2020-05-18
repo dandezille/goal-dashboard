@@ -1,6 +1,7 @@
 class MeasurementsController < ApplicationController
   before_action :require_login
   before_action :find_measurement, only: :destroy
+  before_action :find_goal, only: :create
 
   def create
     if create_measurement
@@ -29,10 +30,14 @@ class MeasurementsController < ApplicationController
     @measurement = Measurement.find(params[:id])
   end
 
+  def find_goal
+    @goal = Goal.find(params[:goal_id])
+  end
+
   def create_measurement
-    if !current_user.goal
+    if @goal.user != current_user
       @measurement = Measurement.new
-      @measurement.errors[:base] << 'Goal is required'
+      @measurement.errors[:base] << 'User does not own this goal'
       return false
     end
 
