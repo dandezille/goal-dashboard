@@ -11,7 +11,7 @@ RSpec.describe 'Measurements' do
         measurement_attributes = attributes_for(:measurement)
 
         expect do
-          post goal_measurements_path(user.goal),
+          post goal_measurements_path(user.goals.first),
                params: { measurement: measurement_attributes }
         end.to change(Measurement, :count).by(1)
 
@@ -26,7 +26,7 @@ RSpec.describe 'Measurements' do
 
       it 'shows errors for invalid input' do
         expect do
-          post goal_measurements_path(user.goal),
+          post goal_measurements_path(user.goals.first),
                params: { measurement: attributes_for(:measurement, date: '') }
         end.not_to change(Measurement, :count)
 
@@ -50,7 +50,7 @@ RSpec.describe 'Measurements' do
 
     it 'redirects if not signed in' do
       expect do
-        post goal_measurements_path(user.goal),
+        post goal_measurements_path(user.goals.first),
              params: { measurement: attributes_for(:measurement) }
       end.not_to change(Measurement, :count)
 
