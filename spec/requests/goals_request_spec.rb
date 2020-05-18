@@ -24,7 +24,7 @@ RSpec.describe 'Goals' do
 
         it 'redirects to goal page' do
           get goals_path
-          expect(response).to redirect_to(goal_path(current_user.goal))
+          expect(response).to redirect_to(goal_path(current_user.goals.first))
         end
       end
     end

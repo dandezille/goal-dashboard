@@ -41,7 +41,7 @@ class MeasurementsController < ApplicationController
       return false
     end
 
-    @measurement = current_user.goal.measurements.create(measurement_params)
+    @measurement = @goal.measurements.create(measurement_params)
     @measurement.save
   end
 

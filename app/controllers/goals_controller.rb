@@ -3,8 +3,9 @@ class GoalsController < ApplicationController
   before_action :find_goal, only: %i[show edit update]
 
   def index
-    if current_user.goal
-      redirect_to goal_path(current_user.goal)
+    if current_user.goals.any?
+      # TODO show list of goals
+      redirect_to goal_path(current_user.goals.first)
     else
       redirect_to new_goal_path
     end
@@ -45,7 +46,7 @@ class GoalsController < ApplicationController
   end
 
   def create_goal
-    @goal = current_user.create_goal(goal_params)
+    @goal = current_user.goals.create(goal_params)
   end
 
   def goal_params

@@ -18,7 +18,15 @@ FactoryBot.define do
     password { 'super_secret' }
 
     trait :with_goal do
-      association :goal
+      after(:stub) do |user, eval|
+        stub_list :goal, 1, user: user
+      end
+      after(:build) do |user, eval|
+        build_list :goal, 1, user: user
+      end
+      after(:create) do |user, eval|
+        create_list :goal, 1, user: user
+      end
     end
   end
 
