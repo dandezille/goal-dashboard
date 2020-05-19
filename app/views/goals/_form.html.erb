@@ -1,7 +1,5 @@
-<div id="goal_form" class="flex justify-center">
-    <%= simple_form_for @goal, html: { class: 'flex flex-col items-center p-6'} do |f| %>
-        <%= f.input :date, as: :date_picker, wrapper_html: { class: 'flex items-center p-4' }, label_html: { class: 'w-40 text-gray-700 text-sm font-bold text-right' }, input_html: { class: 'w-40 shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' }%>
-        <%= f.input :value, step: '0.1', wrapper_html: { class: 'flex items-center p-4' }, label_html: { class: 'w-40 text-gray-700 text-sm font-bold text-right' }, input_html: { class: 'w-40 shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' }%>
-        <%= f.button :submit, class: 'bg-indigo-600 hover:bg-indigo-900 text-indigo-100 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' %>
-    <% end %>
-</div>
+<%= simple_form_for @goal, html: { class: 'flex flex-col items-center p-6'} do |f| %>
+    <%= f.input :date, as: :date_picker, wrapper_html: { class: 'flex items-center p-4' }, label_html: { class: 'w-40 text-gray-700 text-sm font-bold text-right' }, input_html: { class: 'w-40 shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' }%>
+    <%= f.input :value, step: '0.1', wrapper_html: { class: 'flex items-center p-4' }, label_html: { class: 'w-40 text-gray-700 text-sm font-bold text-right' }, input_html: { class: 'w-40 shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' }%>
+    <%= f.button :submit, class: 'bg-indigo-600 hover:bg-indigo-900 text-indigo-100 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' %>
+<% end %>
