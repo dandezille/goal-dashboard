@@ -1,0 +1,58 @@
+.sign-in,
+.sign-up,
+.password-reset {
+  @apply flex justify-around my-10;
+
+  form {
+    @apply bg-white py-4 shadow-md max-w-lg;
+  }
+
+  h2 {
+    @apply hidden;
+  }
+
+  div {
+    @apply mx-4 mb-6;
+  }
+
+  label {
+    @apply block text-gray-700 text-base font-bold mb-2;
+  }
+
+  .text-field,
+  .password-field {
+    input {
+      @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
+    }
+
+    input:focus {
+      @apply outline-none shadow-outline;
+    }
+  }
+
+  .submit-field {
+    @apply flex justify-around;
+
+    input {
+      @apply max-w-xs bg-indigo-700 text-white font-bold py-2 px-4 rounded;
+    }
+
+    input:hover {
+      @apply bg-indigo-500;
+    }
+
+    input:focus {
+      @apply outline-none shadow-outline;
+    }
+  }
+
+  .other-links {
+    @apply flex justify-around;
+
+    a:hover {
+      @apply text-indigo-700;
+    }
+  }
+}
+
+
