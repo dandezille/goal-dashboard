@@ -1,0 +1,33 @@
+.measurement-form {
+  @apply flex flex-col items-center p-6;
+
+  .input {
+    @apply flex items-center p-4;
+
+    label {
+      @apply w-40 text-gray-700 text-sm font-bold text-right;
+    }
+
+    input {
+      @apply w-40 shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3;
+    }
+
+    input:focus {
+      @apply outline-none shadow-outline;
+    }
+
+  }
+
+  .btn {
+    @apply bg-indigo-600 text-indigo-100 font-bold py-2 px-4 rounded;
+  }
+
+  .btn:hover {
+    @apply bg-indigo-900;
+  }
+
+  .btn:focus {
+    @apply outline-none shadow-outline;
+  }
+}
+
