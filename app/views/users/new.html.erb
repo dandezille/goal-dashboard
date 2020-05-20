@@ -1,5 +1,5 @@
 <div class="center-horizontal my-10">
-  <%= simple_form_for @user, defaults: { wrapper_html: { class: 'form-field'} } do |form| %>
+  <%= simple_form_for @user do |form| %>
 
     <%= form.input :email %>
     <%= form.input :password %>

@@ -14,7 +14,7 @@ SimpleForm.setup do |config|
   # stack. The options given below are used to wrap the
   # whole input.
   config.wrappers :default,
-                  class: :input,
+                  class: 'form-field',
                   hint_class: :field_with_hint,
                   error_class: :field_with_errors,
                   valid_class: :field_without_errors do |b|
