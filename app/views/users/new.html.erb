@@ -1,17 +1,14 @@
 <div class="center-horizontal my-10">
-  <%= form_for @user, html: { class: 'form' } do |form| %>
-    <div class="form-field">
-      <%= form.label :email, class: 'label-gray' %>
-      <%= form.text_field :email, type: 'email', class: 'input-text' %>
-    </div>
+  <%= simple_form_for @user, html: { class: 'form' } do |form| %>
 
-    <div class="form-field">
-      <%= form.label :password, class: 'label-gray' %>
-      <%= form.password_field :password, class: 'input-text' %>
-    </div>
+    <%= form.input :email, wrapper_html: { class: 'form-field' }, label_html: { class:
+    'label-gray'}, input_html: { class: 'input-text' } %>
+
+    <%= form.input :password, wrapper_html: { class: 'form-field' }, label_html: { 
+   class: 'label-gray'}, input_html: { class: 'input-text' }  %>
 
     <div class="form-field center-horizontal">
-      <%= form.submit 'Sign up', class: 'btn-indigo' %>
+      <%= form.button :submit, class: 'btn-indigo' %>
     </div>
 
     <div class="center-horizontal">
