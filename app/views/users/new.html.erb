@@ -1,0 +1,13 @@
+<div class="center-horizontal my-10">
+  <%= form_for @user, html: { class: 'form' } do |form| %>
+    <%= render partial: '/users/form', object: form %>
+
+    <div class="form-field center-horizontal">
+      <%= form.submit 'Sign up', class: 'btn-indigo' %>
+    </div>
+
+    <div class="center-horizontal">
+      <%= link_to t(".sign_in"), sign_in_path %>
+    </div>
+  <% end %>
+</div>
