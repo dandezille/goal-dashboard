@@ -27,11 +27,11 @@
 }
 
 .form {
-  @apply bg-white py-4 shadow-md max-w-lg;
+  @apply bg-white pt-4 px-4 shadow-md max-w-lg;
 }
 
 .form-field {
-  @apply mx-4 mb-6;
+  @apply pb-4;
 }
 
 .link-indigo {

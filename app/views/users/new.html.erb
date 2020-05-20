@@ -4,11 +4,8 @@
     <%= form.input :email %>
     <%= form.input :password %>
 
-    <div class="form-field center-horizontal">
+    <div class="form-field flex justify-between items-center">
       <%= form.button :submit %>
-    </div>
-
-    <div class="center-horizontal">
       <%= link_to t(".sign_in"), sign_in_path, class: 'link-indigo' %>
     </div>
   <% end %>
