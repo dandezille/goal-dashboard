@@ -1,0 +1,44 @@
+.center-horizontal {
+  @apply flex justify-around;
+}
+
+.label-gray {
+  @apply block text-gray-700 text-base font-bold mb-2;
+}
+
+.input-text {
+  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
+}
+
+.input-text:focus {
+  @apply outline-none shadow-outline;
+}
+
+.btn-indigo {
+  @apply max-w-xs bg-indigo-700 text-white font-bold py-2 px-4 rounded;
+}
+
+.btn-indigo:hover {
+  @apply bg-indigo-500;
+}
+
+.btn-indigo:focus {
+  @apply outline-none shadow-outline;
+}
+
+.form {
+  @apply bg-white py-4 shadow-md max-w-lg;
+}
+
+.form-field {
+  @apply mx-4 mb-6;
+}
+
+.link-indigo {
+  @apply text-indigo-900;
+}
+
+.link-indigo:hover {
+  @apply text-indigo-700;
+}
+
