@@ -50,11 +50,7 @@
 <% end %>
 
 <%= render layout: 'shared/card', locals: { title: 'New Measurement' } do %>
-    <%= simple_form_for [@goal, @measurement], html: { class: 'flex justify-between p-2 pl-4 pr-4' } do |f| %>
-        <%= f.input :date, as: :date_picker, label_html: { class: 'hidden lg:inline text-gray-700 text-sm font-bold mb-2' }, input_html: { class: 'shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' } %>
-        <%= f.input :value, step: '0.1', label_html: { class: 'hidden lg:inline text-gray-700 text-sm font-bold mb-2' }, input_html: { class: 'shadow appearance-none border rounded text-gray-700 leading-tight py-2 px-3 ml-3 focus:outline-none focus:shadow-outline' } %>
-        <%= f.button :submit, class: 'bg-indigo-600 hover:bg-indigo-900 text-indigo-100 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' %>
-    <% end %>
+    <%= render 'measurements/form' %>
 <% end %>
 
 <%= render layout: 'shared/card', locals: { title: 'Measurements' } do %>
