@@ -1,3 +1,7 @@
+.label-gray {
+  @apply block text-gray-700 text-base font-bold mb-2;
+}
+
 .sign-in,
 .sign-up,
 .password-reset {
@@ -13,10 +17,6 @@
 
   div {
     @apply mx-4 mb-6;
-  }
-
-  label {
-    @apply block text-gray-700 text-base font-bold mb-2;
   }
 
   .text-field,
