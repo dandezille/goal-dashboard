@@ -2,6 +2,14 @@
   @apply block text-gray-700 text-base font-bold mb-2;
 }
 
+.input-text {
+  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
+}
+
+.input-text:focus {
+  @apply outline-none shadow-outline;
+}
+
 .sign-in,
 .sign-up,
 .password-reset {
@@ -17,17 +25,6 @@
 
   div {
     @apply mx-4 mb-6;
-  }
-
-  .text-field,
-  .password-field {
-    input {
-      @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
-    }
-
-    input:focus {
-      @apply outline-none shadow-outline;
-    }
   }
 
   .submit-field {
