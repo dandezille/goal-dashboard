@@ -6,11 +6,11 @@
   @apply block text-gray-700 text-base font-bold mb-2;
 }
 
-.input-text {
+.form-input {
   @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
 }
 
-.input-text:focus {
+.form-input:focus {
   @apply outline-none shadow-outline;
 }
 
