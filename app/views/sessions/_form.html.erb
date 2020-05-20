@@ -13,7 +13,7 @@
     <%= form.submit "Sign in", class: 'btn-indigo' %>
   </div>
 
-  <div class="flex justify-around">
+  <div class="center-horizontal">
     <% if Clearance.configuration.allow_sign_up? %>
       <%= link_to t(".sign_up"), sign_up_path, class: 'link-indigo' %>
     <% end %>

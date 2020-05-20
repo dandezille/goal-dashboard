@@ -1,3 +1,7 @@
+.center-horizontal {
+  @apply flex justify-around;
+}
+
 .label-gray {
   @apply block text-gray-700 text-base font-bold mb-2;
 }
@@ -20,10 +24,6 @@
 
 .btn-indigo:focus {
   @apply outline-none shadow-outline;
-}
-
-.form-card {
-  @apply flex justify-around my-10;
 }
 
 .form {
