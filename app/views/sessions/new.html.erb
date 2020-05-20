@@ -1,9 +1,8 @@
 <div class="center-horizontal my-10">
-  <%= simple_form_for :session, url: session_path, html: { class: 'form' } do |form| %>
+  <%= simple_form_for :session, url: session_path, defaults: { wrapper_html: { class: 'form-field'}, label_html: { class: 'label-gray'}, input_html: { class: 'input-text' }}, html: { class: 'form' }, html: { class: 'form' } do |form| %>
 
-    <%= form.input :email, wrapper_html: { class: 'form-field' }, label_html: { class: 'label-gray'}, input_html: { class: 'input-text' } %>
-
-    <%= form.input :password, wrapper_html: { class: 'form-field' }, label_html: { class: 'label-gray'}, input_html: { class: 'input-text' } %>
+    <%= form.input :email %>
+    <%= form.input :password %>
 
     <div class="form-field center-horizontal">
       <%= form.button :submit, class: 'btn-indigo' %>
