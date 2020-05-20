@@ -1,16 +1,18 @@
-<div class="center-horizontal my-10">
-  <%= simple_form_for :session, url: session_path do |form| %>
+<div class="center-horizontal">
+  <%= render layout: 'shared/card'  do %>
+    <%= simple_form_for :session, url: session_path do |form| %>
 
-    <%= form.input :email %>
-    <%= form.input :password %>
+      <%= form.input :email %>
+      <%= form.input :password %>
 
-    <div class="form-field flex justify-between items-center">
-      <%= form.button :submit %>
-      <%= link_to t(".forgot_password"), new_password_path, class: 'link-indigo' %>
-    </div>
+      <div class="form-field flex justify-between items-center">
+        <%= form.button :submit %>
+        <%= link_to t(".forgot_password"), new_password_path, class: 'link-indigo' %>
+      </div>
 
-    <div class="form-field center-horizontal">
-      <%= link_to t(".sign_up"), sign_up_path, class: 'link-indigo' %>
-    </div>
+      <div class="form-field center-horizontal">
+        <%= link_to t(".sign_up"), sign_up_path, class: 'link-indigo' %>
+      </div>
+    <% end %>
   <% end %>
 </div>
