@@ -13,10 +13,10 @@
     <%= form.submit "Sign in", class: 'btn-indigo' %>
   </div>
 
-  <div class="other-links">
+  <div class="flex justify-around">
     <% if Clearance.configuration.allow_sign_up? %>
-      <%= link_to t(".sign_up"), sign_up_path %>
+      <%= link_to t(".sign_up"), sign_up_path, class: 'link-indigo' %>
     <% end %>
-    <%= link_to t(".forgot_password"), new_password_path %>
+    <%= link_to t(".forgot_password"), new_password_path, class: 'link-indigo' %>
   </div>
 <% end %>

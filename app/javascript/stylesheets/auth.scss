@@ -22,6 +22,10 @@
   @apply outline-none shadow-outline;
 }
 
+.form-card {
+  @apply flex justify-around my-10;
+}
+
 .form {
   @apply bg-white py-4 shadow-md max-w-lg;
 }
@@ -30,22 +34,11 @@
   @apply mx-4 mb-6;
 }
 
-.sign-in,
-.sign-up,
-.password-reset {
-  @apply flex justify-around my-10;
-
-  h2 {
-    @apply hidden;
-  }
-
-  .other-links {
-    @apply flex justify-around;
-
-    a:hover {
-      @apply text-indigo-700;
-    }
-  }
+.link-indigo {
+  @apply text-indigo-900;
 }
 
+.link-indigo:hover {
+  @apply text-indigo-700;
+}
 
