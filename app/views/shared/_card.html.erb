@@ -1,7 +1,7 @@
 <div class="my-6 lg:flex lg:justify-around">
   <div class="card lg:rounded-lg">
     <% if local_assigns.has_key? :title %>
-      <div class="bg-indigo-800 lg:rounded-t-lg text-indigo-100 p-6 lg:p-2 lg:pl-4"><%= title %></div>
+        <div class="bg-indigo-800 lg:rounded-t-lg text-indigo-100 p-6 lg:p-2 lg:pl-4"><%= title %></div>
     <% end %>
     <%= yield %>
   </div>
