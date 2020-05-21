@@ -1,14 +1,12 @@
-<div class="center-horizontal">
-  <%= render layout: 'shared/card' do %>
-    <%= simple_form_for @user do |form| %>
+<%= render layout: 'shared/card' do %>
+  <%= simple_form_for @user do |form| %>
 
-      <%= form.input :email %>
-      <%= form.input :password %>
+    <%= form.input :email %>
+    <%= form.input :password %>
 
-      <div class="form-field flex justify-between items-center">
-        <%= form.button :submit %>
-        <%= link_to t(".sign_in"), sign_in_path, class: 'link-indigo' %>
-      </div>
-    <% end %>
+    <div class="form-field flex justify-between items-center">
+      <%= form.button :submit %>
+      <%= link_to t(".sign_in"), sign_in_path, class: 'link-indigo' %>
+    </div>
   <% end %>
-</div>
+<% end %>

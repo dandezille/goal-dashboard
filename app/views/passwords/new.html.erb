@@ -1,11 +1,9 @@
-<div class="center-horizontal">
-  <%= render layout: 'shared/card' do %>
-    <%= simple_form_for :password, url: passwords_path do |form| %>
-      <%= form.input :email %>
+<%= render layout: 'shared/card' do %>
+  <%= simple_form_for :password, url: passwords_path do |form| %>
+    <%= form.input :email %>
 
-      <div class="form-field center-horizontal">
-        <%= form.button :submit %>
-      </div>
-    <% end %>
+    <div class="form-field center-horizontal">
+      <%= form.button :submit %>
+    </div>
   <% end %>
-</div>
+<% end %>
