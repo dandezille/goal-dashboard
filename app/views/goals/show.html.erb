@@ -9,7 +9,7 @@
 </div>
 
 <%= render layout: 'shared/card' do %>
-    <div class="flex justify-around py-6">
+    <div class="flex justify-around pb-4">
         <div>
             <div class="flex flex-col items-center">
                 <div class="text-base"><%= @goal.latest_date %></div>
@@ -46,7 +46,7 @@
 <% end %>
 
 <%= render layout: 'shared/card' do %>
-    <canvas id="measurements_graph" class="p-6"></canvas>
+    <canvas id="measurements_graph" class="pb-4"></canvas>
 <% end %>
 
 <%= render layout: 'shared/card', locals: { title: 'New Measurement' } do %>
@@ -54,7 +54,9 @@
 <% end %>
 
 <%= render layout: 'shared/card', locals: { title: 'Measurements' } do %>
+  <div class="pb-4">
     <%= render @goal.measurements %>
+  </div>
 <% end %>
 
 <script>
