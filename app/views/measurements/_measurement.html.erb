@@ -2,6 +2,6 @@
     <div class="date w-3/5"><%= format_date(measurement.date) %></div>
     <div class="value w-1/5 text-center"><%= measurement.value %></div>
     <div class="w-1/5 text-right hover:underline">
-        <%= button_to "Delete", [measurement.goal, measurement], method: :delete, data: { confirm: "Are you sure?" } %>
+        <%= link_to "Delete", [measurement.goal, measurement], method: :delete, data: { confirm: "Are you sure?" } %>
     </div>
 </div>
