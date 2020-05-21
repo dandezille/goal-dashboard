@@ -1,8 +1,8 @@
-<%= simple_form_for [@goal, @measurement], html: { class: 'flex justify-between' }, defaults: { wrapper_html: { class: 'flex items-baseline' } } do |f| %>
+<%= simple_form_for [@goal, @measurement], html: { class: 'flex justify-between items-baseline' }, defaults: { wrapper_html: { class: 'flex items-baseline mr-4' }, label_html: { class: 'hidden' } } do |f| %>
   <%= f.input :date, as: :date_picker %>
   <%= f.input :value, step: '0.1' %>
 
   <div class="form-field">
-    <%= f.button :submit %>
+    <%= f.button :submit, class: 'py-1' %>
   </div>
 <% end %>   
