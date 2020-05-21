@@ -1,6 +1,15 @@
-<div class="card lg:m-4 lg:rounded-lg">
-    <% if local_assigns.has_key? :title %>
-        <div class="bg-indigo-800 lg:rounded-t-lg text-indigo-100 p-6 lg:p-2 lg:pl-4"><%= title %></div>
-    <% end %>
+<% if local_assigns.has_key? :title %>
+  <% card_class = 'lg:rounded-b-lg' %>
+<% else %>
+  <% card_class = 'lg:rounded-lg' %>
+<% end %>
+
+<div class="lg:m-4">
+  <% if local_assigns.has_key? :title %>
+    <div class="bg-indigo-800 lg:rounded-t-lg text-indigo-100 p-6 lg:p-2 lg:pl-4"><%= title %></div>
+  <% end %>
+
+  <div class="card <%= card_class %>">
     <%= yield %>
+  </div>
 </div>

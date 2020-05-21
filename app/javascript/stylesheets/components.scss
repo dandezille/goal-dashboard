@@ -19,11 +19,11 @@
 }
 
 .card {
-  @apply bg-white shadow-md;
+  @apply bg-white shadow-md p-4 pb-0;
 }
 
 .form {
-  @apply p-4 pb-0 max-w-lg;
+  @apply max-w-lg;
 }
 
 .form-field {
