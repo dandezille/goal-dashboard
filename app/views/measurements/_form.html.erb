@@ -1,4 +1,4 @@
-<%= simple_form_for [@goal, @measurement], html: { class: 'flex justify-between' } do |f| %>
+<%= simple_form_for [@goal, @measurement], html: { class: 'flex justify-between' }, defaults: { wrapper_html: { class: 'flex items-baseline' } } do |f| %>
   <%= f.input :date, as: :date_picker %>
   <%= f.input :value, step: '0.1' %>
 
