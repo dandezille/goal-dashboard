@@ -1,24 +1,16 @@
-<div class="center-horizontal my-10">
-  <%= form_for :session, url: session_path, html: { class: 'form' } do |form| %>
-    <div class="form-field">
-      <%= form.label :email, class: 'label-gray' %>
-      <%= form.text_field :email, type: 'email', class: 'input-text' %>
-    </div>
+<%= render layout: 'shared/card'  do %>
+  <%= simple_form_for :session, url: session_path do |form| %>
 
-    <div class="form-field">
-      <%= form.label :password, class: 'label-gray' %>
-      <%= form.password_field :password, class: 'input-text' %>
+    <%= form.input :email %>
+    <%= form.input :password %>
+
+    <div class="form-field flex justify-between items-center">
+      <%= form.button :submit %>
+      <%= link_to t(".forgot_password"), new_password_path, class: 'link-indigo' %>
     </div>
 
     <div class="form-field center-horizontal">
-      <%= form.submit "Sign in", class: 'btn-indigo' %>
-    </div>
-
-    <div class="center-horizontal">
-      <% if Clearance.configuration.allow_sign_up? %>
-        <%= link_to t(".sign_up"), sign_up_path, class: 'link-indigo' %>
-      <% end %>
-      <%= link_to t(".forgot_password"), new_password_path, class: 'link-indigo' %>
+      <%= link_to t(".sign_up"), sign_up_path, class: 'link-indigo' %>
     </div>
   <% end %>
-</div>
+<% end %>

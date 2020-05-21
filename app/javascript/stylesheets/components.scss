@@ -3,15 +3,7 @@
 }
 
 .label-gray {
-  @apply block text-gray-700 text-base font-bold mb-2;
-}
-
-.input-text {
-  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
-}
-
-.input-text:focus {
-  @apply outline-none shadow-outline;
+  @apply block text-gray-700 text-base font-bold mb-2 mr-4;
 }
 
 .btn-indigo {
@@ -26,12 +18,24 @@
   @apply outline-none shadow-outline;
 }
 
-.form {
-  @apply bg-white py-4 shadow-md max-w-lg;
+.card {
+  @apply bg-white shadow-md;
+}
+
+.form-basic {
+  @apply p-4 pb-0;
 }
 
 .form-field {
-  @apply mx-4 mb-6;
+  @apply pb-4;
+}
+
+.form-input {
+  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
+}
+
+.form-input:focus {
+  @apply outline-none shadow-outline;
 }
 
 .link-indigo {
