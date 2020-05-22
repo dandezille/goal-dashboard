@@ -3,6 +3,7 @@ class Goal < ApplicationRecord
   has_many :measurements, dependent: :destroy
 
   validates :user_id, presence: true
+  validates :title, presence: true
   validates :date, presence: true
   validates :value, presence: true
 
