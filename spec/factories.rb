@@ -38,7 +38,8 @@ FactoryBot.define do
 
   factory :goal do
     user
-    title { 'Weight' }
+    title { 'Do' }
+    units { 'things' }
     date { generate(:future_date) }
     value { generate(:measurement) }
 
