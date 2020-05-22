@@ -4,6 +4,7 @@ class GoalOnPage < Struct.new(:params)
 
   def create
     fill_in 'goal_title', with: params[:title]
+    fill_in 'goal_units', with: params[:units]
     fill_in 'goal_date', with: params[:date]
     fill_in 'goal_value', with: params[:value]
     click_button 'Update goal'
@@ -17,6 +18,7 @@ class GoalOnPage < Struct.new(:params)
   def visible?
     page.has_css? '#goal' do |element|
       element.has_content?(params[:title]) &&
+      element.has_content?(params[:units]) &&
         element.has_content?(params[:value]) &&
         element.has_content?(format_date(params[:date]))
     end
