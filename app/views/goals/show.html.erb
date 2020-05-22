@@ -12,25 +12,25 @@
     <div class="flex justify-around p-4">
       <div class="flex flex-col items-center mx-6">
         <div class="text-base"><%= @goal.latest_date %></div>
-        <div class="lg:text-3xl"><%= @goal.latest_value %>kg</div>
-        <div class="lg:text-3xl"><%= @goal.to_go %>kg</div>
+        <div class="lg:text-3xl"><%= @goal.latest_value %><%= @goal.units %></div>
+        <div class="lg:text-3xl"><%= @goal.to_go %><%= @goal.units %></div>
         <div class="text-base">to go</div>
       </div>
       <div class="flex flex-col items-center mx-6">
         <div class="text-base">target</div>
-        <div class="lg:text-3xl"><%= @goal.target %>kg</div>
-        <div class="lg:text-3xl"><%= @goal.target_delta %>kg</div>
+        <div class="lg:text-3xl"><%= @goal.target %><%= @goal.units %></div>
+        <div class="lg:text-3xl"><%= @goal.target_delta %><%= @goal.units %></div>
         <div class="text-base"><%= @goal.target_delta_word %></div>
       </div>
       <div class="flex flex-col items-center mx-6">
         <div class="text-base">target per day</div>
-        <div class="lg:text-3xl"><%= @goal.daily_goal %>kg</div>
-        <div class="lg:text-3xl"><%= @goal.daily_historic %>kg</div>
+        <div class="lg:text-3xl"><%= @goal.daily_goal %><%= @goal.units %></div>
+        <div class="lg:text-3xl"><%= @goal.daily_historic %><%= @goal.units %></div>
         <div class="text-base">actual per day</div>
       </div>
       <div class="flex flex-col items-center mx-6">
         <div class="text-base">goal date</div>
-        <div class="lg:text-3xl"><%= @goal.projected_value %>kg</div>
+        <div class="lg:text-3xl"><%= @goal.projected_value %><%= @goal.units %></div>
         <div class="lg:text-3xl"><%= @goal.projected_date %></div>
         <div class="text-base">goal value</div>
       </div>
