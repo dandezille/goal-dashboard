@@ -96,6 +96,7 @@ RSpec.describe 'Goals' do
 
         goal = Goal.first
         expect(goal.user).to eq(@current_user)
+        expect(goal.title).to eq(goal_attributes[:title])
         expect(goal.date).to eq(goal_attributes[:date].to_date)
         expect(goal.value).to eq(goal_attributes[:value])
       end
