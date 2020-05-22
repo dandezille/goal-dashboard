@@ -65,6 +65,14 @@ RSpec.describe 'Goals' do
         get goal_path(goal)
         expect(response).to redirect_to(goals_path)
       end
+      
+      it 'must exist' do
+        goal = create(:goal)
+        goal.delete
+
+        get goal_path(goal)
+        expect(response).to redirect_to(goals_path)
+      end
     end
   end
 
