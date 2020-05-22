@@ -4,7 +4,7 @@
       <%= goal.title %>
     </div>
     <div class="w-full text-center lg:p-2">
-      <%= "#{format_float 1, goal.target}#{goal.units}" %>
+      <%= format_float 1, goal.target %><%= goal.units %>
       by
       <%= format_date goal.date %>
     </div>
