@@ -1,14 +1,14 @@
 <div class="lg:flex lg:justify-center my-6 lg:m-6">
   <div id="goal" class="flex items-center bg-white lg:rounded-lg shadow-md">
     <div class="p-6 lg:p-2 lg:pl-3 lg:rounded-l-lg bg-indigo-800 text-indigo-100">
-      <%= @goal.title %>
+      <%= goal.title %>
     </div>
     <div class="w-full text-center lg:p-2">
-      <%= "#{format_float 1, @goal.target}#{@goal.units}" %>
+      <%= "#{format_float 1, goal.target}#{goal.units}" %>
       by
-      <%= format_date @goal.date %>
+      <%= format_date goal.date %>
     </div>
-    <%= link_to edit_goal_path(@goal) do %>
+    <%= link_to edit_goal_path(goal) do %>
       <i class="fas fa-edit p-6 lg:p-2 lg:pr-3 text-indigo-800 hover:text-indigo-600"></i>
     <% end %>
   </div>

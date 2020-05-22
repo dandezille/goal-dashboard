@@ -1,4 +1,4 @@
-<%= render 'goals/description' %>
+<%= render partial: 'goals/description', locals: { goal: @goal } %>
 
 <%= render layout: 'shared/card' do %>
     <div class="flex justify-around p-4">
