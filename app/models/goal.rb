@@ -6,7 +6,7 @@ class Goal < ApplicationRecord
   validates :title, presence: true
   validates :units, presence: true
   validates :date, presence: true
-  validates :value, presence: true
+  validates :target, presence: true
 
   def latest_measurement
     measurements.order(:date).first

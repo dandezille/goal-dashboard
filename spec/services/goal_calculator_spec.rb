@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe GoalCalculator do
-  let(:goal) { create(:goal, date: Date.tomorrow, value: 70) }
+  let(:goal) { create(:goal, date: Date.tomorrow, target: 70) }
   let(:calcs) { GoalCalculator.new(goal) }
 
   context 'without measurements' do

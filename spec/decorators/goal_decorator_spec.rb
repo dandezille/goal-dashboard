@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe GoalDecorator do
   let(:calculator) { instance_double(GoalCalculator) }
   let(:units) { 'kg' }
-  let(:value) { instance_double(Float) }
+  let(:target) { instance_double(Float) }
   let(:date) { instance_double(DateTime) }
   let(:measurements) { [] }
   let(:goal) do
@@ -12,7 +12,7 @@ RSpec.describe GoalDecorator do
         Goal,
         units: units,
         date: date,
-        value: value,
+        target: target,
         measurements: measurements,
         calculations: calculator,
         latest_measurement: double(value: 65)
@@ -21,7 +21,7 @@ RSpec.describe GoalDecorator do
   end
 
   describe '#description' do
-    let(:value) { 72.32 }
+    let(:target) { 72.32 }
     let(:date) { '2020-05-02' }
 
     it 'describes the goal' do
@@ -205,7 +205,7 @@ RSpec.describe GoalDecorator do
 
     describe '#projected_date' do
       it 'predicts date at goal end value' do
-        expect(calculator).to receive(:predict_date_for).with(value).and_return(
+        expect(calculator).to receive(:predict_date_for).with(target).and_return(
           Date.parse('2020-05-01')
         )
         expect(goal.projected_date).to eq('1st May')
