@@ -38,6 +38,7 @@ FactoryBot.define do
 
   factory :goal do
     user
+    title { 'Weight' }
     date { generate(:future_date) }
     value { generate(:measurement) }
 
