@@ -16,7 +16,8 @@ class GoalOnPage < Struct.new(:params)
 
   def visible?
     page.has_css? '#goal' do |element|
-      element.has_content?(params[:value]) &&
+      element.has_content?(params[:title]) &&
+        element.has_content?(params[:value]) &&
         element.has_content?(format_date(params[:date]))
     end
   end
