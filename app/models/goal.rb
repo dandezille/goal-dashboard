@@ -4,6 +4,7 @@ class Goal < ApplicationRecord
 
   validates :user_id, presence: true
   validates :title, presence: true
+  validates :units, presence: true
   validates :date, presence: true
   validates :value, presence: true
 
