@@ -3,7 +3,7 @@ class GoalDecorator < ApplicationDecorator
   delegate_all
 
   def description
-    "#{format_float 1, value}kg by #{h.format_date date}"
+    "#{format_float 1, value}#{units} by #{h.format_date date}"
   end
 
   def target

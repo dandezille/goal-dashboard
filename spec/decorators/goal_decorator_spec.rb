@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe GoalDecorator do
   let(:calculator) { instance_double(GoalCalculator) }
+  let(:units) { 'kg' }
   let(:value) { instance_double(Float) }
   let(:date) { instance_double(DateTime) }
   let(:measurements) { [] }
@@ -9,6 +10,7 @@ RSpec.describe GoalDecorator do
     GoalDecorator.decorate(
       instance_double(
         Goal,
+        units: units,
         date: date,
         value: value,
         measurements: measurements,

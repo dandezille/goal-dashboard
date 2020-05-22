@@ -3,6 +3,14 @@ FactoryBot.define do
     "user#{n}@example.com"
   end
 
+  sequence :goal_title do |n|
+    "Goal #{n}"
+  end
+
+  sequence :goal_units do |n|
+    "Units#{n}"
+  end
+
   sequence :measurement, 70
 
   sequence :past_date do |n|
@@ -38,7 +46,8 @@ FactoryBot.define do
 
   factory :goal do
     user
-    title { 'Weight' }
+    title { generate(:goal_title) }
+    units { generate(:goal_units) }
     date { generate(:future_date) }
     value { generate(:measurement) }
 
