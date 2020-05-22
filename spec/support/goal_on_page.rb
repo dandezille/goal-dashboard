@@ -3,6 +3,7 @@ class GoalOnPage < Struct.new(:params)
   include FormatHelper
 
   def create
+    fill_in 'goal_title', with: params[:title]
     fill_in 'goal_date', with: params[:date]
     fill_in 'goal_value', with: params[:value]
     click_button 'Update goal'
