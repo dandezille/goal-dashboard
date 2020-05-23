@@ -27,18 +27,18 @@ RSpec.describe 'Goals' do
     end
 
     context 'when signed in' do
-      before { sign_in }
+      let(:user) { create(:user) }
 
       it 'is successful' do
-        goal = create(:goal, user: current_user)
-        get goal_path(goal)
+        goal = create(:goal, user: user)
+        get goal_path(goal, as: user)
         expect(response).to be_successful
       end
 
       it 'shows measurements' do
-        goal = create(:goal, :with_measurements, user: current_user)
+        goal = create(:goal, :with_measurements, user: user)
 
-        get goal_path(goal)
+        get goal_path(goal, as: user)
         expect(response).to be_successful
 
         goal.measurements.each do |measurement|
@@ -49,7 +49,7 @@ RSpec.describe 'Goals' do
       it 'only shows the users goals' do
         goal = create(:goal, :with_measurements)
 
-        get goal_path(goal)
+        get goal_path(goal, as: user)
         expect(response).to redirect_to(goals_path)
       end
       
@@ -57,7 +57,7 @@ RSpec.describe 'Goals' do
         goal = create(:goal)
         goal.delete
 
-        get goal_path(goal)
+        get goal_path(goal, as: user)
         expect(response).to redirect_to(goals_path)
         expect(flash[:alert]).to be_present
       end
