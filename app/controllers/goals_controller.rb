@@ -12,7 +12,6 @@ class GoalsController < ApplicationController
   end
 
   def show
-    redirect_to goals_path unless @goal.user == current_user
     @goal = @goal.decorate
     @measurement = Measurement.new(date: Date.today)
   end
@@ -36,13 +35,17 @@ class GoalsController < ApplicationController
   def update
     @goal.update!(goal_params)
     flash[:notice] = 'Goal updated'
-    redirect_to root_path
+    redirect_to goal_path(@goal)
   end
 
   private
-
+  
   def find_goal
-    @goal = Goal.find(params[:id])
+    @goal = Goal.find_by(id: params[:id])
+    if @goal.nil? || @goal.user != current_user
+      flash[:alert] = 'Invalid goal'
+      redirect_to goals_path
+    end
   end
 
   def create_goal

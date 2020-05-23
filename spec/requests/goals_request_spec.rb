@@ -72,6 +72,7 @@ RSpec.describe 'Goals' do
 
         get goal_path(goal)
         expect(response).to redirect_to(goals_path)
+        expect(flash[:alert]).to be_present
       end
     end
   end
@@ -132,8 +133,29 @@ RSpec.describe 'Goals' do
           goal.reload
         end.to change(goal, :target).from(70).to(60)
 
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(goal_path(goal))
         expect(flash[:notice]).to be_present
+      end
+       
+      it 'must belong to the current user' do
+        goal = create(:goal, target: 70)
+
+        expect do
+          put goal_path(goal), params: { goal: { target: 60 } }
+          goal.reload
+        end.not_to change(goal, :target)
+
+        expect(response).to redirect_to(goals_path)
+        expect(flash[:alert]).to be_present
+      end
+
+      it 'must exist' do
+        goal = create(:goal, user: current_user, target: 70)
+        goal.delete
+
+        put goal_path(goal), params: { goal: { target: 60 } }
+        expect(response).to redirect_to(goals_path)
+        expect(flash[:alert]).to be_present
       end
     end
   end
