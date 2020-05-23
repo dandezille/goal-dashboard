@@ -2,89 +2,80 @@ require 'rails_helper'
 
 RSpec.describe 'Measurements' do
   describe 'POST /measurements' do
-    let(:user) { create(:user, :with_goal) }
+    let(:user) { create(:user) }
+    let(:goal) { create(:goal, user: user) }
+    let(:attributes) { attributes_for(:measurement) }
+
+    before do
+      post goal_measurements_path(goal, as: user),
+        params: { measurement: attributes }
+    end
 
     it_behaves_like 'requires sign in' do
-      before do
-        post goal_measurements_path(user.goals.first),
-             params: { measurement: attributes_for(:measurement) }
-      end
+      let(:user) { nil }
+      let(:goal) { create(:goal) }
     end
 
     context 'when user signed in' do
-      it 'creates a measurement' do
-        measurement_attributes = attributes_for(:measurement)
+      context 'measurement is created' do
+        let(:measurement) { Measurement.first }
 
-        expect do
-          post goal_measurements_path(user.goals.first, as: user),
-               params: { measurement: measurement_attributes }
-        end.to change(Measurement, :count).by(1)
+        it { is_expected.to redirect_to(root_path) }
+        it { expect(Measurement.count).to eq(1) }
+        it { expect(flash[:notice]).to be_present }
 
-        expect(response).to redirect_to(root_path)
-        expect(flash[:notice]).to be_present
-
-        measurement = Measurement.first
-        expect(measurement.goal).to eq(user.goals.first)
-        expect(measurement.date).to eq(measurement_attributes[:date].to_date)
-        expect(measurement.value).to eq(measurement_attributes[:value])
+        it 'populates fields' do
+          expect(measurement.goal).to eq(user.goals.first)
+          expect(measurement.date).to eq(attributes[:date].to_date)
+          expect(measurement.value).to eq(attributes[:value])
+        end
       end
 
-      it 'shows errors for invalid input' do
-        expect do
-          post goal_measurements_path(user.goals.first, as: user),
-               params: { measurement: attributes_for(:measurement, date: '') }
-        end.not_to change(Measurement, :count)
+      context 'with invalid input' do
+        let(:attributes) { attributes_for(:measurement, date: '') }
 
-        expect(response).to redirect_to(root_path)
-        expect(flash[:alert]).to be_present
+        it { is_expected.to redirect_to(root_path) }
+        it { expect(Measurement.count).to eq(0) }
+        it { expect(flash[:alert]).to be_present }
       end
 
-      it 'requires the user to own the goal' do
-        goal = create(:goal)
-        measurement_attributes = attributes_for(:measurement)
+      context 'when user doesn\'t own the goal' do
+        let(:goal) { create(:goal) }
 
-        expect do
-          post goal_measurements_path(goal, as: user),
-               params: { measurement: measurement_attributes }
-        end.not_to change(Measurement, :count)
-
-        expect(response).to redirect_to(root_path)
-        expect(flash[:alert]).to be_present
+        it { is_expected.to redirect_to(root_path) }
+        it { expect(Measurement.count).to eq(0) }
+        it { expect(flash[:alert]).to be_present }
       end
     end
   end
 
   describe 'DELETE /measurements/:id' do
+    let(:user) { create(:user, :with_goal) }
+    let(:goal) { create(:goal, user: user) }
+    let(:measurement) { create(:measurement, goal: goal) }
+
+    before do
+      delete goal_measurement_path(measurement.goal, measurement, as: user)
+    end
+
     it_behaves_like 'requires sign in' do
-      before do
-        measurement = create(:measurement)
-        delete goal_measurement_path(measurement.goal, measurement)
-      end
+      let(:user) { nil }
+      let(:measurement) { create(:measurement) }
     end
 
     context 'when user signed in' do
-      let(:user) { create(:user, :with_goal) }
-
-      it 'deletes the given measurement' do
-        measurement = create(:measurement, goal: user.goals.first)
-
-        expect {
-          delete goal_measurement_path(measurement.goal, measurement, as: user)
-        }.to change(Measurement, :count).by(-1)
-
-        expect(response).to redirect_to(root_path)
-        expect(flash[:notice]).to be_present
+      context 'measurement is deleted' do
+        it { is_expected.to redirect_to(root_path) }
+        it { expect(Measurement.count).to eq(0) }
+        it { expect(flash[:notice]).to be_present }
       end
 
-      it 'fails for other users measurements' do
-        measurement = create(:measurement)
+      context 'when user doesn\'t own the goal' do
+        let(:goal) { create(:goal) }
 
-        expect {
-          delete goal_measurement_path(measurement.goal, measurement, as: user)
-        }.not_to change(Measurement, :count)
-
-        expect(response).to redirect_to(root_path)
-        expect(flash[:alert]).to be_present
+        it { is_expected.to redirect_to(root_path) }
+        it { expect(Measurement.count).to eq(1) }
+        it { expect(flash[:alert]).to be_present }
       end
     end
   end
