@@ -49,7 +49,7 @@ FactoryBot.define do
     title { generate(:goal_title) }
     units { generate(:goal_units) }
     date { generate(:future_date) }
-    value { generate(:measurement) }
+    target { generate(:measurement) }
 
     trait :with_measurements do
       transient { measurements_count { 5 } }

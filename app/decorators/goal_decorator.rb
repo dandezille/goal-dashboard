@@ -3,7 +3,7 @@ class GoalDecorator < ApplicationDecorator
   delegate_all
 
   def description
-    "#{format_float 1, value}#{units} by #{h.format_date date}"
+    "#{format_float 1, model.target}#{units} by #{h.format_date date}"
   end
 
   def target
@@ -58,7 +58,7 @@ class GoalDecorator < ApplicationDecorator
 
   def projected_date
     return '?' unless measurements.count > 1
-    "#{h.format_date(calculations.predict_date_for(value))}"
+    "#{h.format_date(calculations.predict_date_for(model.target))}"
   end
 
   def chart_definition
@@ -68,7 +68,7 @@ class GoalDecorator < ApplicationDecorator
     if first_measurement
       target_data = [
         { x: first_measurement.date, y: first_measurement.value },
-        { x: date, y: value }
+        { x: date, y: target }
       ]
     end
 

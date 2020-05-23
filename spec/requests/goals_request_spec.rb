@@ -98,7 +98,7 @@ RSpec.describe 'Goals' do
         expect(goal.user).to eq(@current_user)
         expect(goal.title).to eq(goal_attributes[:title])
         expect(goal.date).to eq(goal_attributes[:date].to_date)
-        expect(goal.value).to eq(goal_attributes[:value])
+        expect(goal.target).to eq(goal_attributes[:target])
       end
     end
   end
@@ -117,12 +117,12 @@ RSpec.describe 'Goals' do
       before { sign_in }
 
       it 'updates the goal' do
-        goal = create(:goal, user: current_user, value: 70)
+        goal = create(:goal, user: current_user, target: 70)
 
         expect do
-          put goal_path(goal), params: { goal: { value: 60 } }
+          put goal_path(goal), params: { goal: { target: 60 } }
           goal.reload
-        end.to change(goal, :value).from(70).to(60)
+        end.to change(goal, :target).from(70).to(60)
 
         expect(response).to redirect_to(root_path)
         expect(flash[:notice]).to be_present
