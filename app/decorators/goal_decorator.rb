@@ -6,17 +6,17 @@ class GoalDecorator < ApplicationDecorator
     "#{format_float 1, model.target}#{units} by #{h.format_date date}"
   end
 
-  def target
+  def today
     return '?' unless measurements.any?
     "#{format_float 1, calculations.target}"
   end
 
-  def target_delta
+  def today_delta
     return '?' unless measurements.any?
     "#{format_float 1, calculations.target_delta.abs}"
   end
 
-  def target_delta_word
+  def today_delta_word
     return '?' unless measurements.any?
     delta = calculations.target_delta
     target_delta_in_words(delta)
