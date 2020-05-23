@@ -70,24 +70,23 @@ RSpec.describe 'Goals' do
     end
 
     context 'when user signed in' do
-      before { sign_in }
+      let(:user) { create(:user) }
+      let(:attributes) { attributes_for(:goal) }
+      let(:goal) { Goal.first }
 
-      it 'creates a goal' do
-        goal_attributes = attributes_for(:goal)
+      before do
+        post goals_path(as: user), params: { goal: attributes }
+      end
 
-        expect { post goals_path, params: { goal: goal_attributes } }.to change(
-          Goal,
-          :count
-        ).by(1)
+      it { expect(response).to redirect_to(root_path) }
+      it { expect(flash[:notice]).to be_present }
+      it { expect(Goal.count).to eq(1) }
 
-        expect(response).to redirect_to(root_path)
-        expect(flash[:notice]).to be_present
-
-        goal = Goal.first
-        expect(goal.user).to eq(@current_user)
-        expect(goal.title).to eq(goal_attributes[:title])
-        expect(goal.date).to eq(goal_attributes[:date].to_date)
-        expect(goal.target).to eq(goal_attributes[:target])
+      it 'populates fields' do
+        expect(goal.user).to eq(user)
+        expect(goal.title).to eq(attributes[:title])
+        expect(goal.date).to eq(attributes[:date].to_date)
+        expect(goal.target).to eq(attributes[:target])
       end
     end
   end
