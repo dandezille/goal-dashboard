@@ -4,6 +4,13 @@ RSpec.describe 'Measurements' do
   describe 'POST /measurements' do
     let(:user) { create(:user, :with_goal) }
 
+    it_behaves_like 'requires sign in' do
+      before do
+        post goal_measurements_path(user.goals.first),
+             params: { measurement: attributes_for(:measurement) }
+      end
+    end
+
     context 'when user signed in' do
       before { sign_in_as user }
 
@@ -47,19 +54,16 @@ RSpec.describe 'Measurements' do
         expect(flash[:alert]).to be_present
       end
     end
-
-    it 'redirects if not signed in' do
-      expect do
-        post goal_measurements_path(user.goals.first),
-             params: { measurement: attributes_for(:measurement) }
-      end.not_to change(Measurement, :count)
-
-      expect(response).to redirect_to(sign_in_path)
-      expect(flash[:alert]).to be_present
-    end
   end
 
   describe 'DELETE /measurements/:id' do
+    it_behaves_like 'requires sign in' do
+      before do
+        measurement = create(:measurement)
+        delete goal_measurement_path(measurement.goal, measurement)
+      end
+    end
+
     context 'when user signed in' do
       before { sign_in_as create(:user, :with_goal) }
 
@@ -84,17 +88,6 @@ RSpec.describe 'Measurements' do
         expect(response).to redirect_to(root_path)
         expect(flash[:alert]).to be_present
       end
-    end
-
-    it 'redirects if not signed in' do
-      measurement = create(:measurement)
-
-      expect {
-        delete goal_measurement_path(measurement.goal, measurement)
-      }.not_to change(Measurement, :count)
-
-      expect(response).to redirect_to(sign_in_path)
-      expect(flash[:alert]).to be_present
     end
   end
 end

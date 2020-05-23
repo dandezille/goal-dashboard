@@ -2,11 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Goals' do
   describe 'GET /goals' do
-    context 'when signed out' do
-      it 'redirects to sign in' do
-        get goals_path
-        expect(response).to redirect_to(sign_in_path)
-      end
+    it_behaves_like 'requires sign in' do
+      before { get goals_path }
     end
 
     context 'when signed in' do
@@ -31,12 +28,8 @@ RSpec.describe 'Goals' do
   end
 
   describe 'GET /goal/:id' do
-    context 'when signed out' do
-      it 'redirects to sign in' do
-        goal = create(:goal)
-        get goal_path(goal)
-        expect(response).to redirect_to(sign_in_path)
-      end
+    it_behaves_like 'requires sign in' do
+      before { get goal_path(create(:goal)) }
     end
 
     context 'when signed in' do
@@ -78,15 +71,8 @@ RSpec.describe 'Goals' do
   end
 
   describe 'POST /goals' do
-    context 'when user signed out' do
-      it 'it redirects to sign in path' do
-        expect {
-          post goals_path, params: { goal: attributes_for(:goal) }
-        }.not_to change(Goal, :count)
-
-        expect(response).to redirect_to(sign_in_path)
-        expect(flash[:alert]).to be_present
-      end
+    it_behaves_like 'requires sign in' do
+      before { post goals_path, params: { goal: attributes_for(:goal) } }
     end
 
     context 'when user signed in' do
@@ -113,13 +99,8 @@ RSpec.describe 'Goals' do
   end
 
   describe 'PUT /goal/:id' do
-    context 'when user signed out' do
-      it 'it redirects to sign in path' do
-        goal = create(:goal)
-        put goal_path(goal), params: { goal: attributes_for(:goal) }
-        expect(response).to redirect_to(sign_in_path)
-        expect(flash[:alert]).to be_present
-      end
+    it_behaves_like 'requires sign in' do
+      before { put goal_path(create(:goal)), params: { goal: attributes_for(:goal) } }
     end
 
     context 'when user signed in' do
