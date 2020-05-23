@@ -2,10 +2,6 @@ class GoalDecorator < ApplicationDecorator
   include FormatHelper
   delegate_all
 
-  def description
-    "#{format_float 1, model.target}#{units} by #{h.format_date date}"
-  end
-
   def today
     return '?' unless measurements.any?
     "#{format_float 1, calculations.target}"

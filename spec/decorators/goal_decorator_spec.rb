@@ -20,15 +20,6 @@ RSpec.describe GoalDecorator do
     )
   end
 
-  describe '#description' do
-    let(:target) { 72.32 }
-    let(:date) { '2020-05-02' }
-
-    it 'describes the goal' do
-      expect(goal.description).to eq('72.3kg by 2nd May')
-    end
-  end
-
   context 'without measurements' do
     describe '#today' do
       it 'returns ?' do
