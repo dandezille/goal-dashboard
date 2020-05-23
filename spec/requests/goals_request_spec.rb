@@ -2,27 +2,21 @@ require 'rails_helper'
 
 RSpec.describe 'Goals' do
   describe 'GET /goals' do
+    before { get goals_path(as: user) }
+
     it_behaves_like 'requires sign in' do
-      before { get goals_path }
+      let(:user) { nil }
     end
 
     context 'when signed in' do
       context 'without goal' do
-        before { sign_in }
-
-        it 'redirects to new goal page' do
-          get goals_path
-          expect(response).to redirect_to(new_goal_path)
-        end
+        let(:user) { create(:user) }
+        it { is_expected.to redirect_to new_goal_path }
       end
 
       context 'with goal' do
-        before { sign_in_as create(:user, :with_goal) }
-
-        it 'redirects to goal page' do
-          get goals_path
-          expect(response).to redirect_to(goal_path(current_user.goals.first))
-        end
+        let(:user) { create(:user, :with_goal) }
+        it { is_expected.to redirect_to(goal_path(user.goals.first)) }
       end
     end
   end
