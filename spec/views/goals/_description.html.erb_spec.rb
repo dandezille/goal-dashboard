@@ -1,7 +1,6 @@
-require 'rails_helper'
 
 RSpec.describe 'goals/_description.html.erb' do
-  let(:goal) { build(:goal, title: 'Weight', value: 72.32, date: '2020-05-02', units: 'kg', id: 0) }
+  let(:goal) { build(:goal, title: 'Weight', target: 72.32, date: '2020-05-02', units: 'kg', id: 0) }
 
   it 'shows the target' do
     render 'goals/description', goal: goal 
