@@ -22,63 +22,53 @@ RSpec.describe 'Goals' do
   end
 
   describe 'GET /goal/:id' do
+    let(:user) { create(:user) }
+    let(:goal) { create(:goal, :with_measurements, user: user) }
+
+    before { get goal_path(goal, as: user) }
+
     it_behaves_like 'requires sign in' do
-      before { get goal_path(create(:goal)) }
+      let(:user) { nil }
+      let(:goal) { create(:goal) }
     end
 
     context 'when signed in' do
-      let(:user) { create(:user) }
-
-      it 'is successful' do
-        goal = create(:goal, user: user)
-        get goal_path(goal, as: user)
-        expect(response).to be_successful
-      end
+      it { expect(response).to be_successful }
 
       it 'shows measurements' do
-        goal = create(:goal, :with_measurements, user: user)
-
-        get goal_path(goal, as: user)
-        expect(response).to be_successful
-
         goal.measurements.each do |measurement|
           expect(response.body).to include(measurement.value.to_s)
         end
       end
 
-      it 'only shows the users goals' do
-        goal = create(:goal, :with_measurements)
-
-        get goal_path(goal, as: user)
-        expect(response).to redirect_to(goals_path)
+      context 'when user doesn\'t own the goal' do
+        let(:goal) { create(:goal) }
+        it { is_expected.to redirect_to(goals_path) }
+        it { expect(flash[:alert]).to be_present }
       end
-      
-      it 'must exist' do
-        goal = create(:goal)
-        goal.delete
 
-        get goal_path(goal, as: user)
-        expect(response).to redirect_to(goals_path)
-        expect(flash[:alert]).to be_present
+      context 'with invalid goal' do
+        let(:goal) { create(:goal, user: user).tap { |g| g.delete } }
+        it { is_expected.to redirect_to(goals_path) }
+        it { expect(flash[:alert]).to be_present }
       end
     end
   end
 
   describe 'POST /goals' do
+    let(:user) { create(:user) }
+    let(:attributes) { attributes_for(:goal) }
+
+    before { post goals_path(as: user), params: { goal: attributes } }
+
     it_behaves_like 'requires sign in' do
-      before { post goals_path, params: { goal: attributes_for(:goal) } }
+      let(:user) { nil }
     end
 
     context 'when user signed in' do
-      let(:user) { create(:user) }
-      let(:attributes) { attributes_for(:goal) }
       let(:goal) { Goal.first }
 
-      before do
-        post goals_path(as: user), params: { goal: attributes }
-      end
-
-      it { expect(response).to redirect_to(root_path) }
+      it { is_expected.to redirect_to(root_path) }
       it { expect(flash[:notice]).to be_present }
       it { expect(Goal.count).to eq(1) }
 
@@ -92,44 +82,48 @@ RSpec.describe 'Goals' do
   end
 
   describe 'PUT /goal/:id' do
+    let(:user) { create(:user) }
+    let(:goal) { create(:goal, user: user) }
+    let(:updated) { Goal.find(goal.id) }
+    let(:attributes) { attributes_for(:goal) }
+
+    before { put goal_path(goal, as: user), params: { goal: attributes } }
+
     it_behaves_like 'requires sign in' do
-      before { put goal_path(create(:goal)), params: { goal: attributes_for(:goal) } }
+      let(:user) { nil }
+      let(:goal) { create(:goal) }
     end
 
     context 'when user signed in' do
-      let(:user) { create(:user) }
+      context 'goal is updated' do
+        it { is_expected.to redirect_to(goal_path(goal)) }
+        it { expect(flash[:notice]).to be_present }
 
-      it 'updates the goal' do
-        goal = create(:goal, user: user, target: 70)
-
-        expect do
-          put goal_path(goal, as: user), params: { goal: { target: 60 } }
-          goal.reload
-        end.to change(goal, :target).from(70).to(60)
-
-        expect(response).to redirect_to(goal_path(goal))
-        expect(flash[:notice]).to be_present
-      end
-       
-      it 'must belong to the current user' do
-        goal = create(:goal, target: 70)
-
-        expect do
-          put goal_path(goal, as: user), params: { goal: { target: 60 } }
-          goal.reload
-        end.not_to change(goal, :target)
-
-        expect(response).to redirect_to(goals_path)
-        expect(flash[:alert]).to be_present
+        it 'populates fields' do
+          expect(updated.title).to eq(attributes[:title])
+          expect(updated.date).to eq(attributes[:date].to_date)
+          expect(updated.target).to eq(attributes[:target])
+        end
       end
 
-      it 'must exist' do
-        goal = create(:goal, user: user, target: 70)
-        goal.delete
+      context 'when user doesn\'t own the goal' do
+        let(:goal) { create(:goal) }
 
-        put goal_path(goal, as: user), params: { goal: { target: 60 } }
-        expect(response).to redirect_to(goals_path)
-        expect(flash[:alert]).to be_present
+        it { is_expected.to redirect_to(goals_path) }
+        it { expect(flash[:alert]).to be_present }
+
+        it 'does not change fields' do
+          expect(updated.title).to eq(goal.title)
+          expect(updated.date).to eq(goal.date)
+          expect(updated.target).to eq(goal.target)
+        end
+      end
+
+      context 'when goal doesn\'t exist ' do
+        let(:goal) { create(:goal, user: user).tap { |g| g.delete } }
+
+        it { is_expected.to redirect_to(goals_path) }
+        it { expect(flash[:alert]).to be_present }
       end
     end
   end
