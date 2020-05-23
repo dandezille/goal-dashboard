@@ -12,13 +12,11 @@ RSpec.describe 'Measurements' do
     end
 
     context 'when user signed in' do
-      before { sign_in_as user }
-
       it 'creates a measurement' do
         measurement_attributes = attributes_for(:measurement)
 
         expect do
-          post goal_measurements_path(user.goals.first),
+          post goal_measurements_path(user.goals.first, as: user),
                params: { measurement: measurement_attributes }
         end.to change(Measurement, :count).by(1)
 
@@ -33,7 +31,7 @@ RSpec.describe 'Measurements' do
 
       it 'shows errors for invalid input' do
         expect do
-          post goal_measurements_path(user.goals.first),
+          post goal_measurements_path(user.goals.first, as: user),
                params: { measurement: attributes_for(:measurement, date: '') }
         end.not_to change(Measurement, :count)
 
@@ -46,7 +44,7 @@ RSpec.describe 'Measurements' do
         measurement_attributes = attributes_for(:measurement)
 
         expect do
-          post goal_measurements_path(goal),
+          post goal_measurements_path(goal, as: user),
                params: { measurement: measurement_attributes }
         end.not_to change(Measurement, :count)
 
@@ -65,13 +63,13 @@ RSpec.describe 'Measurements' do
     end
 
     context 'when user signed in' do
-      before { sign_in_as create(:user, :with_goal) }
+      let(:user) { create(:user, :with_goal) }
 
       it 'deletes the given measurement' do
-        measurement = create(:measurement, goal: current_user.goals.first)
+        measurement = create(:measurement, goal: user.goals.first)
 
         expect {
-          delete goal_measurement_path(measurement.goal, measurement)
+          delete goal_measurement_path(measurement.goal, measurement, as: user)
         }.to change(Measurement, :count).by(-1)
 
         expect(response).to redirect_to(root_path)
@@ -82,7 +80,7 @@ RSpec.describe 'Measurements' do
         measurement = create(:measurement)
 
         expect {
-          delete goal_measurement_path(measurement.goal, measurement)
+          delete goal_measurement_path(measurement.goal, measurement, as: user)
         }.not_to change(Measurement, :count)
 
         expect(response).to redirect_to(root_path)
