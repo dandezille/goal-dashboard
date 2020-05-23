@@ -73,6 +73,5 @@ RSpec.configure do |config|
 
   config.include SessionHelpers, type: :feature
   config.include ContentHelpers, type: :feature
-  config.include SignInRequestHelpers, type: :request
   config.include ApplicationHelper
 end
