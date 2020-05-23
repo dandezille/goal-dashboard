@@ -30,21 +30,21 @@ RSpec.describe GoalDecorator do
   end
 
   context 'without measurements' do
-    describe '#target' do
+    describe '#today' do
       it 'returns ?' do
-        expect(goal.target).to eq('?')
+        expect(goal.today).to eq('?')
       end
     end
 
-    describe '#target_delta' do
+    describe '#today_delta' do
       it 'returns ?' do
-        expect(goal.target_delta).to eq('?')
+        expect(goal.today_delta).to eq('?')
       end
     end
 
-    describe '#target_delta_word' do
+    describe '#today_delta_word' do
       it 'returns ?' do
-        expect(goal.target_delta_word).to eq('?')
+        expect(goal.today_delta_word).to eq('?')
       end
     end
 
@@ -116,34 +116,34 @@ RSpec.describe GoalDecorator do
   context 'with multiple measurements' do
     let(:measurements) { [double, double] }
 
-    describe '#target' do
+    describe '#today' do
       it 'formats calculated value' do
         expect(calculator).to receive(:target).and_return(63.3)
-        expect(goal.target).to eq('63.3')
+        expect(goal.today).to eq('63.3')
       end
     end
 
-    describe '#target_delta' do
+    describe '#today_delta' do
       it 'formats calculated value' do
         expect(calculator).to receive(:target_delta).and_return(-1.7)
-        expect(goal.target_delta).to eq('1.7')
+        expect(goal.today_delta).to eq('1.7')
       end
     end
 
-    describe '#target_delta_word' do
+    describe '#today_delta_word' do
       it 'returns on target' do
         expect(calculator).to receive(:target_delta).and_return(0)
-        expect(goal.target_delta_word).to eq('on target')
+        expect(goal.today_delta_word).to eq('on target')
       end
 
       it 'returns behind' do
         expect(calculator).to receive(:target_delta).and_return(1)
-        expect(goal.target_delta_word).to eq('behind')
+        expect(goal.today_delta_word).to eq('behind')
       end
 
       it 'returns ahead' do
         expect(calculator).to receive(:target_delta).and_return(-1)
-        expect(goal.target_delta_word).to eq('ahead')
+        expect(goal.today_delta_word).to eq('ahead')
       end
     end
 
@@ -205,9 +205,8 @@ RSpec.describe GoalDecorator do
 
     describe '#projected_date' do
       it 'predicts date at goal end value' do
-        expect(calculator).to receive(:predict_date_for).with(target).and_return(
-          Date.parse('2020-05-01')
-        )
+        expect(calculator).to receive(:predict_date_for).with(target)
+          .and_return(Date.parse('2020-05-01'))
         expect(goal.projected_date).to eq('1st May')
       end
     end
