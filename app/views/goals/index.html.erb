@@ -1,4 +1,5 @@
 <%= render layout: 'shared/card', locals: { title: 'Goals' } do %>
+  <%= link_to 'Create goal', new_goal_path %>
   <% @goals.each do |goal| %>
     <div data-goal-id="<%= goal.id %>">
       <%= link_to goal.title, goal_path(goal) %>

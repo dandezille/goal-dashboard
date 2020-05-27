@@ -19,14 +19,43 @@ RSpec.feature 'manage goals' do
     end
   end
 
-  scenario 'create a goal' do
-    goal = attributes_for(:goal)
+  context 'without a goal' do
+    scenario 'create a goal' do
+      goal = attributes_for(:goal)
 
-    visit new_goal_path(as: user)
-    goal_page.create goal
+      visit root_path(as: user)
+      within '.header' do
+        click_on 'Goals'
+      end
 
-    expect(goal_page).to have_goal goal
-    expect(page).to have_flash_notice 'Goal set'
+      expect(page).to have_current_path(new_goal_path)
+      goal_page.create goal
+      expect(page).to have_flash_notice 'Goal set'
+
+      click_on goal[:title]
+      expect(goal_page).to have_goal goal
+    end
+  end
+
+  context 'with a goal' do
+    scenario 'create a goal' do
+      create(:goal, user: user)
+      goal = attributes_for(:goal)
+
+      visit root_path(as: user)
+      within '.header' do
+        click_on 'Goals'
+      end
+
+      expect(page).to have_current_path(goals_path)
+
+      click_on 'Create goal'
+      goal_page.create goal
+      expect(page).to have_flash_notice 'Goal set'
+
+      click_on goal[:title]
+      expect(goal_page).to have_goal goal
+    end
   end
 
   scenario 'view a goal' do
@@ -45,10 +74,12 @@ RSpec.feature 'manage goals' do
     new = attributes_for(:goal)
 
     visit root_path(as: user)
+    click_on 'Goals'
     goal_page.create original
-    goal_page.change_to new
 
-    expect(goal_page).to have_goal new
+    click_on original[:title]
+    goal_page.change_to new
     expect(page).to have_flash_notice('Goal updated')
+    expect(goal_page).to have_goal new
   end
 end
