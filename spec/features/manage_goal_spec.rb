@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.feature 'manage goal' do
-  before { sign_in }
+RSpec.feature 'manage goals' do
+  let(:user) { create(:user) }
 
   scenario 'with no goal' do
-    visit root_path
+    visit root_path(as: user)
     goal = goal_on_page
     goal.create
 
@@ -13,8 +13,8 @@ RSpec.feature 'manage goal' do
   end
 
   scenario 'with an existing goal' do
-    create(:goal, user: current_user)
-    visit root_path
+    create(:goal, user: user)
+    visit root_path(as: user)
     goal = goal_on_page
     goal.edit
 

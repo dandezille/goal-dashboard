@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.feature 'manage measurements' do
-  before { sign_in_as create(:goal, :with_measurements).user }
+  let(:goal) { create(:goal, :with_measurements) }
+  let(:user) { goal.user }
 
   scenario 'new measurement date is set to today' do
-    visit root_path
+    visit root_path(as: user)
     within('#new_measurement') do
       expect(page).to have_field 'measurement_date',
                  with: Date.today.strftime('%Y-%m-%d')
@@ -12,7 +13,7 @@ RSpec.feature 'manage measurements' do
   end
 
   scenario 'create a new measurement' do
-    visit root_path
+    visit root_path(as: user)
     measurement = measurement_on_page
     measurement.create
 
@@ -21,7 +22,7 @@ RSpec.feature 'manage measurements' do
   end
 
   scenario 'view only measurements the user has created' do
-    visit root_path
+    visit root_path(as: user)
     measurement = measurement_on_page
     measurement.create
 
@@ -31,7 +32,7 @@ RSpec.feature 'manage measurements' do
   end
 
   scenario 'delete a measurement' do
-    visit root_path
+    visit root_path(as: user)
     measurement = measurement_on_page
     measurement.create
     measurement.delete
