@@ -7,7 +7,11 @@ RSpec.feature 'manage goals' do
   scenario 'view goals' do
     goals = create_list(:goal, 3, user: user)
 
-    visit goals_path(as: user)
+    visit root_path(as: user)
+    within '.header' do
+      click_on 'Goals'
+    end
+
     expect(page).to have_css('.card-title', text: "Goals")
 
     goals.each do |goal|
