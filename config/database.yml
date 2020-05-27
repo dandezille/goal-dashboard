@@ -23,13 +23,13 @@ default: &default
 
 development:
   <<: *default
-  database: goal_dashboard_development
+  database: simera_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user that initialized the database.
-  #username: goal_dashboard
+  #username: simera
   # The password associated with the postgres role (username).
   #password:
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -52,7 +52,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: goal_dashboard_test
+  database: simera_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -75,5 +75,5 @@ test:
 #
 production:
   <<: *default
-  database: goal_dashboard_production
+  database: simera_production
   url: <%= ENV['DATABASE_URL'] %>
