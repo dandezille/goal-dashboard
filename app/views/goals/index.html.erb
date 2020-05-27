@@ -3,6 +3,7 @@
   <% @goals.each do |goal| %>
     <div data-goal-id="<%= goal.id %>">
       <%= link_to goal.title, goal_path(goal) %>
+      <%= link_to "Delete", goal, method: :delete, data: { confirm: "Are you sure?" } %>
     </div>
   <% end %>
 <% end %>

@@ -1,6 +1,6 @@
 class GoalsController < ApplicationController
   before_action :require_login
-  before_action :find_goal, only: %i[show edit update]
+  before_action :find_goal, only: %i[show edit update destroy]
 
   def index
     if current_user.goals.any?
@@ -36,6 +36,11 @@ class GoalsController < ApplicationController
     @goal.update!(goal_params)
     flash[:notice] = 'Goal updated'
     redirect_to goal_path(@goal)
+  end
+
+  def destroy
+    @goal.destroy!
+    redirect_to goals_path
   end
 
   private

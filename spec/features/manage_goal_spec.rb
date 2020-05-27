@@ -63,7 +63,7 @@ RSpec.feature 'manage goals' do
 
     visit goals_path(as: user)
     within "[data-goal-id=\"#{goal.id}\"]" do
-      click_on 'a'
+      click_on goal[:title]
     end
 
     expect(page).to have_current_path(goal_path(goal))
@@ -82,4 +82,16 @@ RSpec.feature 'manage goals' do
     expect(page).to have_flash_notice('Goal updated')
     expect(goal_page).to have_goal new
   end
+
+  scenario 'delete a goal' do
+    goal = create(:goal, user: user)
+
+    visit goals_path(as: user)
+    within "[data-goal-id=\"#{goal.id}\"]" do
+      click_on 'Delete'
+    end
+
+    expect(page).not_to have_css "[data-goal-id=\"#{goal.id}\"]" 
+  end
+
 end
