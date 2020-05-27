@@ -1,0 +1,8 @@
+<%= render layout: 'shared/card', locals: { title: 'Goals' } do %>
+  <% @goals.each do |goal| %>
+    <div data-goal-id="<%= goal.id %>">
+      <%= link_to goal.title, goal_path(goal) %>
+    </div>
+  <% end %>
+<% end %>
+

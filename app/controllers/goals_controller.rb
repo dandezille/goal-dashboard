@@ -4,8 +4,8 @@ class GoalsController < ApplicationController
 
   def index
     if current_user.goals.any?
-      # TODO show list of goals
-      redirect_to goal_path(current_user.goals.first)
+      @goals = current_user.goals
+      render :index
     else
       redirect_to new_goal_path
     end
