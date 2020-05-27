@@ -1,19 +1,19 @@
-class GoalOnPage < Struct.new(:params)
+class GoalOnPage
   include Capybara::DSL
   include FormatHelper
 
-  def create
-    fill_fields
+  def create(params)
+    fill_fields(params)
     click_button 'Update goal'
   end
 
-  def edit
+  def change_to(params)
     page.find('#goal a').click
-    fill_fields
+    fill_fields(params)
     click_button 'Update goal'
   end
 
-  def visible?
+  def has_goal?(params)
     page.has_css? '#goal' do |element|
       element.has_content?(params[:title]) &&
       element.has_content?(params[:units]) &&
@@ -24,7 +24,7 @@ class GoalOnPage < Struct.new(:params)
 
   private
 
-  def fill_fields
+  def fill_fields(params)
     fill_in 'goal_title', with: params[:title]
     fill_in 'goal_units', with: params[:units]
     fill_in 'goal_date', with: params[:date]
