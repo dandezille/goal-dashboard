@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'manage measurements' do
-  let(:goal) { create(:goal, :with_measurements) }
-  let(:user) { goal.user }
+  let(:user) { create(:goal, :with_measurements).user }
 
   scenario 'new measurement date is set to today' do
     visit root_path(as: user)
