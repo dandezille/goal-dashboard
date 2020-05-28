@@ -16,7 +16,8 @@ RSpec.describe 'Goals' do
 
       context 'with goal' do
         let(:user) { create(:user, :with_goal) }
-        it { is_expected.to redirect_to(goal_path(user.goals.first)) }
+        it { expect(response).to be_successful }
+        it { is_expected.to render_template(:index) }
       end
     end
   end
