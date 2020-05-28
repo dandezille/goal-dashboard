@@ -5,8 +5,7 @@ class MeasurementsController < ApplicationController
   before_action :find_measurement, only: :destroy
 
   def create
-    @measurement = @goal.measurements.create(measurement_params)
-    if @measurement.save
+    if create_measurement
       flash[:notice] = 'Measurement created'
     else
       flash[:alert] = 'Failed to create measurement'
