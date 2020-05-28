@@ -5,10 +5,17 @@ class MeasurementsController < ApplicationController
   before_action :find_measurement, only: :destroy
 
   def create
-    if create_measurement
-      flash[:notice] = 'Measurement created'
+    if @goal.user != current_user
+      flash[:alert] = 'User does not own this goal'
+      redirect_to root_path
     else
-      flash[:alert] = @measurement.errors.messages
+      @measurement = @goal.measurements.create(measurement_params)
+      if @measurement.save
+        flash[:notice] = 'Measurement created'
+      else
+        flash[:alert] = 'Failed to create measurement'
+      end
+      redirect_to @goal
     end
 
     redirect_to @goal
