@@ -1,4 +1,4 @@
-<div id="measurement_<%= measurement.id %>" class="measurement flex justify-between px-6 py-4 bg-gray-100 even:bg-gray-300">
+<div class="measurement flex justify-between px-6 py-4 bg-gray-100 even:bg-gray-300" data-measurement-id="<%= measurement.id %>">
   <div class="date flex-1"><%= format_date(measurement.date) %></div>
   <div class="value flex-1"><%= measurement.value %></div>
   <div class="link-indigo flex-none">
