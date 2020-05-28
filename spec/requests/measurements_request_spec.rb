@@ -20,7 +20,7 @@ RSpec.describe 'Measurements' do
       context 'measurement is created' do
         let(:measurement) { Measurement.first }
 
-        it { is_expected.to redirect_to(root_path) }
+        it { is_expected.to redirect_to(goal_path(goal)) }
         it { expect(Measurement.count).to eq(1) }
         it { expect(flash[:notice]).to be_present }
 
@@ -34,7 +34,7 @@ RSpec.describe 'Measurements' do
       context 'with invalid input' do
         let(:attributes) { attributes_for(:measurement, date: '') }
 
-        it { is_expected.to redirect_to(root_path) }
+        it { is_expected.to redirect_to(goal_path(goal)) }
         it { expect(Measurement.count).to eq(0) }
         it { expect(flash[:alert]).to be_present }
       end
@@ -65,7 +65,7 @@ RSpec.describe 'Measurements' do
 
     context 'when user signed in' do
       context 'measurement is deleted' do
-        it { is_expected.to redirect_to(root_path) }
+        it { is_expected.to redirect_to(goal_path(goal)) }
         it { expect(Measurement.count).to eq(0) }
         it { expect(flash[:notice]).to be_present }
       end
