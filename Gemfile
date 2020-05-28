@@ -35,5 +35,6 @@ end
 group :test do
   gem 'capybara'
   gem 'formulaic'
+  gem 'rails-controller-testing'
   gem 'shoulda-matchers'
 end
