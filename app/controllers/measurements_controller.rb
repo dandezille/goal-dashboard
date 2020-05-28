@@ -8,7 +8,7 @@ class MeasurementsController < ApplicationController
     if create_measurement
       flash[:notice] = 'Measurement created'
     else
-      flash[:alert] = 'Failed to create measurement'
+      flash[:alert] = @measurement.errors.messages
     end
 
     redirect_to @goal
