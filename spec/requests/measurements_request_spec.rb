@@ -42,7 +42,7 @@ RSpec.describe 'Measurements' do
       context 'when user doesn\'t own the goal' do
         let(:goal) { create(:goal) }
 
-        it { is_expected.to redirect_to(root_path) }
+        it { is_expected.to redirect_to(goals_path) }
         it { expect(Measurement.count).to eq(0) }
         it { expect(flash[:alert]).to be_present }
       end
@@ -73,7 +73,7 @@ RSpec.describe 'Measurements' do
       context 'when user doesn\'t own the goal' do
         let(:goal) { create(:goal) }
 
-        it { is_expected.to redirect_to(root_path) }
+        it { is_expected.to redirect_to(goals_path) }
         it { expect(Measurement.count).to eq(1) }
         it { expect(flash[:alert]).to be_present }
       end
