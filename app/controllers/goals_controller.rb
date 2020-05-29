@@ -1,6 +1,6 @@
 class GoalsController < ApplicationController
   before_action :require_login
-  before_action :find_goal, only: %i[show edit update]
+  before_action :require_goal, only: %i[show edit update]
 
   def index
     if current_user.goals.any?
@@ -40,14 +40,6 @@ class GoalsController < ApplicationController
 
   private
   
-  def find_goal
-    @goal = Goal.find_by(id: params[:id])
-    if @goal.nil? || @goal.user != current_user
-      flash[:alert] = 'Invalid goal'
-      redirect_to goals_path
-    end
-  end
-
   def create_goal
     @goal = current_user.goals.create(goal_params)
   end

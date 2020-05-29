@@ -1,8 +1,7 @@
 class MeasurementsController < ApplicationController
   before_action :require_login
-  before_action :find_goal
-  before_action :user_authorised
-  before_action :find_measurement, only: :destroy
+  before_action { require_goal(:goal_id) }
+  before_action :require_measurement, only: :destroy
 
   def create
     if create_measurement
@@ -25,17 +24,6 @@ class MeasurementsController < ApplicationController
 
   def find_measurement
     @measurement = Measurement.find(params[:id])
-  end
-
-  def find_goal
-    @goal = Goal.find(params[:goal_id])
-  end
-
-  def user_authorised
-    if @goal.user != current_user
-      redirect_to root_path
-      flash[:alert] = 'Action not authorised'
-    end
   end
 
   def create_measurement
