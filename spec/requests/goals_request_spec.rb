@@ -66,17 +66,27 @@ RSpec.describe 'Goals' do
     end
 
     context 'when user signed in' do
-      let(:goal) { Goal.first }
+      context 'with valid attributes' do
+        let(:goal) { Goal.first }
 
-      it { is_expected.to redirect_to(root_path) }
-      it { expect(flash[:notice]).to be_present }
-      it { expect(Goal.count).to eq(1) }
+        it { is_expected.to redirect_to(root_path) }
+        it { expect(flash[:notice]).to be_present }
+        it { expect(Goal.count).to eq(1) }
 
-      it 'populates fields' do
-        expect(goal.user).to eq(user)
-        expect(goal.title).to eq(attributes[:title])
-        expect(goal.date).to eq(attributes[:date].to_date)
-        expect(goal.target).to eq(attributes[:target])
+        it 'populates fields' do
+          expect(goal.user).to eq(user)
+          expect(goal.title).to eq(attributes[:title])
+          expect(goal.date).to eq(attributes[:date].to_date)
+          expect(goal.target).to eq(attributes[:target])
+        end
+      end
+
+      context 'with invalid attributes' do
+        let(:attributes) { attributes_for(:goal, title: '') }
+
+        it { is_expected.to render_template(:new) }
+        it { expect(flash[:alert]).to be_present }
+        it { expect(Goal.count).to eq(0) }
       end
     end
   end
