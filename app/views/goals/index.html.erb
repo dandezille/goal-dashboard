@@ -1,0 +1,8 @@
+<%= render layout: 'shared/card', locals: { title: 'Goals' } do %>
+  <% @goals.each do |goal| %>
+    <div class='p-6 text-center lg:w-64'>
+      <%= link_to goal.title, goal_path(goal), class: 'link-indigo' %>
+    </div>
+  <% end %>
+<% end %>
+
