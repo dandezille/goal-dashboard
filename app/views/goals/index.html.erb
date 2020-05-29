@@ -1,0 +1,6 @@
+<%= render layout: 'shared/card', locals: { title: 'Goals' } do %>
+  <% @goals.each do |goal| %>
+    <%= link_to goal.title, goal_path(goal) %>
+  <% end %>
+<% end %>
+

@@ -1,4 +1,4 @@
-<ul class="text-4xl lg:text-base flex flex-row-reverse p-2 bg-indigo-800 shadow-md text-indigo-100">
+<ul class="header text-4xl lg:text-base flex flex-row-reverse p-2 bg-indigo-800 shadow-md text-indigo-100">
     <% if signed_in? %>
         <li class="mr-6">
             <%= link_to 'Sign out', sign_out_path, method: :delete %>
@@ -11,4 +11,8 @@
             <%= link_to 'Sign in', sign_in_path %>
         </li>
     <% end %>
+    <li class="mr-6">
+        <%= link_to 'Goals', goals_path %>
+    </li>
 </ul>
+

@@ -3,8 +3,8 @@ class GoalsController < ApplicationController
   before_action :require_goal, only: %i[show edit update]
 
   def index
-    redirect_to new_goal_path unless current_user.goals.any?
     @goals = current_user.goals
+    redirect_to new_goal_path unless @goals.any?
   end
 
   def show

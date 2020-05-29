@@ -4,13 +4,13 @@ class GoalOnPage < Struct.new(:params)
 
   def create
     fill_fields
-    click_button 'Update goal'
+    click_button 'Create Goal'
   end
 
   def edit
     page.find('#goal a').click
     fill_fields
-    click_button 'Update goal'
+    click_button 'Update Goal'
   end
 
   def visible?
