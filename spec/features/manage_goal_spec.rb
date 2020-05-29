@@ -14,22 +14,28 @@ RSpec.feature 'manage goals' do
     end
   end
 
-  scenario 'create initial goal' do
-    visit root_path(as: user)
-    expect(page).to have_css('.card-title', text: 'Create Goal')
-  end
+  context 'create goal' do
+    scenario 'with no goals' do
+      visit root_path(as: user)
+      expect(page).to have_css('.card-title', text: 'Create Goal')
+      goal_on_page.create
 
-  scenario 'create goal' do
-    goal = user.goals.create!(attributes)
+      expect(goal_on_page).to be_visible
+      expect(page).to have_flash_notice('Goal set')
+    end
 
-    navigate_to_goals
-    click_on 'Create goal'
+    scenario 'with existing goals' do
+      goal = user.goals.create!(attributes)
 
-    expect(page).to have_css('.card-title', text: 'Create Goal')
-    goal_on_page.create
+      navigate_to_goals
+      click_on 'Create goal'
 
-    expect(goal_on_page).to be_visible
-    expect(page).to have_flash_notice('Goal set')
+      expect(page).to have_css('.card-title', text: 'Create Goal')
+      goal_on_page.create
+
+      expect(goal_on_page).to be_visible
+      expect(page).to have_flash_notice('Goal set')
+    end
   end
 
   scenario 'view goal' do
