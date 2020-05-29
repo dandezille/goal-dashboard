@@ -2,6 +2,18 @@ require 'rails_helper'
 
 RSpec.feature 'manage goals' do
   let(:user) { create(:user) }
+  let(:attributes) { attributes_for(:goal) }
+  let(:goal_on_page) { GoalOnPage.new(attributes) }
+
+  scenario 'create initial goal' do
+    visit root_path(as: user)
+    expect(page).to have_css('.card-title', text: 'Create Goal')
+
+    goal_on_page.create
+
+    expect(goal_on_page).to be_visible
+    expect(page).to have_flash_notice('Goal set')
+  end
 
   scenario 'view goals' do
     goals = create_list(:goal, 3, user: user)
@@ -18,30 +30,32 @@ RSpec.feature 'manage goals' do
     end
   end
 
-  scenario 'with no goal' do
+  scenario 'view goal' do
+    goal = user.goals.create!(attributes)
+
     visit root_path(as: user)
-    expect(page).to have_css('.card-title', text: 'Create Goal')
+    within '.header' do
+      click_on 'Goals'
+    end
 
-    goal = goal_on_page
-    goal.create
-
-    expect(goal).to be_visible
-    expect(page).to have_flash_notice('Goal set')
-  end
-
-  scenario 'with an existing goal' do
-    goal = create(:goal, user: user)
-    visit root_path(as: user)
     click_on goal.title
 
-    goal = goal_on_page
-    goal.edit
-
-    expect(goal).to be_visible
-    expect(page).to have_flash_notice('Goal updated')
+    expect(goal_on_page).to be_visible
   end
 
-  def goal_on_page
-    GoalOnPage.new(attributes_for(:goal))
+  scenario 'edit goal' do
+    goal = create(:goal, user: user)
+
+    visit root_path(as: user)
+    within '.header' do
+      click_on 'Goals'
+    end
+
+    click_on goal.title
+
+    goal_on_page.edit
+
+    expect(goal_on_page).to be_visible
+    expect(page).to have_flash_notice('Goal updated')
   end
 end
