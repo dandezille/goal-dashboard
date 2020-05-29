@@ -23,7 +23,7 @@ class GoalsController < ApplicationController
   def create
     if create_goal
       flash[:notice] = 'Goal set'
-      redirect_to root_path
+      redirect_to @goal
     else
       flash.now[:alert] = 'Failed to create goal'
       render :new
