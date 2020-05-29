@@ -69,7 +69,7 @@ RSpec.describe 'Goals' do
       context 'with valid attributes' do
         let(:goal) { Goal.first }
 
-        it { is_expected.to redirect_to(root_path) }
+        it { is_expected.to redirect_to(goal) }
         it { expect(flash[:notice]).to be_present }
         it { expect(Goal.count).to eq(1) }
 
