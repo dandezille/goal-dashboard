@@ -18,11 +18,7 @@ RSpec.feature 'manage goals' do
   scenario 'view goals' do
     goals = create_list(:goal, 3, user: user)
 
-    visit root_path(as: user)
-    within '.header' do
-      click_on 'Goals'
-    end
-
+    navigate_to_goals
     expect(page).to have_css('.card-title', text: 'Goals')
 
     goals.each do |goal|
@@ -33,11 +29,7 @@ RSpec.feature 'manage goals' do
   scenario 'view goal' do
     goal = user.goals.create!(attributes)
 
-    visit root_path(as: user)
-    within '.header' do
-      click_on 'Goals'
-    end
-
+    navigate_to_goals
     click_on goal.title
 
     expect(goal_on_page).to be_visible
@@ -46,16 +38,19 @@ RSpec.feature 'manage goals' do
   scenario 'edit goal' do
     goal = create(:goal, user: user)
 
-    visit root_path(as: user)
-    within '.header' do
-      click_on 'Goals'
-    end
-
+    navigate_to_goals
     click_on goal.title
 
     goal_on_page.edit
 
     expect(goal_on_page).to be_visible
     expect(page).to have_flash_notice('Goal updated')
+  end
+
+  def navigate_to_goals
+    visit root_path(as: user)
+    within '.header' do
+      click_on 'Goals'
+    end
   end
 end
