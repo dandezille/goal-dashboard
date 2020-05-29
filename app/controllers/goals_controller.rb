@@ -23,11 +23,11 @@ class GoalsController < ApplicationController
   def create
     if create_goal
       flash[:notice] = 'Goal set'
+      redirect_to root_path
     else
-      flash[:alert] = @goal.errors.messages
+      flash.now[:alert] = 'Failed to create goal'
+      render :new
     end
-
-    redirect_to root_path
   end
 
   def edit; end
@@ -41,7 +41,8 @@ class GoalsController < ApplicationController
   private
   
   def create_goal
-    @goal = current_user.goals.create(goal_params)
+    @goal = current_user.goals.new(goal_params)
+    @goal.save
   end
 
   def goal_params
