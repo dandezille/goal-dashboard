@@ -16,7 +16,6 @@ class MeasurementsController < ApplicationController
   def destroy
     @measurement.destroy
     flash[:notice] = 'Measurement removed'
-
     redirect_to @goal
   end
 
