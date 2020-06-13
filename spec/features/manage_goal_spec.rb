@@ -6,12 +6,20 @@ RSpec.feature 'manage goals' do
   let(:goal_on_page) { GoalOnPage.new(attributes) }
 
   scenario 'view goals' do
-    goals = create_list(:goal, 3, user: user)
-    navigate_to_goals
+    current_goal = create(:goal, user: user)
+    complete_goal = create(:goal, user: user, date: Date.yesterday)
 
-    goals.each do |goal|
-      expect(page).to have_content goal.title
-    end
+    navigate_to_goals
+    expect(page).to have_current_goal(current_goal.title)
+    expect(page).to have_complete_goal(complete_goal.title)
+  end
+
+  def have_current_goal(title)
+    have_css '.current-goals', text: title
+  end
+
+  def have_complete_goal(title)
+    have_css '.complete-goals', text: title
   end
 
   context 'create goal' do
