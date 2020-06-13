@@ -14,6 +14,19 @@ RSpec.describe Goal do
     it { is_expected.to validate_presence_of(:target) }
   end
 
+  context 'active/complete scope' do
+    let!(:active) { create(:goal, date: Date.today) }
+    let!(:complete) { create(:goal, date: Date.yesterday) }
+
+    describe '#active' do
+      it { expect(Goal.active).to eq([active]) }
+    end
+
+    describe '#complete' do
+      it { expect(Goal.complete).to eq([complete]) }
+    end
+  end
+
   describe '.latest_measurement' do
     it 'returns the latest measurement' do
       goal = create(:goal)

@@ -7,6 +7,9 @@ class Goal < ApplicationRecord
   validates :units, presence: true
   validates :date, presence: true
   validates :target, presence: true
+  
+  scope :active, -> { where('date >= ?', Date.today) }
+  scope :complete, -> { where.not(id: active) }
 
   def latest_measurement
     measurements.order(:date).first

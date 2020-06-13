@@ -6,16 +6,16 @@ RSpec.feature 'manage goals' do
   let(:goal_on_page) { GoalOnPage.new(attributes) }
 
   scenario 'view goals' do
-    current_goal = create(:goal, user: user)
+    active_goal = create(:goal, user: user)
     complete_goal = create(:goal, user: user, date: Date.yesterday)
 
     navigate_to_goals
-    expect(page).to have_current_goal(current_goal.title)
+    expect(page).to have_active_goal(active_goal.title)
     expect(page).to have_complete_goal(complete_goal.title)
   end
 
-  def have_current_goal(title)
-    have_css '.current-goals', text: title
+  def have_active_goal(title)
+    have_css '.active-goals', text: title
   end
 
   def have_complete_goal(title)
