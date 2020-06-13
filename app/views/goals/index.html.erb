@@ -1,4 +1,4 @@
-<%= render layout: 'shared/card', locals: { title: 'Goals' } do %>
+<%= render layout: 'shared/card', locals: { title: 'Active Goals' } do %>
   <div class="active-goals">
     <% @goals.active.each do |goal| %>
       <div class='m-6 text-center lg:w-64'>
@@ -10,7 +10,9 @@
   <div class='p-6 lg:p-2 text-center bg-indigo-800 lg:rounded-b-lg text-indigo-100 hover:text-indigo-200'>
     <%= link_to 'Create goal', new_goal_path, class: '' %>
   </div>
+<% end %>
 
+<%= render layout: 'shared/card', locals: { title: 'Complete Goals' } do %>
   <div class="complete-goals">
     <% @goals.complete.each do |goal| %>
       <div class='m-6 text-center lg:w-64'>
