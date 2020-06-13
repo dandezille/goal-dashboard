@@ -2,7 +2,7 @@
   <div class="active-goals">
     <% @goals.active.each do |goal| %>
       <div class='m-6 text-center lg:w-64'>
-        <%= link_to goal.title, goal_path(goal), class: 'link-indigo' %>
+        <%= link_to "#{goal.title} - #{goal.target}#{goal.units} by #{format_date(goal.date)}", goal_path(goal), class: 'link-indigo' %>
       </div>
     <% end %>
   </div>
@@ -16,7 +16,7 @@
   <div class="complete-goals">
     <% @goals.complete.each do |goal| %>
       <div class='m-6 text-center lg:w-64'>
-        <%= link_to goal.title, goal_path(goal), class: 'link-indigo' %>
+        <%= link_to "#{goal.title} - #{goal.target}#{goal.units} by #{format_date(goal.date)}", goal_path(goal), class: 'link-indigo' %>
       </div>
     <% end %>
   </div>
