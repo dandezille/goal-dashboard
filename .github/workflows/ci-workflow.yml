@@ -20,6 +20,7 @@ jobs:
       PGPASSWORD: "BAET&Hs%3qdB2vEZ]>2fwwEiPz(tiH22hJRo@Xmakbr7RpURVox&QyUUWpj?K72A"
     steps:
       - uses: actions/checkout@v2
+      - uses: github/super-linter@v2.0.0
       - uses: ruby/setup-ruby@v1
       - uses: actions/cache@v1
         with:
