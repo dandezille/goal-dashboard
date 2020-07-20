@@ -1,7 +1,7 @@
 <table class="table-fixed mx-6 my-6 text-center">
   <thead>
     <tr>
-      <% ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].each do |day| %>
+      <% ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].each do |day| %>
         <th class="px-4 py-2"><%= day %></th>
       <% end %>
     </tr>
@@ -9,8 +9,9 @@
   <tbody>
     <% weeks.each do |week| %>
       <tr>
+        <td class="px-4 py-2 text-right"><%= format_date(week.first.date.strftime('%e %b')) %></td>
         <% week.each do |day| %>
-          <td class="border px-4 py-2"><%= day %></td>
+          <td class="border px-4 py-2 <%= day.value.blank? ? 'bg-gray-100' : '' %>"><%= day.value %></td>
         <% end %>
       </tr>
     <% end %>
