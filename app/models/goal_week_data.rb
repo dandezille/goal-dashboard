@@ -1,15 +1,14 @@
 class GoalWeekData
   def initialize(start_date, end_date)
-    @start_date = start_date
-    @leading_padding = (start_date.wday - 1) % 7
-    range = (start_date..end_date).count
-    tailing_padding = 7 - (@leading_padding + range) % 7
+    array_start = start_date.prev_occurring(:monday)
+    array_end = end_date.next_occurring(:sunday)
 
-    @days = Array.new(@leading_padding + range + tailing_padding, '')
+    @start_date = array_start
+    @days = (array_start..array_end).map { |_| '' }
   end
 
   def insert(date, value)
-    index = (date - @start_date) + @leading_padding
+    index = (date - @start_date)
     @days[index] = value
   end
 
