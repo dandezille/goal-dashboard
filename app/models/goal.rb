@@ -8,8 +8,6 @@ class Goal < ApplicationRecord
   validates :date, presence: true
   validates :target, presence: true
 
-  self.implicit_order_column = :date
-
   scope :active, -> { where('date >= ?', Date.today) }
   scope :complete, -> { where.not(id: active) }
 

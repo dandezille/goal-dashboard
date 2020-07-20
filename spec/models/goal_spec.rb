@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Goal do
-  it { is_expected.to have_implicit_order_column(:date) }
-
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to have_many(:measurements).dependent(:destroy) }
