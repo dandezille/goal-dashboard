@@ -13,7 +13,7 @@ class GoalWeekData
   end
 
   def as_weeks
-    @days.map(&:value).each_slice(7).to_a
+    @days.each_slice(7).to_a
   end
 
   Day = Struct.new(:date, :value)
