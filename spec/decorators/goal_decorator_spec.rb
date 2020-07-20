@@ -104,7 +104,7 @@ RSpec.describe GoalDecorator do
   end
 
   context 'with multiple measurements' do
-    let(:measurements) { [double, double] }
+    let(:measurements) { [double, double(value: 65)] }
 
     describe '#today' do
       it 'formats calculated value' do
@@ -153,9 +153,6 @@ RSpec.describe GoalDecorator do
 
     describe '#latest_value' do
       it 'returns latest measurement value' do
-        expect(goal).to receive(:measurements).twice.and_return(
-          [double(value: 65)]
-        )
         expect(goal.latest_value).to eq('65.0')
       end
     end
