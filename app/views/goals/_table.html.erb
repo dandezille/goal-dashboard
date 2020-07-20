@@ -9,7 +9,7 @@
   <tbody>
     <% weeks.each do |week| %>
       <tr>
-        <td class="px-4 py-2 text-right"><%= format_date(week.first.date.strftime('%e %b')) %></td>
+        <td class="px-4 py-2 text-right"><%= format_date(week.first.date) %></td>
         <% week.each do |day| %>
           <td class="border px-4 py-2 <%= day.value.blank? ? 'bg-gray-100' : '' %>"><%= day.value %></td>
         <% end %>
