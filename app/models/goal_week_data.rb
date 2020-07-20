@@ -4,15 +4,17 @@ class GoalWeekData
     array_end = end_date.next_occurring(:sunday)
 
     @start_date = array_start
-    @days = (array_start..array_end).map { |_| '' }
+    @days = (array_start..array_end).map { |date| Day.new date, ''  }
   end
 
   def insert(date, value)
     index = (date - @start_date)
-    @days[index] = value
+    @days[index].value = value
   end
 
   def as_weeks
-    @days.each_slice(7).to_a
+    @days.map(&:value).each_slice(7).to_a
   end
+
+  Day = Struct.new(:date, :value)
 end
