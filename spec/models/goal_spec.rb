@@ -33,4 +33,39 @@ RSpec.describe Goal do
       expect(goal.calculations).to be_a(GoalCalculator)
     end
   end
+
+  describe '#measurements_by_week' do
+    let(:goal) { create(:goal) }
+    let(:start_date) { Date.today.next_week.next_occurring(:tuesday) }
+    let!(:first) { create(:measurement, date: start_date, goal: goal) }
+    let!(:second) { create(:measurement, date: start_date + 2.days, goal: goal) }
+    let!(:third) { create(:measurement, date: start_date + 1.week, goal: goal) }
+
+    it 'returns measurements by week' do
+      expect(goal.measurements_by_week.map{|w| w.map(&:value) }).to eq(
+        [['', first.value.to_s, '', second.value.to_s, '', '', ''], 
+         ['', third.value.to_s, '', '', '', '', '']]
+      )
+    end
+
+    it 'returns dates by week' do
+      expect(goal.measurements_by_week.map{|w| w.map(&:date) }).to eq(
+        [
+          week_of(first.date).to_a,
+          week_of(third.date).to_a
+        ])
+    end
+
+    context 'with no measurements' do
+      it 'returns []' do
+        expect(create(:goal).measurements_by_week).to eq([])
+      end
+    end
+
+    def week_of(day)
+      first = day.prev_occurring(:monday)
+      last = day.next_occurring(:sunday)
+      first..last
+    end
+  end
 end

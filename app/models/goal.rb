@@ -14,4 +14,17 @@ class Goal < ApplicationRecord
   def calculations
     @calculations ||= GoalCalculator.new(self)
   end
+
+  def measurements_by_week
+    return [] unless measurements.any?
+
+    days = GoalWeekData.new(measurements.first.date, measurements.last.date)
+
+    measurements.each do |measurement| 
+      days.insert(measurement.date, measurement.value.to_s)
+    end
+
+    days.as_weeks
+  end
 end
+
