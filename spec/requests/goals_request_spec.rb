@@ -43,6 +43,15 @@ RSpec.describe 'Goals' do
         end
       end
 
+      it 'assigns goal' do
+        expect(assigns(:goal)).to eq(goal)
+      end
+
+      it 'assigns measurement' do
+        expect(assigns(:measurement)).to be_new_record
+        expect(assigns(:measurement).date).to eq(Date.today)
+      end
+
       context 'when user doesn\'t own the goal' do
         let(:goal) { create(:goal) }
         it { is_expected.to redirect_to(goals_path) }
