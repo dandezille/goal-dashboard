@@ -15,7 +15,6 @@ RSpec.describe GoalDecorator do
         target: target,
         measurements: measurements,
         calculations: calculator,
-        latest_measurement: double(value: 65)
       )
     )
   end
@@ -105,7 +104,7 @@ RSpec.describe GoalDecorator do
   end
 
   context 'with multiple measurements' do
-    let(:measurements) { [double, double] }
+    let(:measurements) { [double, double(value: 65)] }
 
     describe '#today' do
       it 'formats calculated value' do
@@ -154,9 +153,6 @@ RSpec.describe GoalDecorator do
 
     describe '#latest_value' do
       it 'returns latest measurement value' do
-        expect(goal).to receive(:latest_measurement).and_return(
-          double(value: 65)
-        )
         expect(goal.latest_value).to eq('65.0')
       end
     end
@@ -215,8 +211,8 @@ RSpec.describe GoalDecorator do
           datasets: [
             {
               data: [
-                { x: Date.today.strftime('%Y-%m-%d'), y: '55.0' },
-                { x: Date.yesterday.strftime('%Y-%m-%d'), y: '60.0' }
+                { x: Date.yesterday.strftime('%Y-%m-%d'), y: '60.0' },
+                { x: Date.today.strftime('%Y-%m-%d'), y: '55.0' }
               ]
             }
           ]

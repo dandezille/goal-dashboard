@@ -30,7 +30,7 @@ class GoalDecorator < ApplicationDecorator
 
   def latest_value
     return '?' unless measurements.any?
-    "#{format_float 1, latest_measurement.value}"
+    "#{format_float 1, measurements.last.value}"
   end
 
   def latest_date
@@ -61,9 +61,9 @@ class GoalDecorator < ApplicationDecorator
     measurements_data = measurements.map { |m| { x: m.date, y: m.value } }
 
     target_data = []
-    if first_measurement
+    if measurements.first
       target_data = [
-        { x: first_measurement.date, y: first_measurement.value },
+        { x: measurements.first.date, y: measurements.first.value },
         { x: date, y: target }
       ]
     end
@@ -72,8 +72,8 @@ class GoalDecorator < ApplicationDecorator
     if measurements.count > 1
       prediction_data = [
         {
-          x: first_measurement.date,
-          y: calculations.predict_value_at(first_measurement.date)
+          x: measurements.first.date,
+          y: calculations.predict_value_at(measurements.first.date)
         },
         { x: date, y: calculations.predict_value_at(date) }
       ]
