@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Goal do
+  it { is_expected.to have_implicit_order_column(:date) }
+
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to have_many(:measurements).dependent(:destroy) }
@@ -24,28 +26,6 @@ RSpec.describe Goal do
 
     describe '#complete' do
       it { expect(Goal.complete).to eq([complete]) }
-    end
-  end
-
-  describe '.latest_measurement' do
-    it 'returns the latest measurement' do
-      goal = create(:goal)
-      create(:measurement, goal: goal, date: Date.today - 2.days)
-      latest = create(:measurement, goal: goal, date: Date.today)
-      create(:measurement, goal: goal, date: Date.today - 1.day)
-
-      expect(goal.latest_measurement).to eq(latest)
-    end
-  end
-
-  describe '.first_measurement' do
-    it 'returns the first measurement' do
-      goal = create(:goal)
-      create(:measurement, goal: goal, date: Date.today)
-      first = create(:measurement, goal: goal, date: Date.today - 2.days)
-      create(:measurement, goal: goal, date: Date.today - 1.day)
-
-      expect(goal.first_measurement).to eq(first)
     end
   end
 
