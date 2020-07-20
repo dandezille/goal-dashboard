@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/thoughtbot/shoulda-matchers
+  revision: 4d4a9855d64a8d7176e3f6c44ee714f46d843fc5
+  specs:
+    shoulda-matchers (4.3.0)
+      activesupport (>= 4.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -207,8 +214,6 @@ GEM
       rspec-support (~> 3.9)
     rspec-support (3.9.3)
     semantic_range (2.3.0)
-    shoulda-matchers (4.3.0)
-      activesupport (>= 4.2.0)
     simple_form (5.0.2)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -270,7 +275,7 @@ DEPENDENCIES
   rails-controller-testing
   rspec-json_expectations
   rspec-rails
-  shoulda-matchers
+  shoulda-matchers!
   simple_form
   spring
   spring-watcher-listen
