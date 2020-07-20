@@ -1,0 +1,18 @@
+<table class="table-fixed mx-6 my-6 text-center">
+  <thead>
+    <tr>
+      <% ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].each do |day| %>
+        <th class="px-4 py-2"><%= day %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% weeks.each do |week| %>
+      <tr>
+        <% week.each do |day| %>
+          <td class="border px-4 py-2"><%= day %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

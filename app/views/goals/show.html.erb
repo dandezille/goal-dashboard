@@ -33,6 +33,10 @@
     <canvas id="measurements_graph" class="p-4" style="width: 90vw"></canvas>
 <% end %>
 
+<%= render layout: 'shared/card' do %>
+  <%= render partial: 'goals/table', locals: { weeks: @weeks } %>
+<% end %>
+
 <%= render layout: 'shared/card', locals: { title: 'Measurements' } do %>
   <div class="p-4 pb-0">
     <%= render 'measurements/form' %>
