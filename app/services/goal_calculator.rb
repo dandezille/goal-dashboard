@@ -8,26 +8,26 @@ class GoalCalculator
   def target
     check_for_measurements
 
-    days_between = (@goal.date - @goal.first_measurement.date).to_i
-    delta = @goal.target - @goal.first_measurement.value
+    days_between = (@goal.date - @goal.measurements.first.date).to_i
+    delta = @goal.target - @goal.measurements.first.value
     per_day = delta / days_between
-    @goal.first_measurement.value +
-      per_day * (Date.today - @goal.first_measurement.date)
+    @goal.measurements.first.value +
+      per_day * (Date.today - @goal.measurements.first.date)
   end
 
   def target_delta
     check_for_measurements
-    @goal.latest_measurement.value - target
+    @goal.measurements.last.value - target
   end
 
   def to_go
     check_for_measurements
-    @goal.latest_measurement.value - @goal.target
+    @goal.measurements.last.value - @goal.target
   end
 
   def daily_goal
     check_for_measurements
-    days_between = (@goal.date - @goal.latest_measurement.date).to_i
+    days_between = (@goal.date - @goal.measurements.last.date).to_i
     to_go / days_between
   end
 
@@ -38,7 +38,7 @@ class GoalCalculator
 
   def latest_date_delta
     check_for_measurements
-    (Date.today - @goal.latest_measurement.date).to_i
+    (Date.today - @goal.measurements.last.date).to_i
   end
 
   def predict_value_at(date)
