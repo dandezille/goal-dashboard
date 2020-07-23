@@ -41,7 +41,7 @@
   <div class="p-4 pb-0">
     <%= render 'measurements/form' %>
   </div>
-  <%= render @goal.measurements %>
+  <%= render @goal.measurements.reverse %>
 <% end %>
 
 <script>
