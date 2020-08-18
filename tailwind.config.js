@@ -1,10 +1,10 @@
 module.exports = {
-  purge: ["./app/**/*.html.erb"],
+  purge: ['./app/**/*.html.erb'],
   theme: {
     extend: {},
   },
   variants: {
-    backgroundColor: ["responsive", "hover", "focus", "even"],
+    backgroundColor: ['responsive', 'hover', 'focus', 'even'],
   },
   plugins: [],
 };
