@@ -11,13 +11,13 @@ jobs:
         env:
           POSTGRES_USER: goal_dashboard
           POSTGRES_DB: goal_dashboard_test
-          POSTGRES_PASSWORD: "BAET&Hs%3qdB2vEZ]>2fwwEiPz(tiH22hJRo@Xmakbr7RpURVox&QyUUWpj?K72A"
-        ports: ["5432:5432"]
+          POSTGRES_PASSWORD: 'BAET&Hs%3qdB2vEZ]>2fwwEiPz(tiH22hJRo@Xmakbr7RpURVox&QyUUWpj?K72A'
+        ports: ['5432:5432']
     env:
       RAILS_ENV: test
       PGHOST: localhost
       PGUSER: goal_dashboard
-      PGPASSWORD: "BAET&Hs%3qdB2vEZ]>2fwwEiPz(tiH22hJRo@Xmakbr7RpURVox&QyUUWpj?K72A"
+      PGPASSWORD: 'BAET&Hs%3qdB2vEZ]>2fwwEiPz(tiH22hJRo@Xmakbr7RpURVox&QyUUWpj?K72A'
     steps:
       - uses: actions/checkout@v2
 

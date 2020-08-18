@@ -33,4 +33,4 @@ en:
   helpers:
     submit:
       measurement:
-        create: "Add"
+        create: 'Add'
