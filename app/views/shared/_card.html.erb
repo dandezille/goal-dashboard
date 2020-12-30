@@ -1,8 +1,8 @@
 <div class="my-6 lg:flex lg:justify-around">
   <div class="card lg:rounded-lg"
     <% if local_assigns.has_key? :attributes %>
-      <% attributes.each do |attribute| %>
-        <%= attribute.html_safe %>
+      <% attributes.each do |key, value| %>
+        <%= key %>="<%= value %>"
       <% end %>
     <% end %>
     >
