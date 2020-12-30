@@ -4,6 +4,6 @@ Rails.application.routes.draw do
 
   resources :goals, only: %i[index show new create edit update] do
     resources :measurements, shallow: true, only: %i[create destroy]
-    get 'table', to: 'goals#table'
+    get 'measurements-table', to: 'goals#measurements_table'
   end
 end
