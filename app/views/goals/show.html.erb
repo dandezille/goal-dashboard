@@ -34,7 +34,8 @@
 <% end %>
 
 <%= render layout: 'shared/card' do %>
-  <%= render partial: 'goals/table', locals: { weeks: @weeks } %>
+    <div data-controller="content-loader"
+         data-content-loader-url-value="<%= goal_path %>/table.html"></div>
 <% end %>
 
 <%= render layout: 'shared/card', locals: { title: 'Measurements' } do %>
