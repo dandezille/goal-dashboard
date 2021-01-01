@@ -3,7 +3,7 @@
 <%= render partial: 'shared/card', locals: { 
     attributes: {
         'data-controller': 'content-loader',
-        'data-content-loader-url-value': summary_goal_path(@goal)
+        'data-content-loader-url-value': goal_summary_path(@goal)
     } } %>
 
 <%= render layout: 'shared/card' do %>

@@ -70,7 +70,7 @@ RSpec.describe 'Goals' do
     let(:user) { create(:user) }
     let(:goal) { create(:goal, :with_measurements, user: user) }
 
-    before { get summary_goal_path(goal, as: user) }
+    before { get goal_summary_path(goal, as: user) }
 
     it_behaves_like 'requires sign in' do
       let(:user) { nil }

@@ -3,9 +3,7 @@ Rails.application.routes.draw do
   root to: 'goals#index'
 
   resources :goals, only: %i[index show new create edit update] do
-    member do
-      get 'summary'
-    end
+    get 'summary'
 
     resources :measurements, shallow: true, only: %i[create destroy] do
       collection do

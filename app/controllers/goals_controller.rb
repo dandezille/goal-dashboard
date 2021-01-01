@@ -1,6 +1,7 @@
 class GoalsController < ApplicationController
   before_action :require_login
-  before_action :require_goal, only: %i[show summary edit update]
+  before_action :require_goal, only: %i[show edit update]
+  before_action -> { require_goal(:goal_id) }, only: :summary
 
   def index
     @goals = current_user.goals
