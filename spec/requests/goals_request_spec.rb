@@ -52,10 +52,6 @@ RSpec.describe 'Goals' do
         expect(assigns(:measurement).date).to eq(Date.today)
       end
 
-      it 'assigns weeks' do
-        expect(assigns(:weeks)).to eq(goal.measurements_by_week)
-      end
-
       context 'when user doesn\'t own the goal' do
         let(:goal) { create(:goal) }
         it { is_expected.to redirect_to(goals_path) }

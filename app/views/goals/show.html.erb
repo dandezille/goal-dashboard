@@ -1,44 +1,20 @@
 <%= render partial: 'goals/description', locals: { goal: @goal } %>
 
-<%= render layout: 'shared/card' do %>
-    <div class="flex justify-around p-4">
-      <div class="flex flex-col items-center mx-6">
-        <div class="text-base"><%= @goal.latest_date %></div>
-        <div class="lg:text-3xl"><%= @goal.latest_value %><%= @goal.units %></div>
-        <div class="lg:text-3xl"><%= @goal.to_go %><%= @goal.units %></div>
-        <div class="text-base">to go</div>
-      </div>
-      <div class="flex flex-col items-center mx-6">
-        <div class="text-base">target</div>
-        <div class="lg:text-3xl"><%= @goal.today %><%= @goal.units %></div>
-        <div class="lg:text-3xl"><%= @goal.today_delta %><%= @goal.units %></div>
-        <div class="text-base"><%= @goal.today_delta_word %></div>
-      </div>
-      <div class="flex flex-col items-center mx-6">
-        <div class="text-base">target per day</div>
-        <div class="lg:text-3xl"><%= @goal.daily_goal %><%= @goal.units %></div>
-        <div class="lg:text-3xl"><%= @goal.daily_historic %><%= @goal.units %></div>
-        <div class="text-base">actual per day</div>
-      </div>
-      <div class="flex flex-col items-center mx-6">
-        <div class="text-base">goal date</div>
-        <div class="lg:text-3xl"><%= @goal.projected_value %><%= @goal.units %></div>
-        <div class="lg:text-3xl"><%= @goal.projected_date %></div>
-        <div class="text-base">goal value</div>
-      </div>
-    </div>
-<% end %>
+<%= render partial: 'shared/card', locals: { 
+    attributes: {
+        'data-controller': 'content-loader',
+        'data-content-loader-url-value': summary_goal_path(@goal)
+    } } %>
 
 <%= render layout: 'shared/card' do %>
     <canvas id="measurements_graph" class="p-4" style="width: 90vw"></canvas>
 <% end %>
 
-<%= render layout: 'shared/card', locals: { 
+<%= render partial: 'shared/card', locals: { 
     attributes: {
         'data-controller': 'content-loader',
         'data-content-loader-url-value': table_goal_measurements_path(@goal)
-    } } do %>
-<% end %>
+    } } %>
 
 <%= render layout: 'shared/card', locals: { title: 'Measurements' } do %>
   <div class="p-4 pb-0">
