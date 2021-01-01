@@ -55,7 +55,7 @@ RSpec.describe 'Measurements' do
     let(:measurement) { create(:measurement, goal: goal) }
 
     before do
-      delete goal_measurement_path(measurement.goal, measurement, as: user)
+      delete measurement_path(measurement, as: user)
     end
 
     it_behaves_like 'requires sign in' do
