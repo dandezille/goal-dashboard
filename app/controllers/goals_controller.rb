@@ -13,12 +13,6 @@ class GoalsController < ApplicationController
     @weeks = @goal.measurements_by_week
   end
 
-  def measurements_table
-    goal = Goal.find_by(id: params[:goal_id])
-    @weeks = goal.decorate.measurements_by_week
-    render layout: false
-  end
-
   def new
     @goal = Goal.new
   end

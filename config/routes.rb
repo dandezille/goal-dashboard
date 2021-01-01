@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   root to: 'goals#index'
 
   resources :goals, only: %i[index show new create edit update] do
-    resources :measurements, shallow: true, only: %i[create destroy]
-    get 'measurements-table', to: 'goals#measurements_table'
+    resources :measurements, shallow: true, only: %i[create destroy] do
+      collection do
+        get 'table'
+      end
+    end
   end
 end

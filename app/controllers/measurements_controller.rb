@@ -1,7 +1,12 @@
 class MeasurementsController < ApplicationController
   before_action :require_login
-  before_action -> { require_goal(:goal_id) }, only: :create
+  before_action -> { require_goal(:goal_id) }, only: [:create, :table]
   before_action :require_measurement, only: :destroy
+
+  def table
+    @weeks = @goal.measurements_by_week
+    render layout: false
+  end
 
   def create
     if create_measurement
