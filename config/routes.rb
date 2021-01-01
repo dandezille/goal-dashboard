@@ -6,9 +6,7 @@ Rails.application.routes.draw do
     get 'summary'
 
     resources :measurements, shallow: true, only: %i[create destroy] do
-      collection do
-        get 'table'
-      end
+      get 'table', on: :collection
     end
   end
 end
