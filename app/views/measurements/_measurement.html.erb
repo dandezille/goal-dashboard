@@ -1,7 +1,7 @@
-<div id="measurement_<%= measurement.id %>" class="measurement flex justify-between px-6 py-4 bg-gray-100 even:bg-gray-300">
-  <div class="date flex-1"><%= format_date(measurement.date) %></div>
-  <div class="value flex-1"><%= measurement.value %></div>
-  <div class="link-indigo flex-none">
-    <%= link_to "Delete", [measurement.goal, measurement], method: :delete, data: { confirm: "Are you sure?" } %>
+<div id="measurement_<%= measurement.id %>" class="flex justify-between px-6 py-4 bg-gray-100 measurement even:bg-gray-300">
+  <div class="flex-1 date"><%= format_date(measurement.date) %></div>
+  <div class="flex-1 value"><%= measurement.value %></div>
+  <div class="flex-none link-indigo">
+    <%= link_to "Delete", measurement, method: :delete, data: { confirm: "Are you sure?" } %>
   </div>
 </div>

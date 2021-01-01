@@ -3,6 +3,6 @@ Rails.application.routes.draw do
   root to: 'goals#index'
 
   resources :goals, only: %i[index show new create edit update] do
-    resources :measurements, only: %i[create destroy]
+    resources :measurements, shallow: true, only: %i[create destroy]
   end
 end

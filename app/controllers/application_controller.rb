@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
     @measurement = Measurement.find_by(id: params[id_field])
     if @measurement.nil? || @measurement.goal.user != current_user
       flash[:alert] = 'Invalid measurement'
-      redirect_to goal_path(@measurement.goal)
+      redirect_to goals_path
     end
   end
 end

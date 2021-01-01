@@ -1,6 +1,6 @@
 class MeasurementsController < ApplicationController
   before_action :require_login
-  before_action { require_goal(:goal_id) }
+  before_action -> { require_goal(:goal_id) }, only: :create
   before_action :require_measurement, only: :destroy
 
   def create
@@ -16,14 +16,10 @@ class MeasurementsController < ApplicationController
   def destroy
     @measurement.destroy
     flash[:notice] = 'Measurement removed'
-    redirect_to @goal
+    redirect_to @measurement.goal
   end
 
   private
-
-  def find_measurement
-    @measurement = Measurement.find(params[:id])
-  end
 
   def create_measurement
     @measurement = @goal.measurements.create(measurement_params)
