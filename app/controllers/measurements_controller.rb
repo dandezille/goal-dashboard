@@ -1,6 +1,6 @@
 class MeasurementsController < ApplicationController
   before_action :require_login
-  before_action -> { require_goal(:goal_id) }, only: [:index, :create, :table]
+  before_action -> { require_goal(:goal_id) }, only: [:index, :new, :create, :table]
   before_action :require_measurement, only: :destroy
 
   def table
@@ -10,6 +10,11 @@ class MeasurementsController < ApplicationController
 
   def index
     @measurements = @goal.measurements.reverse
+    render layout: false
+  end
+
+  def new
+    @measurement = Measurement.new(date: Date.today)
     render layout: false
   end
 

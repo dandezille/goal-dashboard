@@ -10,7 +10,6 @@ class GoalsController < ApplicationController
 
   def show
     @goal = @goal.decorate
-    @measurement = Measurement.new(date: Date.today)
   end
 
   def summary
