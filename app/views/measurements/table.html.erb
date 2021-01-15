@@ -1,4 +1,4 @@
-<table class="table-fixed mx-6 my-6 text-center text-xs md:text-base">
+<table class="mx-6 my-6 text-xs text-center table-fixed md:text-base">
   <thead>
     <tr>
       <% ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].each do |day| %>
@@ -7,7 +7,7 @@
     </tr>
   </thead>
   <tbody>
-    <% weeks.each do |week| %>
+    <% @weeks.each do |week| %>
       <tr>
         <td class="px-4 py-2 text-right"><%= format_date(week.first.date) %></td>
         <% week.each do |day| %>

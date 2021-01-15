@@ -52,8 +52,36 @@ RSpec.describe 'Goals' do
         expect(assigns(:measurement).date).to eq(Date.today)
       end
 
-      it 'assigns weeks' do
-        expect(assigns(:weeks)).to eq(goal.measurements_by_week)
+      context 'when user doesn\'t own the goal' do
+        let(:goal) { create(:goal) }
+        it { is_expected.to redirect_to(goals_path) }
+        it { expect(flash[:alert]).to be_present }
+      end
+
+      context 'with invalid goal' do
+        let(:goal) { create(:goal, user: user).tap { |g| g.delete } }
+        it { is_expected.to redirect_to(goals_path) }
+        it { expect(flash[:alert]).to be_present }
+      end
+    end
+  end
+
+  describe 'GET /goal/:id/summary' do
+    let(:user) { create(:user) }
+    let(:goal) { create(:goal, :with_measurements, user: user) }
+
+    before { get goal_summary_path(goal, as: user) }
+
+    it_behaves_like 'requires sign in' do
+      let(:user) { nil }
+      let(:goal) { create(:goal) }
+    end
+
+    context 'when signed in' do
+      it { expect(response).to be_successful }
+
+      it 'assigns goal' do
+        expect(assigns(:goal)).to eq(goal)
       end
 
       context 'when user doesn\'t own the goal' do
