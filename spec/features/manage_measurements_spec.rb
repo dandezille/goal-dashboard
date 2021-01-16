@@ -17,8 +17,10 @@ RSpec.feature 'manage measurements' do
     measurement = measurement_on_page
     measurement.create
 
-    expect(measurement).to be_visible
     expect(page).to have_flash_notice('Measurement created')
+
+    visit goal_measurements_path(goal, as: user)
+    expect(measurement).to be_visible
   end
 
   scenario 'view only measurements the user has created' do
@@ -33,10 +35,14 @@ RSpec.feature 'manage measurements' do
   scenario 'delete a measurement' do
     measurement = measurement_on_page
     measurement.create
+
+    visit goal_measurements_path(goal, as: user)
     measurement.delete
 
-    expect(measurement).not_to be_visible
     expect(page).to have_flash_notice('Measurement removed')
+
+    visit goal_measurements_path(goal, as: user)
+    expect(measurement).not_to be_visible
   end
 
   def measurement_on_page

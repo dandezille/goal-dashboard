@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :goals, only: %i[index show new create edit update] do
     get 'summary'
 
-    resources :measurements, shallow: true, only: %i[create destroy] do
+    resources :measurements, shallow: true, only: %i[index create destroy] do
       get 'table', on: :collection
     end
   end
