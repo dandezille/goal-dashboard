@@ -47,6 +47,34 @@ RSpec.describe 'Goals' do
         expect(assigns(:goal)).to eq(goal)
       end
 
+      context 'when user doesn\'t own the goal' do
+        let(:goal) { create(:goal) }
+        it { is_expected.to redirect_to(goals_path) }
+        it { expect(flash[:alert]).to be_present }
+      end
+
+      context 'with invalid goal' do
+        let(:goal) { create(:goal, user: user).tap { |g| g.delete } }
+        it { is_expected.to redirect_to(goals_path) }
+        it { expect(flash[:alert]).to be_present }
+      end
+    end
+  end
+
+  describe 'GET /goal/:id/measurements/new' do
+    let(:user) { create(:user) }
+    let(:goal) { create(:goal, :with_measurements, user: user) }
+
+    before { get new_goal_measurement_path(goal, as: user) }
+
+    it_behaves_like 'requires sign in' do
+      let(:user) { nil }
+      let(:goal) { create(:goal) }
+    end
+
+    context 'when signed in' do
+      it { expect(response).to be_successful }
+
       it 'assigns measurement' do
         expect(assigns(:measurement)).to be_new_record
         expect(assigns(:measurement).date).to eq(Date.today)
