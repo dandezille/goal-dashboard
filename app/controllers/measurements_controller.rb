@@ -3,19 +3,18 @@ class MeasurementsController < ApplicationController
   before_action -> { require_goal(:goal_id) }, only: [:index, :new, :create, :table]
   before_action :require_measurement, only: :destroy
 
+  layout false
+
   def table
     @weeks = @goal.measurements_by_week
-    render layout: false
   end
 
   def index
     @measurements = @goal.measurements.reverse
-    render layout: false
   end
 
   def new
     @measurement = Measurement.new(date: Date.today)
-    render layout: false
   end
 
   def create
