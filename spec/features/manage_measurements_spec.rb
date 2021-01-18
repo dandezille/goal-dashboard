@@ -6,14 +6,14 @@ RSpec.feature 'manage measurements' do
 
   before { visit goal_path(goal, as: user) }
 
-  scenario 'new measurement date is set to today' do
+  scenario 'create a new measurement' do
+    visit new_goal_measurement_path(goal)
+
     within('#new_measurement') do
       expect(page).to have_field 'measurement_date',
                  with: Date.today.strftime('%Y-%m-%d')
     end
-  end
 
-  scenario 'create a new measurement' do
     measurement = measurement_on_page
     measurement.create
 
@@ -24,6 +24,8 @@ RSpec.feature 'manage measurements' do
   end
 
   scenario 'view only measurements the user has created' do
+    visit new_goal_measurement_path(goal)
+
     measurement = measurement_on_page
     measurement.create
 
@@ -33,6 +35,8 @@ RSpec.feature 'manage measurements' do
   end
 
   scenario 'delete a measurement' do
+    visit new_goal_measurement_path(goal)
+
     measurement = measurement_on_page
     measurement.create
 
