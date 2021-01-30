@@ -11,7 +11,7 @@ gem 'pg'
 gem 'puma'
 gem 'rails'
 gem 'simple_form'
-gem 'turbolinks'
+gem 'turbo-rails'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'webpacker'
 
