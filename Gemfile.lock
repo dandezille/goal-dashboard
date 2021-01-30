@@ -230,9 +230,8 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     thor (1.0.1)
-    turbolinks (5.2.1)
-      turbolinks-source (~> 5.2)
-    turbolinks-source (5.2.0)
+    turbo-rails (0.5.9)
+      rails (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     uniform_notifier (1.13.2)
@@ -279,7 +278,7 @@ DEPENDENCIES
   simple_form
   spring
   spring-watcher-listen
-  turbolinks
+  turbo-rails
   tzinfo-data
   web-console
   webpacker
