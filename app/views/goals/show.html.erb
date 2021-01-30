@@ -2,26 +2,23 @@
 
 <%= render layout: 'shared/card' do %>
   <turbo-frame id="goal-summary" src="<%= goal_summary_path(@goal) %>">
-    <div>Loading...</div>
   </turbo-frame>
 <% end %>
 
 <%= render layout: 'shared/card' do %>
-    <canvas id="measurements_graph" class="p-4" style="width: 90vw"></canvas>
+  <canvas id="measurements_graph" class="p-4" style="width: 90vw"></canvas>
 <% end %>
 
-<%= render partial: 'shared/card', locals: { 
-    attributes: {
-        'data-controller': 'content-loader',
-        'data-content-loader-url-value': table_goal_measurements_path(@goal)
-    } } %>
+<%= render layout: 'shared/card' do %>
+  <turbo-frame id="goal-table" src="<%= table_goal_measurements_path(@goal) %>">
+  </turbo-frame>
+<% end %>
 
 <%= render layout: 'shared/card', locals: { title: 'Measurements' } do %>
   <turbo-frame id="new_measurement" 
                src="<%= new_goal_measurement_path(@goal) %>">
   </turbo-frame>
   <turbo-frame id="measurements" src="<%= goal_measurements_path(@goal) %>">
-    <div>Loading...</div>
   </turbo-frame>
 <% end %>
 
