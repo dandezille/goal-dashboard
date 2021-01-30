@@ -15,7 +15,7 @@
 <% end %>
 
 <%= render layout: 'shared/card', locals: { title: 'Measurements' } do %>
-  <turbo-frame id="new_measurement" src="<%= new_goal_measurement_path(@goal) %>">
+  <turbo-frame id="new-measurement" src="<%= new_goal_measurement_path(@goal) %>">
   </turbo-frame>
   <turbo-frame id="measurements" src="<%= goal_measurements_path(@goal) %>">
   </turbo-frame>
