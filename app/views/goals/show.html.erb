@@ -21,9 +21,9 @@
        data-controller="content-loader"
        data-content-loader-url-value="<%= new_goal_measurement_path(@goal) %>">
   </div>
-  <div data-controller="content-loader"
-       data-content-loader-url-value="<%= goal_measurements_path(@goal) %>">
-  </div>
+  <turbo-frame id="measurements" src="<%= goal_measurements_path(@goal) %>">
+    <div>Loading measurements...</div>
+  </turbo-frame>
 <% end %>
 
 <script>
