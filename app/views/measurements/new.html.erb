@@ -1,1 +1,7 @@
-<%= render 'measurements/form' %>
+<%= render layout: 'shared/card', locals: { title: 'New Measurement' } do %>
+  <turbo-frame id="new-measurement">
+    <div class="p-4 pb-0">
+      <%= render 'measurements/form' %>
+    </div>
+  </turbo-frame>
+<% end %>

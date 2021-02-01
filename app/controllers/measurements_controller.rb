@@ -3,8 +3,6 @@ class MeasurementsController < ApplicationController
   before_action -> { require_goal(:goal_id) }, only: [:index, :new, :create, :table]
   before_action :require_measurement, only: :destroy
 
-  layout false
-
   def table
     @weeks = @goal.measurements_by_week
   end

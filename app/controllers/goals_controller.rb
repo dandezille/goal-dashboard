@@ -14,7 +14,6 @@ class GoalsController < ApplicationController
 
   def summary
     @goal = @goal.decorate
-    render layout: false
   end
 
   def new

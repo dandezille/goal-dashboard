@@ -1,19 +1,23 @@
-<table class="mx-6 my-6 text-xs text-center table-fixed md:text-base">
-  <thead>
-    <tr>
-      <% ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].each do |day| %>
-        <th class="px-4 py-2"><%= day %></th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <% @weeks.each do |week| %>
-      <tr>
-        <td class="px-4 py-2 text-right"><%= format_date(week.first.date) %></td>
-        <% week.each do |day| %>
-          <td class="border px-4 py-2 <%= day.value.blank? ? 'bg-gray-100' : '' %>"><%= day.value %></td>
+<%= render layout: 'shared/card', locals: { title: 'Measurements' } do %>
+  <turbo-frame id="goal-table">
+    <table class="mx-6 my-6 text-xs text-center table-fixed md:text-base">
+      <thead>
+        <tr>
+          <% ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].each do |day| %>
+            <th class="px-4 py-2"><%= day %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @weeks.each do |week| %>
+          <tr>
+            <td class="px-4 py-2 text-right"><%= format_date(week.first.date) %></td>
+            <% week.each do |day| %>
+              <td class="border px-4 py-2 <%= day.value.blank? ? 'bg-gray-100' : '' %>"><%= day.value %></td>
+            <% end %>
+          </tr>
         <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      </tbody>
+    </table>
+  </turbo-frame>
+<% end %>
